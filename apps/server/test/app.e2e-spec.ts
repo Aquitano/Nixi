@@ -136,8 +136,13 @@ describe('App e2e', () => {
 
     describe('Create article', () => {
       const dto: CreateArticleDto = {
-        title: 'First Article',
-        link: 'https://www.youtube.com/watch?v=d6WC5n9G_sM',
+        title: `This 30-year-old makes $114,000 a month in passive income: \u20184 businesses you can start today for $99 or less'`,
+        link: 'https://www.cnbc.com/2022/08/23/i-make-119000-a-month-in-passive-income-here-are-businesses-you-can-start-for-99-dollars-or-less.html',
+        author: 'Charlie Chang',
+        top_image_url:
+          'https://image.cnbcfm.com/api/v1/image/107048403-1650379684091-Lifestyle-3.jpg?v=1652360136&w=1920&h=1080',
+        favorite: false,
+        word_count: 888,
       };
       it('should create article', () =>
         pactum

@@ -2,7 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # Run linter
-pnpm lint-staged
+pnpm run lint
 
 # Run prettier
 pnpm run format

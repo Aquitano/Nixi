@@ -31,7 +31,7 @@
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "@prisma/client": "^4.2.1",
-    "argon2": "^0.28.7",
+    "argon2": "^0.29.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "passport": "^0.6.0",

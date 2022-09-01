@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateArticleDto {
   @IsString()
@@ -12,4 +12,20 @@ export class CreateArticleDto {
   @IsString()
   @IsNotEmpty()
   link: string;
+
+  @IsString()
+  @IsNotEmpty()
+  author: string;
+
+  @IsString()
+  @IsNotEmpty()
+  top_image_url: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  favorite: boolean;
+
+  @IsInt()
+  @IsNotEmpty()
+  word_count: number;
 }

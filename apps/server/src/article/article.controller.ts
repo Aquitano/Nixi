@@ -22,23 +22,23 @@ export class ArticleController {
   constructor(private articleService: ArticleService) {}
 
   @Post()
-  createArticle(@GetUser('id') userId: number, @Body() dto: CreateArticleDto) {
+  createArticle(@GetUser('id') userId: string, @Body() dto: CreateArticleDto) {
     return this.articleService.createArticle(userId, dto);
   }
 
   @Get()
-  getArticles(@GetUser('id') userId: number) {
+  getArticles(@GetUser('id') userId: string) {
     return this.articleService.getArticles(userId);
   }
 
   @Get(':id')
-  getArticleById(@GetUser('id') userId: number, @Param('id', ParseIntPipe) articleId: number) {
+  getArticleById(@GetUser('id') userId: string, @Param('id', ParseIntPipe) articleId: number) {
     return this.articleService.getArticleById(userId, articleId);
   }
 
   @Patch(':id')
   editArticleById(
-    @GetUser('id') userId: number,
+    @GetUser('id') userId: string,
     @Param('id', ParseIntPipe) articleId: number,
     @Body() dto: EditArticleDto,
   ) {
@@ -47,7 +47,7 @@ export class ArticleController {
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  deleteArticleById(@GetUser('id') userId: number, @Param('id', ParseIntPipe) articleId: number) {
+  deleteArticleById(@GetUser('id') userId: string, @Param('id', ParseIntPipe) articleId: number) {
     return this.articleService.deleteArticleById(userId, articleId);
   }
 }

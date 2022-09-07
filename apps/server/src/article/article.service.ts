@@ -6,8 +6,9 @@ import { CreateArticleDto, EditArticleDto } from './dto';
 export class ArticleService {
   constructor(private prisma: PrismaService) {}
 
-  async createArticle(userId: number, dto: CreateArticleDto) {
+  async createArticle(userId: string, dto: CreateArticleDto) {
     return this.prisma.article.create({
+      // @ts-ignore
       data: {
         userId,
         ...dto,
@@ -15,7 +16,7 @@ export class ArticleService {
     });
   }
 
-  getArticles(userId: number) {
+  getArticles(userId: string) {
     return this.prisma.article.findMany({
       where: {
         userId,
@@ -23,7 +24,7 @@ export class ArticleService {
     });
   }
 
-  getArticleById(userId: number, articleId: number) {
+  getArticleById(userId: string, articleId: number) {
     return this.prisma.article.findFirst({
       where: {
         id: articleId,
@@ -32,7 +33,7 @@ export class ArticleService {
     });
   }
 
-  async editArticleById(userId: number, articleId: number, dto: EditArticleDto) {
+  async editArticleById(userId: string, articleId: number, dto: EditArticleDto) {
     // get the article by id
     const article = await this.prisma.article.findUnique({
       where: {
@@ -54,7 +55,7 @@ export class ArticleService {
     });
   }
 
-  async deleteArticleById(userId: number, articleId: number) {
+  async deleteArticleById(userId: string, articleId: number) {
     // get the article by id
     const article = await this.prisma.article.findUnique({
       where: {

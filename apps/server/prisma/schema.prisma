@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -22,6 +22,7 @@ model User {
   lastName  String?
 
   articles Article[]
+  Tag      Tag[]
 
   @@map("users")
 }
@@ -34,19 +35,31 @@ model Article {
   title         String
   link          String
   author        String
-  top_image_url String
+  top_image_url String?
   favorite      Boolean
   word_count    Int
 
   description String?
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  tags Tag[]
 
   @@map("articles")
 }
 
 model Tag {
-  id   Int    @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   name String
+
+  articles Article[]
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("tags")
 }

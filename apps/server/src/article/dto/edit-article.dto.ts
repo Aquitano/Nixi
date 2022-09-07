@@ -12,4 +12,8 @@ export class EditArticleDto {
   @IsString()
   @IsOptional()
   link?: string;
+
+  @IsString()
+  @IsOptional()
+  author?: string;
 }

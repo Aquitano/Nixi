@@ -18,8 +18,8 @@ export class CreateArticleDto {
   author: string;
 
   @IsString()
-  @IsNotEmpty()
-  top_image_url: string;
+  @IsOptional()
+  top_image_url?: string;
 
   @IsBoolean()
   @IsNotEmpty()

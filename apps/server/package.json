@@ -18,7 +18,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "lint": "eslint \"{src,test}/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,vue}\" --fix",
+    "lint": "eslint \"{src,test}/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,vue}\" --fix && tsc --noEmit",
     "test": "jest",
     "pretest:e2e": "pnpm run db:test:restart",
     "test:e2e": "dotenv -e .env.test -- jest --config ./test/jest-e2e.json"

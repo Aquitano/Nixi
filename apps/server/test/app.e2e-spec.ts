@@ -154,7 +154,8 @@ describe('App e2e', () => {
           })
           .withBody(dto)
           .expectStatus(201)
-          .stores('articleId', 'id'));
+          .stores('articleId', 'id')
+          .expectBodyContains(`Hello World! XSS Test: <a>Click Me</a>`)); // XSS protection test
     });
 
     describe('Get articles', () => {
@@ -187,6 +188,7 @@ describe('App e2e', () => {
         title: 'Kubernetes Course - Full Beginners Tutorial (Containerize Your Apps!)',
         description:
           'Learn how to use Kubernetes in this complete course. Kubernetes makes it possible to containerize applications and simplifies app deployment to production.',
+        content: `Hello World! XSS Test: <a href="javascript:alert('XSS')">Click Me</a>`,
       };
       it('should edit article', () =>
         pactum
@@ -199,7 +201,8 @@ describe('App e2e', () => {
           .withBody(dto)
           .expectStatus(200)
           .expectBodyContains(dto.title)
-          .expectBodyContains(dto.description));
+          .expectBodyContains(dto.description)
+          .expectBodyContains(`Hello World! XSS Test: <a>Click Me</a>`)); // XSS protection test
     });
 
     describe('Delete article by id', () => {

@@ -34,6 +34,7 @@ model Article {
 
   title         String
   link          String
+  content       String
   author        String
   top_image_url String?
   favorite      Boolean

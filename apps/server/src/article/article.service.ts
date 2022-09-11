@@ -24,13 +24,14 @@ export class ArticleService {
     });
   }
 
-  getArticleById(userId: string, articleId: number) {
-    return this.prisma.article.findFirst({
+  async getArticleById(userId: string, articleId: number) {
+    const output = await this.prisma.article.findFirst({
       where: {
         id: articleId,
         userId,
       },
     });
+    return output;
   }
 
   async editArticleById(userId: string, articleId: number, dto: EditArticleDto) {

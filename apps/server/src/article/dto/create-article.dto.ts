@@ -1,9 +1,22 @@
+import { Transform } from 'class-transformer';
 import { IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import DOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
 
 export class CreateArticleDto {
   @IsString()
   @IsNotEmpty()
   title: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Transform(({ value }) => {
+    const { window } = new JSDOM('');
+    const purify = DOMPurify(window);
+    const clean = purify.sanitize(value);
+    return clean;
+  })
+  content: string;
 
   @IsString()
   @IsOptional()

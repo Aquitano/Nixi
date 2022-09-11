@@ -143,6 +143,7 @@ describe('App e2e', () => {
           'https://image.cnbcfm.com/api/v1/image/107048403-1650379684091-Lifestyle-3.jpg?v=1652360136&w=1920&h=1080',
         favorite: false,
         word_count: 888,
+        content: `Hello World! XSS Test: <a href="javascript:alert('XSS')">Click Me</a>`,
       };
       it('should create article', () =>
         pactum

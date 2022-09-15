@@ -14,7 +14,7 @@ import {
 import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
 import { ArticleService } from './article.service';
-import { CreateArticleDto, EditArticleDto } from './dto';
+import { AddHighlightDto, CreateArticleDto, EditArticleDto } from './dto';
 
 @UseGuards(JwtGuard)
 @Controller('articles')
@@ -22,23 +22,23 @@ export class ArticleController {
   constructor(private articleService: ArticleService) {}
 
   @Post()
-  createArticle(@GetUser('id') userId: number, @Body() dto: CreateArticleDto) {
+  createArticle(@GetUser('id') userId: string, @Body() dto: CreateArticleDto) {
     return this.articleService.createArticle(userId, dto);
   }
 
   @Get()
-  getArticles(@GetUser('id') userId: number) {
+  getArticles(@GetUser('id') userId: string) {
     return this.articleService.getArticles(userId);
   }
 
   @Get(':id')
-  getArticleById(@GetUser('id') userId: number, @Param('id', ParseIntPipe) articleId: number) {
+  getArticleById(@GetUser('id') userId: string, @Param('id', ParseIntPipe) articleId: number) {
     return this.articleService.getArticleById(userId, articleId);
   }
 
   @Patch(':id')
   editArticleById(
-    @GetUser('id') userId: number,
+    @GetUser('id') userId: string,
     @Param('id', ParseIntPipe) articleId: number,
     @Body() dto: EditArticleDto,
   ) {
@@ -47,7 +47,24 @@ export class ArticleController {
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  deleteArticleById(@GetUser('id') userId: number, @Param('id', ParseIntPipe) articleId: number) {
+  deleteArticleById(@GetUser('id') userId: string, @Param('id', ParseIntPipe) articleId: number) {
     return this.articleService.deleteArticleById(userId, articleId);
+  }
+
+  // Highlights
+
+  @Get('highlights/:id')
+  getHighlights(@GetUser('id') userId: string, @Param('id', ParseIntPipe) highlightId: number) {
+    return this.articleService.getHighlights(userId, highlightId);
+  }
+
+  @Post('highlights/:id')
+  addHighlight(@GetUser('id') userId: string, @Body() dto: AddHighlightDto) {
+    return this.articleService.addHighlight(userId, dto);
+  }
+
+  @Delete('highlights/:id')
+  deleteHighlight(@GetUser('id') userId: string, @Param('id', ParseIntPipe) highlightId: number) {
+    return this.articleService.deleteHighlightById(userId, highlightId);
   }
 }

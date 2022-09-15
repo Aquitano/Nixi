@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -21,7 +21,9 @@ model User {
   firstName String?
   lastName  String?
 
-  articles Article[]
+  articles  Article[]
+  Tag       Tag[]
+  Highlight Highlight[]
 
   @@map("users")
 }
@@ -33,20 +35,52 @@ model Article {
 
   title         String
   link          String
+  content       String
   author        String
-  top_image_url String
+  top_image_url String?
   favorite      Boolean
   word_count    Int
 
   description String?
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  tags       Tag[]
+  highlights Highlight[]
 
   @@map("articles")
 }
 
 model Tag {
-  id   Int    @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   name String
+
+  articles Article[]
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("tags")
+}
+
+model Highlight {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  content String
+  start   Int
+  end     Int
+
+  articleId Int
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("highlights")
 }

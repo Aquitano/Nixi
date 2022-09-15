@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateArticleDto, EditArticleDto } from './dto';
+import { AddHighlightDto, CreateArticleDto, EditArticleDto } from './dto';
 
 @Injectable()
 export class ArticleService {
@@ -8,7 +8,6 @@ export class ArticleService {
 
   async createArticle(userId: string, dto: CreateArticleDto) {
     return this.prisma.article.create({
-      // @ts-ignore
       data: {
         userId,
         ...dto,
@@ -16,7 +15,7 @@ export class ArticleService {
     });
   }
 
-  getArticles(userId: string) {
+  async getArticles(userId: string) {
     return this.prisma.article.findMany({
       where: {
         userId,
@@ -71,6 +70,66 @@ export class ArticleService {
     await this.prisma.article.delete({
       where: {
         id: articleId,
+      },
+    });
+  }
+
+  // Highlights
+
+  async getHighlights(userId: string, highlightId: number) {
+    // get the article by id
+    const article = await this.prisma.article.findUnique({
+      where: {
+        id: highlightId,
+      },
+    });
+
+    // check if user owns the article
+    if (!article || article.userId !== userId)
+      throw new ForbiddenException('Access to resources denied');
+
+    return this.prisma.highlight.findMany({
+      where: {
+        articleId: highlightId,
+      },
+    });
+  }
+
+  async addHighlight(userId: string, dto: AddHighlightDto) {
+    // check if article exists
+    const article = await this.prisma.article.findUnique({
+      where: {
+        id: dto.articleId,
+      },
+    });
+
+    // check if user owns the article
+    if (!article || article.userId !== userId)
+      throw new ForbiddenException('Access to resources denied');
+
+    return this.prisma.highlight.create({
+      data: {
+        userId,
+        ...dto,
+      },
+    });
+  }
+
+  async deleteHighlightById(userId: string, highlightId: number) {
+    // get the highlight by id
+    const highlight = await this.prisma.highlight.findUnique({
+      where: {
+        id: highlightId,
+      },
+    });
+
+    // check if user owns the article
+    if (!highlight || highlight.userId !== userId)
+      throw new ForbiddenException('Access to resources denied');
+
+    await this.prisma.highlight.delete({
+      where: {
+        id: highlightId,
       },
     });
   }

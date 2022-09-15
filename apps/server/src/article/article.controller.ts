@@ -14,7 +14,7 @@ import {
 import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
 import { ArticleService } from './article.service';
-import { CreateArticleDto, EditArticleDto } from './dto';
+import { AddHighlightDto, CreateArticleDto, EditArticleDto } from './dto';
 
 @UseGuards(JwtGuard)
 @Controller('articles')
@@ -49,5 +49,22 @@ export class ArticleController {
   @Delete(':id')
   deleteArticleById(@GetUser('id') userId: string, @Param('id', ParseIntPipe) articleId: number) {
     return this.articleService.deleteArticleById(userId, articleId);
+  }
+
+  // Highlights
+
+  @Get('highlights/:id')
+  getHighlights(@GetUser('id') userId: string, @Param('id', ParseIntPipe) highlightId: number) {
+    return this.articleService.getHighlights(userId, highlightId);
+  }
+
+  @Post('highlights/:id')
+  addHighlight(@GetUser('id') userId: string, @Body() dto: AddHighlightDto) {
+    return this.articleService.addHighlight(userId, dto);
+  }
+
+  @Delete('highlights/:id')
+  deleteHighlight(@GetUser('id') userId: string, @Param('id', ParseIntPipe) highlightId: number) {
+    return this.articleService.deleteHighlightById(userId, highlightId);
   }
 }

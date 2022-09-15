@@ -3,7 +3,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as pactum from 'pactum';
 import { AppModule } from '../src/app.module';
-import { CreateArticleDto, EditArticleDto } from '../src/article/dto';
+import { AddHighlightDto, CreateArticleDto, EditArticleDto } from '../src/article/dto';
 import { AuthDto } from '../src/auth/dto';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { EditUserDto } from '../src/user/dto';
@@ -203,6 +203,53 @@ describe('App e2e', () => {
           .expectBodyContains(dto.title)
           .expectBodyContains(dto.description)
           .expectBodyContains(`Hello World! XSS Test: <a>Click Me</a>`)); // XSS protection test
+    });
+
+    describe('Add highlight', () => {
+      // get store variable outside of pactum
+
+      const dto: AddHighlightDto = {
+        content: 'Learn how to use Kubernetes',
+        start: 0,
+        end: 27,
+        articleId: 0,
+      };
+      it('should add highlight', () =>
+        pactum
+          .spec()
+          .post('/articles/highlights/{id}')
+          .withPathParams('id', '$S{articleId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody({ ...dto, articleId: '$S{articleId}' })
+          .expectStatus(201)
+          .stores('highlightId', 'id'));
+    });
+
+    describe('Get highlights', () => {
+      it('should get highlights', () =>
+        pactum
+          .spec()
+          .get('/articles/highlights/{id}')
+          .withPathParams('id', '$S{articleId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectJsonLength(1));
+    });
+
+    describe('Delete highlight', () => {
+      it('should delete highlight', () =>
+        pactum
+          .spec()
+          .delete('/articles/highlights/{id}')
+          .withPathParams('id', '$S{highlightId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200));
     });
 
     describe('Delete article by id', () => {

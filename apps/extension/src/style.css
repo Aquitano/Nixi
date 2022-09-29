@@ -87,6 +87,33 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+.wrap-input {
+  width: 100%;
+  background-color: #f7f7f7;
+  border: 1px solid #858585;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+input {
+  outline: none;
+  border: none;
+}
+#email,
+#password {
+  color: #333333;
+  line-height: 1.2;
+  display: block;
+  width: 100%;
+  background: transparent;
+  border-radius: 10px;
+  height: 40px;
+  padding: 0 24px;
+}
+#email:focus,
+#password:focus {
+  border: 1px solid #fc00ff;
+  border-radius: 10px;
+}
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

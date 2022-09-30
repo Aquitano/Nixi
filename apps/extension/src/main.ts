@@ -2,6 +2,7 @@
 import { setupLoginButton, setupSaveButton } from './button';
 import './style.css';
 
+// Get encoded data from JWT token
 function parseJwt(token) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -9,7 +10,7 @@ function parseJwt(token) {
     window
       .atob(base64)
       .split('')
-      .map(function (c) {
+      .map((c) => {
         return `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`;
       })
       .join(''),
@@ -18,7 +19,7 @@ function parseJwt(token) {
   return JSON.parse(jsonPayload);
 }
 
-// check if user is logged in
+// Check if user is logged in
 chrome.storage.local.get(['jwt'], (result) => {
   const button = document.querySelector<HTMLButtonElement>('#main-button')!;
 

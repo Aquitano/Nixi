@@ -1,17 +1,17 @@
 export class CreateArticleDto {
-  title!: string;
+  title: string;
 
-  content!: string;
+  content: string;
 
   description?: string;
 
-  link!: string;
+  link: string;
 
-  author!: string;
+  author: string;
 
   top_image_url?: string;
 
-  favorite!: boolean;
+  favorite: boolean;
 
-  word_count!: number;
+  word_count: number;
 }

@@ -78,13 +78,18 @@ async function getData(jwt: string) {
       },
     });
 
-    // Run when data is received
-    chrome.runtime.onMessage.addListener((message) => {
+    // eslint-disable-next-line no-inner-declarations
+    function handleMessage(message) {
+      chrome.runtime.onMessage.removeListener(handleMessage);
+
       if (message.type === 'data') {
         const { data } = message;
         sendArticle(data, jwt);
       }
-    });
+    }
+
+    // Run when data is received
+    chrome.runtime.onMessage.addListener(handleMessage);
   }
 
   return {};

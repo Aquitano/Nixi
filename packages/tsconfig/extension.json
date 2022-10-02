@@ -5,16 +5,10 @@
   "compilerOptions": {
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
+    "lib": ["ESNext", "DOM"],
     "noEmit": true,
     "noImplicitReturns": true,
     "strictNullChecks": false,
-    "types": [
-      "chrome",
-      "vite/client"
-    ]
+    "types": ["chrome", "vite/client"]
   }
 }

@@ -12,11 +12,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { GetUser } from '../auth/decorator';
-import { JwtGuard } from '../auth/guard';
+import { AuthGuard } from '../auth/guard';
 import { ArticleService } from './article.service';
 import { AddHighlightDto, CreateArticleDto, EditArticleDto } from './dto';
 
-@UseGuards(JwtGuard)
+@UseGuards(AuthGuard)
 @Controller('articles')
 export class ArticleController {
   constructor(private articleService: ArticleService) {}

@@ -6,34 +6,34 @@ import { AddHighlightDto, CreateArticleDto, EditArticleDto } from './dto';
 export class ArticleService {
   constructor(private prisma: PrismaService) {}
 
-  async createArticle(userId: string, dto: CreateArticleDto) {
+  async createArticle(profileId: number, dto: CreateArticleDto) {
     return this.prisma.article.create({
       data: {
-        userId,
+        profileId,
         ...dto,
       },
     });
   }
 
-  async getArticles(userId: string) {
+  async getArticles(profileId: number) {
     return this.prisma.article.findMany({
       where: {
-        userId,
+        profileId,
       },
     });
   }
 
-  async getArticleById(userId: string, articleId: number) {
+  async getArticleById(profileId: number, articleId: number) {
     const output = await this.prisma.article.findFirst({
       where: {
         id: articleId,
-        userId,
+        profileId,
       },
     });
     return output;
   }
 
-  async editArticleById(userId: string, articleId: number, dto: EditArticleDto) {
+  async editArticleById(profileId: number, articleId: number, dto: EditArticleDto) {
     // get the article by id
     const article = await this.prisma.article.findUnique({
       where: {
@@ -42,7 +42,7 @@ export class ArticleService {
     });
 
     // check if user owns the article
-    if (!article || article.userId !== userId)
+    if (!article || article.profileId !== profileId)
       throw new ForbiddenException('Access to resources denied');
 
     return this.prisma.article.update({
@@ -55,16 +55,16 @@ export class ArticleService {
     });
   }
 
-  async deleteArticleById(userId: string, articleId: number) {
+  async deleteArticleById(profileId: number, articleId: number) {
     // get the article by id
     const article = await this.prisma.article.findUnique({
       where: {
-        id: articleId,
+        id: profileId,
       },
     });
 
     // check if user owns the article
-    if (!article || article.userId !== userId)
+    if (!article || article.profileId !== profileId)
       throw new ForbiddenException('Access to resources denied');
 
     await this.prisma.article.delete({
@@ -76,7 +76,7 @@ export class ArticleService {
 
   // Highlights
 
-  async getHighlights(userId: string, highlightId: number) {
+  async getHighlights(profileId: number, highlightId: number) {
     // get the article by id
     const article = await this.prisma.article.findUnique({
       where: {
@@ -85,7 +85,7 @@ export class ArticleService {
     });
 
     // check if user owns the article
-    if (!article || article.userId !== userId)
+    if (!article || article.profileId !== profileId)
       throw new ForbiddenException('Access to resources denied');
 
     return this.prisma.highlight.findMany({
@@ -95,7 +95,7 @@ export class ArticleService {
     });
   }
 
-  async addHighlight(userId: string, dto: AddHighlightDto) {
+  async addHighlight(profileId: number, dto: AddHighlightDto) {
     // check if article exists
     const article = await this.prisma.article.findUnique({
       where: {
@@ -104,18 +104,18 @@ export class ArticleService {
     });
 
     // check if user owns the article
-    if (!article || article.userId !== userId)
+    if (!article || article.profileId !== profileId)
       throw new ForbiddenException('Access to resources denied');
 
     return this.prisma.highlight.create({
       data: {
-        userId,
+        profileId,
         ...dto,
       },
     });
   }
 
-  async deleteHighlightById(userId: string, highlightId: number) {
+  async deleteHighlightById(profileId: number, highlightId: number) {
     // get the highlight by id
     const highlight = await this.prisma.highlight.findUnique({
       where: {
@@ -124,7 +124,7 @@ export class ArticleService {
     });
 
     // check if user owns the article
-    if (!highlight || highlight.userId !== userId)
+    if (!highlight || highlight.profileId !== profileId)
       throw new ForbiddenException('Access to resources denied');
 
     await this.prisma.highlight.delete({

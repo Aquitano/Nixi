@@ -5,23 +5,23 @@ importers:
   .:
     specifiers:
       eslint-config-prettier: ^8.5.0
-      eslint-config-turbo: ^0.0.3
+      eslint-config-turbo: ^0.0.4
       husky: ^8.0.1
       prettier: ^2.7.1
       turbo: ^1.4.5
     devDependencies:
       eslint-config-prettier: 8.5.0_eslint@8.23.0
-      eslint-config-turbo: 0.0.3_eslint@8.23.0
+      eslint-config-turbo: 0.0.4_eslint@8.23.0
       husky: 8.0.1
       prettier: 2.7.1
       turbo: 1.4.5
 
   apps/extension:
     specifiers:
-      '@types/chrome': ^0.0.196
+      '@types/chrome': ^0.0.197
       '@types/node': ^18.7.3
       autoprefixer: ^10.4.8
-      axios: ^0.27.2
+      axios: ^1.1.2
       chrome-types: ^0.1.131
       config: workspace:config
       eslint: ^8.0.1
@@ -32,9 +32,9 @@ importers:
       typescript: ^4.8.2
       vite: ^3.0.7
     dependencies:
-      axios: 0.27.2
+      axios: 1.1.2
     devDependencies:
-      '@types/chrome': 0.0.196
+      '@types/chrome': 0.0.197
       '@types/node': 18.7.14
       autoprefixer: 10.4.8_postcss@8.4.16
       chrome-types: 0.1.133
@@ -132,7 +132,7 @@ importers:
       eslint-config-airbnb-base: ^15.0.0
       eslint-config-airbnb-typescript: ^17.0.0
       eslint-config-prettier: ^8.5.0
-      eslint-config-turbo: ^0.0.3
+      eslint-config-turbo: ^0.0.4
       eslint-import-resolver-typescript: ^3.5.0
       eslint-plugin-import: ^2.25.3
       eslint-plugin-jest: ^27.0.1
@@ -146,7 +146,7 @@ importers:
       eslint-config-airbnb-base: 15.0.0_faomjyrlgqmwswvqymymzkxcqi
       eslint-config-airbnb-typescript: 17.0.0_nwt6qmnsbmuicuvak5hafgwebq
       eslint-config-prettier: 8.5.0_eslint@8.23.0
-      eslint-config-turbo: 0.0.3_eslint@8.23.0
+      eslint-config-turbo: 0.0.4_eslint@8.23.0
       eslint-import-resolver-typescript: 3.5.0_faomjyrlgqmwswvqymymzkxcqi
       eslint-plugin-import: 2.26.0_a3i7brydqn6m553iazzl7kmmui
       eslint-plugin-jest: 27.0.1_vj2biyzi5xv6yshnzimrvgmo7e
@@ -1262,8 +1262,8 @@ packages:
       '@types/connect': 3.4.35
       '@types/node': 18.7.16
 
-  /@types/chrome/0.0.196:
-    resolution: {integrity: sha512-LAjGIQYC0wyiYu6lVT03dBrHBfYTMsM8EmNfQ+UdZipGZe8OUiir6weoa9oQoBw3T3RLzBCp9m904T+rFtpPAg==}
+  /@types/chrome/0.0.197:
+    resolution: {integrity: sha512-m1NfS5bOjaypyqQfaX6CxmJodZVcvj5+Mt/K94EBHkflYjPNmXHAzbxfifdLMa0YM3PDyOxohoTS5ug/e6p5jA==}
     dependencies:
       '@types/filesystem': 0.0.32
       '@types/har-format': 1.2.8
@@ -1976,11 +1976,12 @@ packages:
       - debug
     dev: false
 
-  /axios/0.27.2:
-    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
+  /axios/1.1.2:
+    resolution: {integrity: sha512-bznQyETwElsXl2RK7HLLwb5GPpOLlycxHCtrpDR/4RqqBzjARaOTo3jz4IgtntWUYee7Ne4S8UHd92VCuzPaWA==}
     dependencies:
-      follow-redirects: 1.15.1
+      follow-redirects: 1.15.1_debug@4.3.4
       form-data: 4.0.0
+      proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
     dev: false
@@ -3113,13 +3114,13 @@ packages:
     dependencies:
       eslint: 8.23.0
 
-  /eslint-config-turbo/0.0.3_eslint@8.23.0:
-    resolution: {integrity: sha512-hK5MlxDugUWZV9ZKcyfNwLXrlMuM2wPgAUk51cUFBC3nXRCVmCA9uSRFBZsyAIurN1wH7mS7G1NBo5F8VkF7lQ==}
+  /eslint-config-turbo/0.0.4_eslint@8.23.0:
+    resolution: {integrity: sha512-HErPS/wfWkSdV9Yd2dDkhZt3W2B78Ih/aWPFfaHmCMjzPalh+5KxRRGTf8MOBQLCebcWJX0lP1Zvc1rZIHlXGg==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0
     dependencies:
       eslint: 8.23.0
-      eslint-plugin-turbo: 0.0.3_eslint@8.23.0
+      eslint-plugin-turbo: 0.0.4_eslint@8.23.0
 
   /eslint-import-resolver-node/0.3.6:
     resolution: {integrity: sha512-0En0w03NRVMn9Uiyn8YRPDKvWjxCWkslUEhGNTdGx15RvPJYQ+lbOlqrlNI2vEAs4pDYK4f/HN2TbDmk5TP0iw==}
@@ -3328,8 +3329,8 @@ packages:
       - typescript
     dev: false
 
-  /eslint-plugin-turbo/0.0.3_eslint@8.23.0:
-    resolution: {integrity: sha512-QjidATGxWtaB9QUrD3NocUySmsgWKZlBMFlw4kX2IIjRLAxMPwukk90h3ZTaNXyRHuaQsrEgh7hhlCZoxP0TTw==}
+  /eslint-plugin-turbo/0.0.4_eslint@8.23.0:
+    resolution: {integrity: sha512-dfmYE/iPvoJInQq+5E/0mj140y/rYwKtzZkn3uVK8+nvwC5zmWKQ6ehMWrL4bYBkGzSgpOndZM+jOXhPQ2m8Cg==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0
     dependencies:
@@ -3646,16 +3647,6 @@ packages:
 
   /flatted/3.2.7:
     resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}
-
-  /follow-redirects/1.15.1:
-    resolution: {integrity: sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-    dev: false
 
   /follow-redirects/1.15.1_debug@4.3.4:
     resolution: {integrity: sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==}
@@ -5775,6 +5766,10 @@ packages:
     dependencies:
       forwarded: 0.2.0
       ipaddr.js: 1.9.1
+
+  /proxy-from-env/1.1.0:
+    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
+    dev: false
 
   /pseudomap/1.0.2:
     resolution: {integrity: sha512-b/YwNhb8lk1Zz2+bXXpS/LK9OisiZZ1SNsSLxN1x2OXVEhW2Ckr/7mWE5vrC1ZTiJlD9g19jWszTmJsB+oEpFQ==}

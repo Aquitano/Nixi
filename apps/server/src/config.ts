@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+import { PrismaClient } from '@prisma/client';
 import Session from 'supertokens-node/recipe/session';
 import ThirdPartyEmailPassword from 'supertokens-node/recipe/thirdpartyemailpassword';
 
@@ -10,7 +12,7 @@ export const appInfo = {
   websiteBasePath: '/auth',
 };
 
-export const connectionUri = 'https://try.supertokens.com';
+export const connectionUri = 'http://localhost:3567';
 
 export const recipeList = [
   ThirdPartyEmailPassword.init({
@@ -35,6 +37,61 @@ export const recipeList = [
         },
       }),
     ],
+    override: {
+      apis: (originalImplementation) => {
+        return {
+          ...originalImplementation,
+
+          // override the email password sign up API
+          async emailPasswordSignUpPOST(input) {
+            if (originalImplementation.emailPasswordSignUpPOST === undefined) {
+              throw Error('Should never come here');
+            }
+
+            const response = await originalImplementation.emailPasswordSignUpPOST(input);
+
+            if (response.status === 'OK') {
+              const userId = response.user.id;
+
+              const prisma = new PrismaClient();
+
+              await prisma.profile.create({
+                data: {
+                  userId,
+                },
+              });
+            }
+
+            return response;
+          },
+
+          // override the thirdparty sign in / up API
+          async thirdPartySignInUpPOST(input) {
+            if (originalImplementation.thirdPartySignInUpPOST === undefined) {
+              throw Error('Should never come here');
+            }
+
+            const response = await originalImplementation.thirdPartySignInUpPOST(input);
+
+            if (response.status === 'OK') {
+              if (response.createdNewUser) {
+                const userId = response.user.id;
+
+                const prisma = new PrismaClient();
+
+                await prisma.profile.create({
+                  data: {
+                    userId,
+                  },
+                });
+              }
+            }
+
+            return response;
+          },
+        };
+      },
+    },
   }),
   Session.init(),
 ];

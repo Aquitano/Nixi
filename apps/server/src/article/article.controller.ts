@@ -22,49 +22,55 @@ export class ArticleController {
   constructor(private articleService: ArticleService) {}
 
   @Post()
-  createArticle(@GetUser('id') userId: string, @Body() dto: CreateArticleDto) {
-    return this.articleService.createArticle(userId, dto);
+  createArticle(@GetUser('id') profileId: number, @Body() dto: CreateArticleDto) {
+    return this.articleService.createArticle(profileId, dto);
   }
 
   @Get()
-  getArticles(@GetUser('id') userId: string) {
-    return this.articleService.getArticles(userId);
+  getArticles(@GetUser('id') profileId: number) {
+    return this.articleService.getArticles(profileId);
   }
 
   @Get(':id')
-  getArticleById(@GetUser('id') userId: string, @Param('id', ParseIntPipe) articleId: number) {
-    return this.articleService.getArticleById(userId, articleId);
+  getArticleById(@GetUser('id') profileId: number, @Param('id', ParseIntPipe) articleId: number) {
+    return this.articleService.getArticleById(profileId, articleId);
   }
 
   @Patch(':id')
   editArticleById(
-    @GetUser('id') userId: string,
+    @GetUser('id') profileId: number,
     @Param('id', ParseIntPipe) articleId: number,
     @Body() dto: EditArticleDto,
   ) {
-    return this.articleService.editArticleById(userId, articleId, dto);
+    return this.articleService.editArticleById(profileId, articleId, dto);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  deleteArticleById(@GetUser('id') userId: string, @Param('id', ParseIntPipe) articleId: number) {
-    return this.articleService.deleteArticleById(userId, articleId);
+  deleteArticleById(
+    @GetUser('id') profileId: number,
+    @Param('id', ParseIntPipe) articleId: number,
+  ) {
+    return this.articleService.deleteArticleById(profileId, articleId);
   }
 
   // Highlights
 
   @Get('highlights/:id')
-  getHighlights(@GetUser('id') userId: string, @Param('id', ParseIntPipe) highlightId: number) {
-    return this.articleService.getHighlights(userId, highlightId);
+  getHighlights(@GetUser('id') profileId: number, @Param('id', ParseIntPipe) highlightId: number) {
+    return this.articleService.getHighlights(profileId, highlightId);
   }
 
   @Post('highlights/:id')
-  addHighlight(@GetUser('id') userId: string, @Body() dto: AddHighlightDto) {
-    return this.articleService.addHighlight(userId, dto);
+  addHighlight(@GetUser('id') profileId: number, @Body() dto: AddHighlightDto) {
+    return this.articleService.addHighlight(profileId, dto);
   }
 
   @Delete('highlights/:id')
-  deleteHighlight(@GetUser('id') userId: string, @Param('id', ParseIntPipe) highlightId: number) {
-    return this.articleService.deleteHighlightById(userId, highlightId);
+  deleteHighlight(
+    @GetUser('id') profileId: number,
+    @Param('id', ParseIntPipe) highlightId: number,
+  ) {
+    return this.articleService.deleteHighlightById(profileId, highlightId);
   }
 }

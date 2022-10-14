@@ -4,7 +4,7 @@ import { Test } from '@nestjs/testing';
 import * as pactum from 'pactum';
 import { AppModule } from '../src/app.module';
 import { AddHighlightDto, CreateArticleDto, EditArticleDto } from '../src/article/dto';
-import { AuthDto } from '../src/auth/dto';
+// import { AuthDto } from '../src/auth/dto';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { EditUserDto } from '../src/user/dto';
 
@@ -34,7 +34,7 @@ describe('App e2e', () => {
   });
 
   describe('Auth', () => {
-    const dto: AuthDto = {
+    const dto = {
       email: 'test@test.me',
       password: 'dX87@V5w*XLcY6',
     };
@@ -105,7 +105,6 @@ describe('App e2e', () => {
       it('should edit user', () => {
         const dto: EditUserDto = {
           firstName: 'Vladimir',
-          email: 'new@test.me',
         };
         return pactum
           .spec()
@@ -115,8 +114,7 @@ describe('App e2e', () => {
           })
           .withBody(dto)
           .expectStatus(200)
-          .expectBodyContains(dto.firstName)
-          .expectBodyContains(dto.email);
+          .expectBodyContains(dto.firstName);
       });
     });
   });

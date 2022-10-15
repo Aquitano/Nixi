@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Vue.js",
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "incremental": true,
+    "module": "ESNext",
+    "outDir": "./dist",
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "strictNullChecks": false,
+    "target": "ES2022"
+  },
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
+    }
+  ],
+}

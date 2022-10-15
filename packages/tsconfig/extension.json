@@ -3,12 +3,12 @@
   "display": "Extension",
   "extends": "./base.json",
   "compilerOptions": {
-    "useDefineForClassFields": true,
+    "lib": ["DOM", "ESNext"],
     "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
     "noEmit": true,
     "noImplicitReturns": true,
     "strictNullChecks": false,
-    "types": ["chrome", "vite/client"]
+    "types": ["chrome", "vite/client"],
+    "useDefineForClassFields": true
   }
 }

@@ -18,5 +18,3 @@ export class SupertokensService {
   }
 }
 // TODO: Add supertokens to the project (change articles to use supertokens)
-// TODO: Add custom fields to supertokens (First Name, Last Name)
-// TODO: Use argon-2 for password hashing instead of bcrypt

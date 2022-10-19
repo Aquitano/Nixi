@@ -20,8 +20,8 @@ export class UserController {
   }
 
   @Patch('')
-  // TODO: Replace User by Profile
-  editUser(@GetUser('id') userId: number, @Body() dto: EditUserDto) {
-    return this.userService.editProfile(userId, dto);
+  // TODO: Replace User by Profile -> DONE
+  editUser(@GetUser('id') profileId: number, @Body() dto: EditUserDto) {
+    return this.userService.editProfile(profileId, dto);
   }
 }

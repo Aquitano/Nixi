@@ -25,6 +25,28 @@ export default {
           .then((data) => {
             console.log(data);
           });
+
+        const dto = {
+          title: `This 30-year-old makes $114,000 a month in passive income: \u20184 businesses you can start today for $99 or less'`,
+          link: 'https://www.cnbc.com/2022/08/23/i-make-119000-a-month-in-passive-income-here-are-businesses-you-can-start-for-99-dollars-or-less.html',
+          author: 'Charlie Chang',
+          top_image_url:
+            'https://image.cnbcfm.com/api/v1/image/107048403-1650379684091-Lifestyle-3.jpg?v=1652360136&w=1920&h=1080',
+          favorite: false,
+          word_count: 888,
+          content: `Hello World! XSS Test: <a href="javascript:alert('XSS')">Click Me</a>`,
+        };
+        fetch('http://localhost:8200/articles', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(dto),
+        }) // this is the backend route
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
       }
     },
     async onLogout() {

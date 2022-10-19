@@ -7,7 +7,7 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async editProfile(profileId: number, dto: EditUserDto) {
-    const user = await this.prisma.profile.update({
+    const profile = await this.prisma.profile.update({
       where: {
         id: profileId,
       },
@@ -16,6 +16,6 @@ export class UserService {
       },
     });
 
-    return user;
+    return profile;
   }
 }

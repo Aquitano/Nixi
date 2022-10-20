@@ -4,9 +4,11 @@ import { Test } from '@nestjs/testing';
 import * as pactum from 'pactum';
 import { AppModule } from '../src/app.module';
 import { AddHighlightDto, CreateArticleDto, EditArticleDto } from '../src/article/dto';
-import { AuthDto } from '../src/auth/dto';
+import { SupertokensExceptionFilter } from '../src/auth/auth.filter';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { EditUserDto } from '../src/user/dto';
+
+const authCookie: string[] = [];
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -16,14 +18,18 @@ describe('App e2e', () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
+
     app = moduleRef.createNestApplication();
     app.useGlobalPipes(
       new ValidationPipe({
         whitelist: true,
       }),
     );
+    app.useGlobalFilters(new SupertokensExceptionFilter());
+
     await app.init();
     await app.listen(3333);
+
     prisma = app.get(PrismaService);
     await prisma.cleanDb();
     pactum.request.setBaseUrl('http://localhost:3333');
@@ -34,8 +40,8 @@ describe('App e2e', () => {
   });
 
   describe('Auth', () => {
-    const dto: AuthDto = {
-      email: 'test@test.me',
+    const dto = {
+      email: 'test@test.mee',
       password: 'dX87@V5w*XLcY6',
     };
     describe('Signup', () => {
@@ -57,14 +63,24 @@ describe('App e2e', () => {
           .expectStatus(400));
       it('should throw if no body provided', () =>
         pactum.spec().post('/auth/signup').expectStatus(400));
-      it('should signup', () => pactum.spec().post('/auth/signup').withBody(dto).expectStatus(201));
+      it('should signup', () =>
+        pactum
+          .spec()
+          .post('/auth/signup')
+          .withBody({
+            formFields: [
+              { id: 'email', value: dto.email },
+              { id: 'password', value: dto.password },
+            ],
+          })
+          .expectStatus(200));
     });
 
     describe('Login', () => {
       it('should throw if email empty', () =>
         pactum
           .spec()
-          .post('/auth/login')
+          .post('/auth/signin')
           .withBody({
             password: dto.password,
           })
@@ -72,20 +88,30 @@ describe('App e2e', () => {
       it('should throw if password empty', () =>
         pactum
           .spec()
-          .post('/auth/login')
+          .post('/auth/signin')
           .withBody({
             email: dto.email,
           })
           .expectStatus(400));
       it('should throw if no body provided', () =>
-        pactum.spec().post('/auth/login').expectStatus(400));
-      it('should login', () =>
-        pactum
+        pactum.spec().post('/auth/signin').expectStatus(400));
+      it('should login', async () => {
+        const cookie: string[] = await pactum
           .spec()
-          .post('/auth/login')
-          .withBody(dto)
+          .post('/auth/signin')
+          .withBody({
+            formFields: [
+              { id: 'email', value: dto.email },
+              { id: 'password', value: dto.password },
+            ],
+          })
           .expectStatus(200)
-          .stores('userAt', 'access_token'));
+          .returns((ctx) => {
+            return ctx.res.headers['set-cookie'];
+          });
+
+        authCookie.push(...cookie);
+      });
     });
   });
 
@@ -95,9 +121,8 @@ describe('App e2e', () => {
         pactum
           .spec()
           .get('/users/me')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
+          .withCookies(authCookie[0])
+          .withCookies(authCookie[2])
           .expectStatus(200));
     });
 
@@ -105,18 +130,16 @@ describe('App e2e', () => {
       it('should edit user', () => {
         const dto: EditUserDto = {
           firstName: 'Vladimir',
-          email: 'new@test.me',
         };
         return pactum
           .spec()
           .patch('/users')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
+          .withCookies(authCookie[0])
+          .withCookies(authCookie[1])
+          .withCookies(authCookie[2])
           .withBody(dto)
           .expectStatus(200)
-          .expectBodyContains(dto.firstName)
-          .expectBodyContains(dto.email);
+          .expectBodyContains(dto.firstName);
       });
     });
   });
@@ -127,9 +150,8 @@ describe('App e2e', () => {
         pactum
           .spec()
           .get('/articles')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
+          .withCookies(authCookie[0])
+          .withCookies(authCookie[2])
           .expectStatus(200)
           .expectBody([]));
     });
@@ -149,9 +171,8 @@ describe('App e2e', () => {
         pactum
           .spec()
           .post('/articles')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
+          .withCookies(authCookie[0])
+          .withCookies(authCookie[2])
           .withBody(dto)
           .expectStatus(201)
           .stores('articleId', 'id')
@@ -163,9 +184,8 @@ describe('App e2e', () => {
         pactum
           .spec()
           .get('/articles')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
+          .withCookies(authCookie[0])
+          .withCookies(authCookie[2])
           .expectStatus(200)
           .expectJsonLength(1));
     });
@@ -176,9 +196,8 @@ describe('App e2e', () => {
           .spec()
           .get('/articles/{id}')
           .withPathParams('id', '$S{articleId}')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
+          .withCookies(authCookie[0])
+          .withCookies(authCookie[2])
           .expectStatus(200)
           .expectBodyContains('$S{articleId}'));
     });
@@ -195,9 +214,8 @@ describe('App e2e', () => {
           .spec()
           .patch('/articles/{id}')
           .withPathParams('id', '$S{articleId}')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
+          .withCookies(authCookie[0])
+          .withCookies(authCookie[2])
           .withBody(dto)
           .expectStatus(200)
           .expectBodyContains(dto.title)
@@ -219,9 +237,8 @@ describe('App e2e', () => {
           .spec()
           .post('/articles/highlights/{id}')
           .withPathParams('id', '$S{articleId}')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
+          .withCookies(authCookie[0])
+          .withCookies(authCookie[2])
           .withBody({ ...dto, articleId: '$S{articleId}' })
           .expectStatus(201)
           .stores('highlightId', 'id'));
@@ -233,9 +250,8 @@ describe('App e2e', () => {
           .spec()
           .get('/articles/highlights/{id}')
           .withPathParams('id', '$S{articleId}')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
+          .withCookies(authCookie[0])
+          .withCookies(authCookie[2])
           .expectStatus(200)
           .expectJsonLength(1));
     });
@@ -246,9 +262,8 @@ describe('App e2e', () => {
           .spec()
           .delete('/articles/highlights/{id}')
           .withPathParams('id', '$S{highlightId}')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
+          .withCookies(authCookie[0])
+          .withCookies(authCookie[2])
           .expectStatus(200));
     });
 
@@ -258,18 +273,16 @@ describe('App e2e', () => {
           .spec()
           .delete('/articles/{id}')
           .withPathParams('id', '$S{articleId}')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
+          .withCookies(authCookie[0])
+          .withCookies(authCookie[2])
           .expectStatus(204));
 
       it('should get empty article', () =>
         pactum
           .spec()
           .get('/articles')
-          .withHeaders({
-            Authorization: 'Bearer $S{userAt}',
-          })
+          .withCookies(authCookie[0])
+          .withCookies(authCookie[2])
           .expectStatus(200)
           .expectJsonLength(0));
     });

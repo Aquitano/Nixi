@@ -1,12 +1,35 @@
-import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { JwtStrategy } from './strategy';
+import { DynamicModule, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+
+import { AuthMiddleware } from './auth.middleware';
+import { AuthModuleConfig, ConfigInjectionToken } from './config.interface';
+import { SupertokensService } from './supertokens/supertokens.service';
 
 @Module({
-  imports: [JwtModule.register({})],
-  controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [SupertokensService],
+  exports: [],
+  controllers: [],
 })
-export class AuthModule {}
+export class AuthModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('*');
+  }
+
+  static forRoot({ connectionURI, apiKey, appInfo }: AuthModuleConfig): DynamicModule {
+    return {
+      providers: [
+        {
+          useValue: {
+            appInfo,
+            connectionURI,
+            apiKey,
+          },
+          provide: ConfigInjectionToken,
+        },
+        SupertokensService,
+      ],
+      exports: [],
+      imports: [],
+      module: AuthModule,
+    };
+  }
+}

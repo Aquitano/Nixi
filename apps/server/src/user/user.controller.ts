@@ -1,23 +1,25 @@
 import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { all_auth_recipe_users } from '@prisma/client';
 import { GetUser } from '../auth/decorator';
-import { JwtGuard } from '../auth/guard';
+import { AuthGuard } from '../auth/guard';
 import { EditUserDto } from './dto';
 import { UserService } from './user.service';
 
-@UseGuards(JwtGuard)
+@UseGuards(AuthGuard)
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
 
-  // eslint-disable-next-line class-methods-use-this
   @Get('me')
-  getMe(@GetUser() user: User /* @GetUser('email') _email: string */) {
+  async getMe(
+    @GetUser() user: all_auth_recipe_users,
+    /* @Session() session: SessionContainer @GetUser('email') _email: string */
+  ): Promise<object> {
     return user;
   }
 
   @Patch('')
-  editUser(@GetUser('id') userId: string, @Body() dto: EditUserDto) {
-    return this.userService.editUser(userId, dto);
+  editUser(@GetUser('id') profileId: string, @Body() dto: EditUserDto) {
+    return this.userService.editProfile(profileId, dto);
   }
 }

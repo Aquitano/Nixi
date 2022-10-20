@@ -10,7 +10,6 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  // eslint-disable-next-line class-methods-use-this
   @Get('me')
   async getMe(
     @GetUser() user: all_auth_recipe_users,
@@ -20,7 +19,6 @@ export class UserController {
   }
 
   @Patch('')
-  // TODO: Replace User by Profile -> DONE
   editUser(@GetUser('id') profileId: string, @Body() dto: EditUserDto) {
     return this.userService.editProfile(profileId, dto);
   }

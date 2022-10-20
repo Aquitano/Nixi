@@ -17,4 +17,3 @@ export class SupertokensService {
     });
   }
 }
-// TODO: Add supertokens to the project (change articles to use supertokens)

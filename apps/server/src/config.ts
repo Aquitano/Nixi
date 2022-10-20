@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { PrismaClient } from '@prisma/client';
 import Session from 'supertokens-node/recipe/session';
 import ThirdPartyEmailPassword from 'supertokens-node/recipe/thirdpartyemailpassword';

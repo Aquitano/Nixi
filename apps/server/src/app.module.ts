@@ -14,7 +14,6 @@ import { UserModule } from './user/user.module';
     PrismaModule,
     AuthModule.forRoot({
       connectionURI: SuperTokensConfig.connectionUri,
-      // apiKey: "IF YOU HAVE AN API KEY FOR THE CORE, ADD IT HERE",
       appInfo: SuperTokensConfig.appInfo,
     }),
   ],

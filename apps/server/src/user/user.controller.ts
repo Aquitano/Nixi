@@ -21,7 +21,7 @@ export class UserController {
 
   @Patch('')
   // TODO: Replace User by Profile -> DONE
-  editUser(@GetUser('id') profileId: number, @Body() dto: EditUserDto) {
+  editUser(@GetUser('id') profileId: string, @Body() dto: EditUserDto) {
     return this.userService.editProfile(profileId, dto);
   }
 }

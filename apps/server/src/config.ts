@@ -3,37 +3,38 @@ import { PrismaClient } from '@prisma/client';
 import Session from 'supertokens-node/recipe/session';
 import ThirdPartyEmailPassword from 'supertokens-node/recipe/thirdpartyemailpassword';
 
+const { env } = process;
+
+const prisma = new PrismaClient();
+
 export const appInfo = {
   // Learn more about this on https://supertokens.com/docs/thirdpartypasswordless/appinfo
   appName: 'Nixi',
-  apiDomain: 'http://localhost:8200',
-  websiteDomain: 'http://localhost:3000',
+  apiDomain: process.env.BACKEND_DOMAIN,
+  websiteDomain: process.env.FRONTEND_DOMAIN,
   apiBasePath: '/auth',
   websiteBasePath: '/auth',
 };
 
-export const connectionUri = 'http://localhost:3567';
+export const connectionUri = process.env.SUPERTOKENS_DOMAIN;
 
 export const recipeList = [
   ThirdPartyEmailPassword.init({
     providers: [
-      // We have provided you with development keys which you can use for testing.
-      // IMPORTANT: Please replace them with your own OAuth keys for production use.
       ThirdPartyEmailPassword.Google({
-        clientId: '1060725074195-kmeum4crr01uirfl2op9kd5acmi9jutn.apps.googleusercontent.com',
-        clientSecret: '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',
+        clientId: env.GOOGLE_CLIENT_ID,
+        clientSecret: env.GOOGLE_CLIENT_SECRET,
       }),
       ThirdPartyEmailPassword.Github({
-        clientSecret: 'e97051221f4b6426e8fe8d51486396703012f5bd',
-        clientId: '467101b197249757c71f',
+        clientId: env.GITHUB_CLIENT_ID,
+        clientSecret: env.GITHUB_CLIENT_SECRET,
       }),
       ThirdPartyEmailPassword.Apple({
-        clientId: '4398792-io.supertokens.example.service',
+        clientId: env.APPLE_CLIENT_ID,
         clientSecret: {
-          keyId: '7M48Y4RYDL',
-          privateKey:
-            '-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgu8gXs+XYkqXD6Ala9Sf/iJXzhbwcoG5dMh1OonpdJUmgCgYIKoZIzj0DAQehRANCAASfrvlFbFCYqn3I2zeknYXLwtH30JuOKestDbSfZYxZNMqhF/OzdZFTV0zc5u5s3eN+oCWbnvl0hM+9IW0UlkdA\n-----END PRIVATE KEY-----',
-          teamId: 'YWQCXGJRJL',
+          keyId: env.APPLE_KEY_ID,
+          privateKey: env.APPLE_PRIVATE_KEY,
+          teamId: env.APPLE_TEAM_ID,
         },
       }),
     ],
@@ -52,8 +53,6 @@ export const recipeList = [
 
             if (response.status === 'OK') {
               const userId = response.user.id;
-
-              const prisma = new PrismaClient();
 
               await prisma.profile.create({
                 data: {
@@ -76,8 +75,6 @@ export const recipeList = [
             if (response.status === 'OK') {
               if (response.createdNewUser) {
                 const userId = response.user.id;
-
-                const prisma = new PrismaClient();
 
                 await prisma.profile.create({
                   data: {

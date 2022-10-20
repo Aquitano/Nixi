@@ -355,4 +355,3 @@ ALTER TABLE "userid_mapping"
     ADD CONSTRAINT "userid_mapping_supertokens_user_id_fkey" FOREIGN KEY ("supertokens_user_id") REFERENCES "all_auth_recipe_users" ("user_id") ON DELETE CASCADE ON
     UPDATE
         NO ACTION;
-

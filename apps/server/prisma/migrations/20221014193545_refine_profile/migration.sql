@@ -55,3 +55,4 @@ ALTER TABLE "highlights"
     ADD CONSTRAINT "highlights_profileId_fkey" FOREIGN KEY ("profileId") REFERENCES "profiles" ("id") ON DELETE CASCADE ON
     UPDATE
         CASCADE;
+

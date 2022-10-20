@@ -9,9 +9,8 @@ datasource db {
 
 // Content
 model Profile {
-  id     Int                   @id @default(autoincrement())
+  userId String                @id @unique
   user   all_auth_recipe_users @relation(fields: [userId], references: [user_id], onDelete: Cascade)
-  userId String                @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -41,8 +40,8 @@ model Article {
 
   description String?
 
-  profileId Int
-  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [userId], onDelete: Cascade)
 
   tags       Tag[]
   highlights Highlight[]
@@ -59,8 +58,8 @@ model Tag {
 
   articles Article[]
 
-  profileId Int
-  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [userId], onDelete: Cascade)
 
   @@map("tags")
 }
@@ -77,8 +76,8 @@ model Highlight {
   articleId Int
   article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
 
-  profileId Int
-  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [userId], onDelete: Cascade)
 
   @@map("highlights")
 }

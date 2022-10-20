@@ -6,7 +6,7 @@ import { AddHighlightDto, CreateArticleDto, EditArticleDto } from './dto';
 export class ArticleService {
   constructor(private prisma: PrismaService) {}
 
-  async createArticle(profileId: number, dto: CreateArticleDto) {
+  async createArticle(profileId: string, dto: CreateArticleDto) {
     return this.prisma.article.create({
       data: {
         profileId,
@@ -15,7 +15,7 @@ export class ArticleService {
     });
   }
 
-  async getArticles(profileId: number) {
+  async getArticles(profileId: string) {
     return this.prisma.article.findMany({
       where: {
         profileId,
@@ -23,7 +23,7 @@ export class ArticleService {
     });
   }
 
-  async getArticleById(profileId: number, articleId: number) {
+  async getArticleById(profileId: string, articleId: number) {
     const output = await this.prisma.article.findFirst({
       where: {
         id: articleId,
@@ -33,7 +33,7 @@ export class ArticleService {
     return output;
   }
 
-  async editArticleById(profileId: number, articleId: number, dto: EditArticleDto) {
+  async editArticleById(profileId: string, articleId: number, dto: EditArticleDto) {
     // get the article by id
     const article = await this.prisma.article.findUnique({
       where: {
@@ -55,11 +55,11 @@ export class ArticleService {
     });
   }
 
-  async deleteArticleById(profileId: number, articleId: number) {
+  async deleteArticleById(profileId: string, articleId: number) {
     // get the article by id
     const article = await this.prisma.article.findUnique({
       where: {
-        id: profileId,
+        id: articleId,
       },
     });
 
@@ -76,7 +76,7 @@ export class ArticleService {
 
   // Highlights
 
-  async getHighlights(profileId: number, highlightId: number) {
+  async getHighlights(profileId: string, highlightId: number) {
     // get the article by id
     const article = await this.prisma.article.findUnique({
       where: {
@@ -95,7 +95,7 @@ export class ArticleService {
     });
   }
 
-  async addHighlight(profileId: number, dto: AddHighlightDto) {
+  async addHighlight(profileId: string, dto: AddHighlightDto) {
     // check if article exists
     const article = await this.prisma.article.findUnique({
       where: {
@@ -115,7 +115,7 @@ export class ArticleService {
     });
   }
 
-  async deleteHighlightById(profileId: number, highlightId: number) {
+  async deleteHighlightById(profileId: string, highlightId: number) {
     // get the highlight by id
     const highlight = await this.prisma.highlight.findUnique({
       where: {

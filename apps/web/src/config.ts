@@ -18,6 +18,7 @@ export const SuperTokensReactConfig = {
       signInAndUpFeature: {
         providers: [Github.init(), Google.init(), Apple.init()],
       },
+      // @ts-ignore
       emailVerificationFeature: {
         mode: 'REQUIRED',
       },

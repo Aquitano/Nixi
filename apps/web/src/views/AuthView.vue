@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 export default {
   mounted: () => {
     ReactDOM.render(
+      // @ts-ignore
       React.createElement(SuperTokensReactComponent),
       document.getElementById('authapp'),
     );

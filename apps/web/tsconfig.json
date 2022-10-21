@@ -1,21 +1,16 @@
 {
-  "extends": "tsconfig/web.json",
-  "include": [
-    "env.d.ts",
-    "src/**/*",
-    "src/**/*.vue",
-    "vite.config.*",
-    "vitest.config.*",
-    "cypress.config.*"
-  ],
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
   "compilerOptions": {
-    "module": "ESNext",
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "exclude": ["node_modules"]
+
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
+    }
+  ]
 }

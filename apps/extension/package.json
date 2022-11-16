@@ -10,7 +10,7 @@
     "format": "prettier --write \"{src,apps,libs,test}/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,vue,css,scss}\" --config ../../.prettierrc"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.201",
+    "@types/chrome": "^0.0.202",
     "@types/node": "^18.7.3",
     "autoprefixer": "^10.4.8",
     "chrome-types": "^0.1.131",

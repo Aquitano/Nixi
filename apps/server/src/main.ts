@@ -18,7 +18,10 @@ async function bootstrap() {
   app.useGlobalFilters(new SupertokensExceptionFilter());
 
   app.enableCors({
-    origin: [SuperTokensConfig.appInfo.websiteDomain],
+    origin: [
+      SuperTokensConfig.appInfo.websiteDomain,
+      'chrome-extension://jhdeegckihjocpfhplcialblcfaiahlp',
+    ],
     allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
     credentials: true,
   });

@@ -95,35 +95,8 @@ async function getData(jwt: string) {
   return {};
 }
 
-// Save JWT Token to local storage
-function saveToken(token: string) {
-  chrome.storage.local.set({ jwt: token }, () => {
-    console.log(`Value is set to ${token}`);
-  });
-}
-
 export function setupSaveButton(element: HTMLButtonElement, jwt: string) {
   element.addEventListener('click', () => {
     getData(jwt);
-  });
-}
-
-export function setupLoginButton(
-  element: HTMLButtonElement,
-  credentials: { email: string; password: string },
-) {
-  element.addEventListener('click', () => {
-    axios
-      .post('http://localhost:8200/auth/login', {
-        ...credentials,
-      })
-      .then((response) => {
-        saveToken(JSON.parse(response.request.response).access_token);
-        // Refresh page
-        window.location.reload();
-      })
-      .catch((error) => {
-        addMessage(error, 'text-red-400');
-      });
   });
 }

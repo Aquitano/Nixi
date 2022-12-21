@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { CreateArticleDto } from './dto';
+import { axiosInstance } from './utils';
 
 // Add message to popup
 function addMessage(message: string, colorClass: string) {
@@ -13,8 +13,8 @@ function addMessage(message: string, colorClass: string) {
 }
 
 // Send data to backend
-function sendArticle(data: CreateArticleDto, jwt: string) {
-  axios({
+async function sendArticle(data: CreateArticleDto, jwt: string) {
+  axiosInstance({
     method: 'post',
     url: 'http://localhost:8200/articles',
     data,
@@ -31,7 +31,7 @@ function sendArticle(data: CreateArticleDto, jwt: string) {
 }
 
 // Get article data from current page
-async function getData(jwt: string) {
+async function getData() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
   if (!tab.url?.includes('chrome://') && tab.id !== undefined) {
@@ -84,6 +84,8 @@ async function getData(jwt: string) {
 
       if (message.type === 'data') {
         const { data } = message;
+        // TODO
+        const jwt = localStorage.getItem('rt');
         sendArticle(data, jwt);
       }
     }
@@ -95,8 +97,8 @@ async function getData(jwt: string) {
   return {};
 }
 
-export function setupSaveButton(element: HTMLButtonElement, jwt: string) {
+export function setupSaveButton(element: HTMLButtonElement) {
   element.addEventListener('click', () => {
-    getData(jwt);
+    getData();
   });
 }

@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import helmet from 'helmet';
 import supertokens from 'supertokens-node';
 import { AppModule } from './app.module';
 import { SupertokensExceptionFilter } from './auth/auth.filter';
@@ -15,6 +16,8 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
+  app.use(helmet());
+
   app.useGlobalFilters(new SupertokensExceptionFilter());
 
   app.enableCors({
@@ -22,10 +25,13 @@ async function bootstrap() {
       SuperTokensConfig.appInfo.websiteDomain,
       'chrome-extension://jhdeegckihjocpfhplcialblcfaiahlp',
     ],
-    allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
+
+    allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders(), 'st-cookie'],
+    exposedHeaders: ['st-cookie'],
     credentials: true,
   });
 
   await app.listen(configService.get('APP_PORT'));
 }
+
 bootstrap();

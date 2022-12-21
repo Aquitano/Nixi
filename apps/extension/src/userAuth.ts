@@ -1,11 +1,6 @@
-import Session from 'supertokens-web-js/recipe/session';
-import {
-  doesEmailExist,
-  emailPasswordSignIn,
-  emailPasswordSignUp,
-} from 'supertokens-web-js/recipe/thirdpartyemailpassword';
-
 async function checkEmail(email: string) {
+  // Dynamic import of doesEmailExist from supertokens-web-js
+  const { doesEmailExist } = await import('supertokens-web-js/recipe/thirdpartyemailpassword');
   try {
     const response = await doesEmailExist({
       email,
@@ -25,7 +20,13 @@ async function checkEmail(email: string) {
 }
 
 export async function logout() {
+  const Session = await import('supertokens-web-js/recipe/session');
+
   await Session.signOut();
+
+  await localStorage.removeItem('st-cookie');
+  await localStorage.removeItem('supertokens');
+
   Session.doesSessionExist().then((userId) => {
     console.log(userId);
   });
@@ -33,6 +34,8 @@ export async function logout() {
 }
 
 export async function signUpClicked(email: string, password: string) {
+  const { emailPasswordSignUp } = await import('supertokens-web-js/recipe/thirdpartyemailpassword');
+
   await checkEmail(email);
 
   try {
@@ -78,6 +81,8 @@ export async function signUpClicked(email: string, password: string) {
 }
 
 export async function signInClicked(email: string, password: string) {
+  const { emailPasswordSignIn } = await import('supertokens-web-js/recipe/thirdpartyemailpassword');
+
   try {
     const response = await emailPasswordSignIn({
       formFields: [
@@ -99,6 +104,8 @@ export async function signInClicked(email: string, password: string) {
           window.alert(formField.error);
         }
       });
+    } else if (response.status === 'WRONG_CREDENTIALS_ERROR') {
+      window.alert('Email password combination is incorrect.');
     } else {
       // sign in successful. The session tokens are automatically handled by
       // the frontend SDK.

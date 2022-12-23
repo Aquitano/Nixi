@@ -117,6 +117,32 @@ export function addCustomInterceptorToAxios(input: { axiosInstance: AxiosInstanc
   );
 }
 
+export enum ColorClasses {
+  success = 'text-green-400',
+  error = 'text-red-400',
+}
+
+/**
+ * Add status message to popup
+ *
+ * @param {string} message - Message to display
+ * @param  {string} colorClass - Tailwind CSS color class
+ */
+export function addMessage(message: string, colorClass: string) {
+  const statusDiv = document.querySelector<HTMLDivElement>('.status');
+
+  // Check if status already exists
+  if (statusDiv?.firstChild) {
+    statusDiv.removeChild(statusDiv.firstChild);
+  }
+
+  // Create response message
+  const responseMessage = document.createElement('p');
+  responseMessage.classList.add(colorClass, 'mb-5', 'fade-in');
+  responseMessage.innerText = message;
+  statusDiv.appendChild(responseMessage);
+}
+
 export async function createAxiosInstance() {
   const { default: axios } = await import('axios');
   const Session = await import('supertokens-web-js/recipe/session');

@@ -58,8 +58,6 @@ Session.doesSessionExist().then(async (exists) => {
     const { setupSaveButton } = await import('./button');
     const { axiosInstance } = await import('./utils');
 
-    // window.alert(`Welcome ${await Session.getUserId()}`);
-
     button.innerText = 'Save Article';
     button.id = 'save-button';
 

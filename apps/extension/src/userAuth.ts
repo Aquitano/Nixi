@@ -1,3 +1,10 @@
+import { addMessage, ColorClasses } from './utils';
+
+/**
+ * Check if a user with the given email address already exists
+ *
+ * @param {string} email - Email address of user
+ */
 async function checkEmail(email: string) {
   // Dynamic import of doesEmailExist from supertokens-web-js
   const { doesEmailExist } = await import('supertokens-web-js/recipe/thirdpartyemailpassword');
@@ -7,32 +14,45 @@ async function checkEmail(email: string) {
     });
 
     if (response.doesExist) {
-      window.alert('Email already exists. Please sign in instead');
+      addMessage('Email already exists. Please sign in instead', ColorClasses.error);
     }
   } catch (err: any) {
     if (err.isSuperTokensGeneralError === true) {
-      // this may be a custom error message sent from the API by you.
-      window.alert(err.message);
+      // Custom error message sent from the API
+      addMessage(err.message, ColorClasses.error);
     } else {
-      window.alert('Oops! Something went wrong.');
+      addMessage('Oops! Something went wrong.', ColorClasses.error);
     }
   }
 }
 
+/**
+ * Logout user by removing the session token from local storage and invoking the SuperTokens session logout function
+ */
 export async function logout() {
   const Session = await import('supertokens-web-js/recipe/session');
 
   await Session.signOut();
 
-  await localStorage.removeItem('st-cookie');
-  await localStorage.removeItem('supertokens');
+  localStorage.removeItem('st-cookie');
+  localStorage.removeItem('supertokens');
 
   Session.doesSessionExist().then((userId) => {
-    console.log(userId);
+    if (userId) {
+      // User is still logged in
+      addMessage('Logout failed', ColorClasses.error);
+    }
   });
+
   window.location.href = '/index.html';
 }
 
+/**
+ * Sign up a new user
+ *
+ * @param {string} email - Email address of user
+ * @param {string} password - Password of user
+ */
 export async function signUpClicked(email: string, password: string) {
   const { emailPasswordSignUp } = await import('supertokens-web-js/recipe/thirdpartyemailpassword');
 
@@ -53,33 +73,37 @@ export async function signUpClicked(email: string, password: string) {
     });
 
     if (response.status === 'FIELD_ERROR') {
-      // one of the input formFields failed validaiton
+      // one of the input formFields failed validation
       response.formFields.forEach((formField) => {
         if (formField.id === 'email') {
-          // Email validation failed (for example incorrect email syntax),
-          // or the email is not unique.
-          window.alert(formField.error);
+          // Email validation failed, or the email is not unique.
+          addMessage(formField.error, ColorClasses.error);
         } else if (formField.id === 'password') {
           // Password validation failed.
           // Maybe it didn't match the password strength
-          window.alert(formField.error);
+          addMessage(formField.error, ColorClasses.error);
         }
       });
     } else {
-      // sign up successful. The session tokens are automatically handled by
-      // the frontend SDK.
+      // Sign up successful.
       window.location.href = '/index.html';
     }
   } catch (err: any) {
     if (err.isSuperTokensGeneralError === true) {
-      // this may be a custom error message sent from the API by you.
-      window.alert(err.message);
+      // Custom error message sent from the API
+      addMessage(err.message, ColorClasses.error);
     } else {
-      window.alert('Oops! Something went wrong.');
+      addMessage('Oops! Something went wrong.', ColorClasses.error);
     }
   }
 }
 
+/**
+ * Sign in a user
+ *
+ * @param {string} email - Email address of user
+ * @param {string} password - Password of user
+ */
 export async function signInClicked(email: string, password: string) {
   const { emailPasswordSignIn } = await import('supertokens-web-js/recipe/thirdpartyemailpassword');
 
@@ -100,23 +124,22 @@ export async function signInClicked(email: string, password: string) {
     if (response.status === 'FIELD_ERROR') {
       response.formFields.forEach((formField) => {
         if (formField.id === 'email') {
-          // Email validation failed (for example incorrect email syntax).
-          window.alert(formField.error);
+          // Email validation failed
+          addMessage(formField.error, ColorClasses.error);
         }
       });
     } else if (response.status === 'WRONG_CREDENTIALS_ERROR') {
-      window.alert('Email password combination is incorrect.');
+      addMessage('Email password combination is incorrect.', ColorClasses.error);
     } else {
-      // sign in successful. The session tokens are automatically handled by
-      // the frontend SDK.
+      // Sign in successful
       window.location.href = '/index.html';
     }
   } catch (err: any) {
     if (err.isSuperTokensGeneralError === true) {
-      // this may be a custom error message sent from the API by you.
-      window.alert(err.message);
+      // Custom error message sent from the API
+      addMessage(err.message, ColorClasses.error);
     } else {
-      window.alert('Oops! Something went wrong.');
+      addMessage('Oops! Something went wrong.', ColorClasses.error);
     }
   }
 }

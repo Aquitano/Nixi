@@ -1,23 +1,11 @@
 import { CreateArticleDto } from './dto';
-import { axiosInstance } from './utils';
+import { addMessage, axiosInstance, ColorClasses } from './utils';
 
-// Add message to popup
-function addMessage(message: string, colorClass: string) {
-  const statusDiv = document.querySelector<HTMLDivElement>('.status');
-
-  // Check if status already exists
-  if (statusDiv?.firstChild) {
-    statusDiv.removeChild(statusDiv.firstChild);
-  }
-
-  // Create response message
-  const responseMessage = document.createElement('p');
-  responseMessage.classList.add(colorClass, 'mb-5', 'fade-in');
-  responseMessage.innerText = message;
-  statusDiv.appendChild(responseMessage);
-}
-
-// Send data to backend
+/**
+ * Send article data to backend
+ *
+ * @param {CreateArticleDto} data - Full article data
+ */
 async function sendArticle(data: CreateArticleDto) {
   axiosInstance({
     method: 'post',
@@ -25,15 +13,18 @@ async function sendArticle(data: CreateArticleDto) {
     data,
   })
     .then((response) => {
-      addMessage(`${response.statusText} with id ${response.data.id}`, 'text-green-400');
+      addMessage(`${response.statusText} with id ${response.data.id}`, ColorClasses.success);
     })
     .catch((error) => {
-      addMessage(error, 'text-red-400');
+      addMessage(error, ColorClasses.error);
     });
 }
 
-// Get article data from current page
+/**
+ * Get article data from current page
+ */
 async function getData() {
+  // Get current tab
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
   if (!tab.url?.includes('chrome://') && tab.id !== undefined) {
@@ -48,20 +39,25 @@ async function getData() {
     // Try to get data from website
     try {
       chrome.tabs.sendMessage(tab.id, { task: 'getArticleData' }, (response) => {
-        // console.log({ response });
         if (response?.message === 'success') {
           const { data } = response;
 
           sendArticle(data);
         } else {
-          addMessage('Error getting data from website', 'text-red-400');
+          addMessage('Error getting data from website', ColorClasses.error);
         }
       });
     } catch (error) {
-      addMessage('Error getting data from website', 'text-red-400');
+      addMessage('Error getting data from website', ColorClasses.error);
     }
   }
 }
+
+/**
+ * Setup save button to get data from current page and send it to backend
+ *
+ * @param {HTMLButtonElement} element - Save button
+ */
 
 export function setupSaveButton(element: HTMLButtonElement) {
   element.addEventListener('click', () => {

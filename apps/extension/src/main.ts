@@ -53,6 +53,7 @@ logoutButton.addEventListener('click', async () => {
 
 // Is user logged in?
 Session.doesSessionExist().then(async (exists) => {
+  Session.attemptRefreshingSession();
   if (exists) {
     const { setupSaveButton } = await import('./button');
     const { axiosInstance } = await import('./utils');

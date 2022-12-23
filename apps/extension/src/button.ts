@@ -5,6 +5,11 @@ import { axiosInstance } from './utils';
 function addMessage(message: string, colorClass: string) {
   const statusDiv = document.querySelector<HTMLDivElement>('.status');
 
+  // Check if status already exists
+  if (statusDiv?.firstChild) {
+    statusDiv.removeChild(statusDiv.firstChild);
+  }
+
   // Create response message
   const responseMessage = document.createElement('p');
   responseMessage.classList.add(colorClass, 'mb-5', 'fade-in');
@@ -13,14 +18,11 @@ function addMessage(message: string, colorClass: string) {
 }
 
 // Send data to backend
-async function sendArticle(data: CreateArticleDto, jwt: string) {
+async function sendArticle(data: CreateArticleDto) {
   axiosInstance({
     method: 'post',
     url: 'http://localhost:8200/articles',
     data,
-    headers: {
-      Authorization: `Bearer ${jwt}`,
-    },
   })
     .then((response) => {
       addMessage(`${response.statusText} with id ${response.data.id}`, 'text-green-400');
@@ -40,61 +42,25 @@ async function getData() {
       target: {
         tabId: tab.id,
       },
-      func: () => {
-        function countWords(str) {
-          const arr = str.split(' ');
-
-          return arr.filter((word) => word !== '').length;
-        }
-
-        const title = document.querySelector('#__next > main > article > header > h1')?.textContent;
-
-        const author = document.querySelector(
-          '#__next > main > article > header > div.a1ryita6 > div.a5fas5x > span',
-        )?.textContent;
-
-        const link = document.querySelector<HTMLAnchorElement>(
-          '#reader\\.external-link\\.view-original',
-        )?.href;
-
-        const content = document.querySelector('#RIL_less > div')?.innerHTML;
-
-        let favorite = false;
-        if (document.querySelector('[aria-label="Favorite Article"]') === null) {
-          favorite = true;
-        }
-
-        const data: CreateArticleDto = {
-          title,
-          author,
-          content,
-          link,
-          favorite,
-          word_count: countWords(document.querySelector('#RIL_less > div')?.textContent),
-        };
-
-        // Send data to popup
-        chrome.runtime.sendMessage({ type: 'data', data });
-      },
+      files: ['contentScript.js'],
     });
 
-    // eslint-disable-next-line no-inner-declarations
-    function handleMessage(message) {
-      chrome.runtime.onMessage.removeListener(handleMessage);
+    // Try to get data from website
+    try {
+      chrome.tabs.sendMessage(tab.id, { task: 'getArticleData' }, (response) => {
+        // console.log({ response });
+        if (response?.message === 'success') {
+          const { data } = response;
 
-      if (message.type === 'data') {
-        const { data } = message;
-        // TODO
-        const jwt = localStorage.getItem('rt');
-        sendArticle(data, jwt);
-      }
+          sendArticle(data);
+        } else {
+          addMessage('Error getting data from website', 'text-red-400');
+        }
+      });
+    } catch (error) {
+      addMessage('Error getting data from website', 'text-red-400');
     }
-
-    // Run when data is received
-    chrome.runtime.onMessage.addListener(handleMessage);
   }
-
-  return {};
 }
 
 export function setupSaveButton(element: HTMLButtonElement) {

@@ -76,7 +76,6 @@ Session.doesSessionExist().then(async (exists) => {
     button.id = 'login-button';
 
     button.addEventListener('click', () => {
-      chrome.runtime.sendMessage({ type: 'login' });
       const credentials = {
         email: document.querySelector<HTMLInputElement>('#email')!.value,
         password: document.querySelector<HTMLInputElement>('#password')!.value,

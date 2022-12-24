@@ -58,7 +58,6 @@ async function getData() {
  *
  * @param {HTMLButtonElement} element - Save button
  */
-
 export function setupSaveButton(element: HTMLButtonElement) {
   element.addEventListener('click', () => {
     getData();

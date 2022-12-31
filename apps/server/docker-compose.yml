@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   db:
-    image: postgres:14.5
+    image: postgres:15.1
     ports:
       - ${DATABASE_PORT}:5432
     environment:
@@ -10,6 +10,12 @@ services:
       POSTGRES_DB: ${DATABASE_NAME}
     networks:
       - app_network
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'pg_isready -U supertokens_user']
+      interval: 120s
+      timeout: 5s
+      retries: 5
   supertokens:
     image: registry.supertokens.io/supertokens/supertokens-postgresql
     depends_on:
@@ -17,7 +23,7 @@ services:
     ports:
       - ${SUPERTOKENS_PORT}:3567
     environment:
-      POSTGRESQL_CONNECTION_URI: ${SUPERTOKENS_CONNECTION_URI}
+      POSTGRESQL_CONNECTION_URI: 'postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@db:5432/${DATABASE_NAME}'
       PASSWORD_HASHING_ALG: ${SUPERTOKENS_HASHING_ALGORITHM}
       ARGON2_ITERATIONS: ${ARGON2_ITERATIONS}
       ARGON2_MEMORY_KB: ${ARGON2_MEMORY_KB}
@@ -25,9 +31,16 @@ services:
       ARGON2_HASHING_POOL_SIZE: ${ARGON2_HASHING_POOL_SIZE}
     networks:
       - app_network
+    restart: unless-stopped
+    healthcheck:
+      test: >
+        bash -c 'exec 3<>/dev/tcp/127.0.0.1/3567 && echo -e "GET /hello HTTP/1.1\r\nhost: 127.0.0.1:3567\r\nConnection: close\r\n\r\n" >&3 && cat <&3 | grep "Hello"'
+      interval: 120s
+      timeout: 5s
+      retries: 5
 
   test-db:
-    image: postgres:14.5
+    image: postgres:15.1
     ports:
       - ${DATABASE_PORT}:5432
     environment:
@@ -35,7 +48,7 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
     networks:
-      - app_network
+      - test_network
   test-supertokens:
     image: registry.supertokens.io/supertokens/supertokens-postgresql
     depends_on:
@@ -43,15 +56,17 @@ services:
     ports:
       - ${SUPERTOKENS_PORT}:3567
     environment:
-      POSTGRESQL_CONNECTION_URI: ${SUPERTOKENS_CONNECTION_URI}
+      POSTGRESQL_CONNECTION_URI: 'postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@db:5432/${DATABASE_NAME}'
       PASSWORD_HASHING_ALG: ${SUPERTOKENS_HASHING_ALGORITHM}
       ARGON2_ITERATIONS: ${ARGON2_ITERATIONS}
       ARGON2_MEMORY_KB: ${ARGON2_MEMORY_KB}
       ARGON2_PARALLELISM: ${ARGON2_PARALLELISM}
       ARGON2_HASHING_POOL_SIZE: ${ARGON2_HASHING_POOL_SIZE}
     networks:
-      - app_network
+      - test_network
 
 networks:
   app_network:
+    driver: bridge
+  test_network:
     driver: bridge

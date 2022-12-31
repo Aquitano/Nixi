@@ -1,19 +1,33 @@
 import { CreateArticleDto } from './dto';
 import { addMessage, axiosInstance, ColorClasses } from './utils';
 
+export const saveButtonHTML = `
+<button id="save-button" type="button" class="rounded-2xl bg-emerald-500 hover:bg-green-500 transition ease-in-out duration-500">Save Article</button>
+` as const;
+
 /**
  * Send article data to backend
  *
  * @param {CreateArticleDto} data - Full article data
  */
 async function sendArticle(data: CreateArticleDto) {
-  axiosInstance({
+  const articleId = await axiosInstance({
     method: 'post',
     url: 'http://localhost:8200/articles',
     data,
   })
     .then((response) => {
       addMessage(`${response.statusText} with id ${response.data.id}`, ColorClasses.success);
+      return response.data.id;
+    })
+    .catch((error) => {
+      addMessage(error, ColorClasses.error);
+      return null;
+    });
+
+  await axiosInstance({ method: 'get', url: `http://localhost:8200/articles/tags/${articleId}` })
+    .then((response) => {
+      console.log(response.data);
     })
     .catch((error) => {
       addMessage(error, ColorClasses.error);

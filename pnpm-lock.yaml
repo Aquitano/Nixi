@@ -18,7 +18,7 @@ importers:
 
   apps/extension:
     specifiers:
-      '@types/chrome': ^0.0.204
+      '@types/chrome': ^0.0.205
       '@types/node': ^18.11.17
       autoprefixer: ^10.4.13
       axios: ^1.2.1
@@ -38,7 +38,7 @@ importers:
       set-cookie-parser: 2.5.1
       supertokens-web-js: 0.3.0
     devDependencies:
-      '@types/chrome': 0.0.204
+      '@types/chrome': 0.0.205
       '@types/node': 18.11.17
       autoprefixer: 10.4.13_postcss@8.4.20
       chrome-types: 0.1.155
@@ -1732,8 +1732,8 @@ packages:
       '@types/connect': 3.4.35
       '@types/node': 18.11.17
 
-  /@types/chrome/0.0.204:
-    resolution: {integrity: sha512-EvnHfxMHUWP5EAlRMK66uIEUiy36t72vg5RwmzQv9tdIl2ZmAp92NwvmEZJKpbRnIMTEc2BmSmtrFiEISUJ0Sw==}
+  /@types/chrome/0.0.205:
+    resolution: {integrity: sha512-8udQq15kFxFguFfzFXdGOFahWwM6CIOXx6z1xmR7ypFBaLtMnbHZEKIPJK493rAaBFeoy1mPhmJ7GZUQZDwDpA==}
     dependencies:
       '@types/filesystem': 0.0.32
       '@types/har-format': 1.2.8

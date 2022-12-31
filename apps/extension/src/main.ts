@@ -9,8 +9,6 @@ import {
   createAxiosInstance,
 } from './utils';
 
-const button = document.querySelector<HTMLButtonElement>('#main-button')!;
-
 addCustomInterceptorsToGlobalFetch();
 
 SuperTokens.init({
@@ -51,36 +49,65 @@ logoutButton.addEventListener('click', async () => {
   logout();
 });
 
+function signIn(e: SubmitEvent, signInClicked: (email: string, password: string) => Promise<void>) {
+  e.preventDefault();
+
+  const credentials = {
+    email: document.querySelector<HTMLInputElement>('#email')!.value,
+    password: document.querySelector<HTMLInputElement>('#password')!.value,
+  };
+  signInClicked(credentials.email, credentials.password);
+}
+
 // Is user logged in?
 Session.doesSessionExist().then(async (exists) => {
   Session.attemptRefreshingSession();
   if (exists) {
-    const { setupSaveButton } = await import('./button');
+    const { setupSaveButton, saveButtonHTML } = await import('./button');
     const { axiosInstance } = await import('./utils');
 
-    button.innerText = 'Save Article';
-    button.id = 'save-button';
+    document.querySelector<HTMLDivElement>('.card')!.innerHTML += saveButtonHTML;
 
-    const inputs = document.querySelectorAll('.wrap-input');
-    inputs.forEach((input) => {
-      input.remove();
-    });
+    const button = document.querySelector<HTMLButtonElement>('#save-button')!;
 
     console.log((await axiosInstance.get('http://localhost:8200/users/me')).data);
-
+    document.querySelector('#app > div > div.card > div.auth');
     setupSaveButton(button);
   } else {
-    const { signInClicked } = await import('./userAuth');
+    const { loginFormHTML, signInClicked, signUpClicked } = await import('./userAuth');
 
-    button.innerText = 'Login';
-    button.id = 'login-button';
+    const authContainer = document.querySelector<HTMLDivElement>('.auth')!;
 
-    button.addEventListener('click', () => {
-      const credentials = {
-        email: document.querySelector<HTMLInputElement>('#email')!.value,
-        password: document.querySelector<HTMLInputElement>('#password')!.value,
-      };
-      signInClicked(credentials.email, credentials.password);
+    authContainer.innerHTML = loginFormHTML;
+
+    const loginForm = document.querySelector<HTMLDivElement>('#loginForm')!;
+
+    const switchButton = document.querySelector<HTMLButtonElement>('#switchButton')!;
+
+    document
+      .querySelector<HTMLButtonElement>('#signUpButton')!
+      .addEventListener('click', async () => {
+        switchButton.querySelector('span')!.textContent = 'Already have an account?';
+        switchButton.querySelector('a')!.textContent = 'Sign Up';
+        loginForm.querySelector('button')!.textContent = 'Sign Up';
+
+        loginForm.removeEventListener('submit', (e) => {
+          signIn(e, signInClicked);
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          const credentials = {
+            email: document.querySelector<HTMLInputElement>('#email')!.value,
+            password: document.querySelector<HTMLInputElement>('#password')!.value,
+          };
+          signUpClicked(credentials.email, credentials.password);
+        });
+      });
+
+    loginForm.addEventListener('submit', async (e) => {
+      signIn(e, signInClicked);
     });
   }
 });

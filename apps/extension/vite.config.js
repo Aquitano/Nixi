@@ -6,12 +6,13 @@ export default defineConfig({
     rollupOptions: {
       input: {
         popup: fileURLToPath(new URL('./index.html', import.meta.url)),
-        contentScript: fileURLToPath(new URL('./src/contentScript.ts', import.meta.url)),
+        contentScript: fileURLToPath(new URL('./src/contentScript/index.ts', import.meta.url)),
       },
       output: {
         entryFileNames: '[name].js',
       },
     },
     minify: false,
+    target: 'es2022',
   },
 });

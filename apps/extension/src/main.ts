@@ -49,16 +49,6 @@ logoutButton.addEventListener('click', async () => {
   logout();
 });
 
-function signIn(e: SubmitEvent, signInClicked: (email: string, password: string) => Promise<void>) {
-  e.preventDefault();
-
-  const credentials = {
-    email: document.querySelector<HTMLInputElement>('#email')!.value,
-    password: document.querySelector<HTMLInputElement>('#password')!.value,
-  };
-  signInClicked(credentials.email, credentials.password);
-}
-
 // Is user logged in?
 Session.doesSessionExist().then(async (exists) => {
   Session.attemptRefreshingSession();
@@ -74,40 +64,8 @@ Session.doesSessionExist().then(async (exists) => {
     document.querySelector('#app > div > div.card > div.auth');
     setupSaveButton(button);
   } else {
-    const { loginFormHTML, signInClicked, signUpClicked } = await import('./userAuth');
+    const { initAuthForm } = await import('./userAuth');
 
-    const authContainer = document.querySelector<HTMLDivElement>('.auth')!;
-
-    authContainer.innerHTML = loginFormHTML;
-
-    const loginForm = document.querySelector<HTMLDivElement>('#loginForm')!;
-
-    const switchButton = document.querySelector<HTMLButtonElement>('#switchButton')!;
-
-    document
-      .querySelector<HTMLButtonElement>('#signUpButton')!
-      .addEventListener('click', async () => {
-        switchButton.querySelector('span')!.textContent = 'Already have an account?';
-        switchButton.querySelector('a')!.textContent = 'Sign Up';
-        loginForm.querySelector('button')!.textContent = 'Sign Up';
-
-        loginForm.removeEventListener('submit', (e) => {
-          signIn(e, signInClicked);
-        });
-
-        loginForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-
-          const credentials = {
-            email: document.querySelector<HTMLInputElement>('#email')!.value,
-            password: document.querySelector<HTMLInputElement>('#password')!.value,
-          };
-          signUpClicked(credentials.email, credentials.password);
-        });
-      });
-
-    loginForm.addEventListener('submit', async (e) => {
-      signIn(e, signInClicked);
-    });
+    await initAuthForm();
   }
 });

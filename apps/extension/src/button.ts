@@ -1,4 +1,5 @@
 import { CreateArticleDto } from './dto';
+import { addTagPrompt } from './tags';
 import { addMessage, axiosInstance, ColorClasses } from './utils';
 
 export const saveButtonHTML = `
@@ -18,6 +19,7 @@ async function sendArticle(data: CreateArticleDto) {
   })
     .then((response) => {
       addMessage(`${response.statusText} with id ${response.data.id}`, ColorClasses.success);
+      addTagPrompt(response.data.id);
       return response.data.id;
     })
     .catch((error) => {
@@ -73,6 +75,7 @@ async function getData() {
  * @param {HTMLButtonElement} element - Save button
  */
 export function setupSaveButton(element: HTMLButtonElement) {
+  addTagPrompt('test');
   element.addEventListener('click', () => {
     getData();
   });

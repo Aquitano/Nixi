@@ -2,7 +2,7 @@
 import { addMessage, ColorClasses } from './utils';
 
 const AuthState: { currentAuthState: 'login' | 'signup' } = {
-  currentAuthState: 'login',
+  currentAuthState: 'login', // The default state is login
 };
 
 /**
@@ -11,21 +11,21 @@ const AuthState: { currentAuthState: 'login' | 'signup' } = {
  * @param {string} email - Email address of user
  */
 async function checkEmail(email: string) {
-  // Dynamic import of doesEmailExist from supertokens-web-js
   const { doesEmailExist } = await import('supertokens-web-js/recipe/thirdpartyemailpassword');
-  try {
-    const response = await doesEmailExist({
-      email,
-    });
 
+  try {
+    // Call the doesEmailExist function to check if the email already exists
+    const response = await doesEmailExist({ email });
     if (response.doesExist) {
+      // If the email already exists, display an error message
       addMessage('Email already exists. Please sign in instead', ColorClasses.error);
     }
   } catch (err: any) {
     if (err.isSuperTokensGeneralError === true) {
-      // Custom error message sent from the API
+      // If the error is a SuperTokens error, display the error message from the API
       addMessage(err.message, ColorClasses.error);
     } else {
+      // If the error is not a SuperTokens error, display a generic error message
       addMessage('Oops! Something went wrong.', ColorClasses.error);
     }
   }
@@ -35,13 +35,15 @@ async function checkEmail(email: string) {
  * Logout user by removing the session token from local storage and invoking the SuperTokens session logout function
  */
 export async function logout() {
+  // Sign out the user
   const Session = await import('supertokens-web-js/recipe/session');
-
   await Session.signOut();
 
+  // Clear cookies and local storage
   localStorage.removeItem('st-cookie');
   localStorage.removeItem('supertokens');
 
+  // Check if the user is still logged in
   Session.doesSessionExist().then((userId) => {
     if (userId) {
       // User is still logged in
@@ -49,6 +51,7 @@ export async function logout() {
     }
   });
 
+  // Redirect the user to the homepage
   window.location.href = '/index.html';
 }
 
@@ -60,17 +63,14 @@ export async function logout() {
  */
 export async function signUpClicked(
   e: SubmitEvent,
-  credentials: { email?: string; password?: string } = {},
+  credentials?: { email?: string; password?: string },
 ) {
   e.preventDefault();
   const { emailPasswordSignUp } = await import('supertokens-web-js/recipe/thirdpartyemailpassword');
 
-  if (!credentials.email) {
-    credentials.email = (document.getElementById('email') as HTMLInputElement).value;
-  }
-  if (!credentials.password) {
-    credentials.password = (document.getElementById('password') as HTMLInputElement).value;
-  }
+  // Get the email and password from the HTML fields if not provided
+  credentials.email ||= (document.getElementById('email') as HTMLInputElement).value;
+  credentials.password ||= (document.getElementById('password') as HTMLInputElement).value;
 
   await checkEmail(credentials.email);
 
@@ -128,12 +128,9 @@ export async function signInClicked(
 
   const { emailPasswordSignIn } = await import('supertokens-web-js/recipe/thirdpartyemailpassword');
 
-  if (!credentials.email) {
-    credentials.email = (document.getElementById('email') as HTMLInputElement).value;
-  }
-  if (!credentials.password) {
-    credentials.password = (document.getElementById('password') as HTMLInputElement).value;
-  }
+  // Get the email and password from the HTML fields if not provided
+  credentials.email ||= (document.getElementById('email') as HTMLInputElement).value;
+  credentials.password ||= (document.getElementById('password') as HTMLInputElement).value;
 
   try {
     const response = await emailPasswordSignIn({
@@ -176,28 +173,37 @@ export async function signInClicked(
  * Switch between login and sign up forms
  *
  */
-export async function switchForms() {
+export async function switchForms(): Promise<void> {
   const authForm = document.querySelector<HTMLFormElement>('#auth-form')!;
   const switchContainer = document.querySelector<HTMLButtonElement>('#switch-auth-state')!;
 
-  if (AuthState.currentAuthState === 'login') {
-    AuthState.currentAuthState = 'signup';
+  switch (AuthState.currentAuthState) {
+    case 'login':
+      AuthState.currentAuthState = 'signup';
 
-    switchContainer.querySelector('span')!.textContent = 'Already have an account?';
-    switchContainer.querySelector('a')!.textContent = 'Sign Up';
-    authForm.querySelector('button')!.textContent = 'Sign Up';
+      // Update the UI
+      switchContainer.querySelector('span')!.textContent = 'Already have an account?';
+      switchContainer.querySelector('a')!.textContent = 'Sign Up';
+      authForm.querySelector('button')!.textContent = 'Sign Up';
 
-    authForm.removeEventListener('submit', signInClicked);
-    authForm.addEventListener('submit', signUpClicked);
-  } else {
-    AuthState.currentAuthState = 'login';
+      // Remove the sign in event listener and add the sign up event listener.
+      authForm.removeEventListener('submit', signInClicked);
+      authForm.addEventListener('submit', signUpClicked);
+      break;
+    case 'signup':
+      AuthState.currentAuthState = 'login';
 
-    switchContainer.querySelector('span')!.textContent = "Don't have an account?";
-    switchContainer.querySelector('a')!.textContent = 'Sign In';
-    authForm.querySelector('button')!.textContent = 'Sign In';
+      // Update the UI
+      switchContainer.querySelector('span')!.textContent = "Don't have an account?";
+      switchContainer.querySelector('a')!.textContent = 'Sign In';
+      authForm.querySelector('button')!.textContent = 'Sign In';
 
-    authForm.removeEventListener('submit', signUpClicked);
-    authForm.addEventListener('submit', signInClicked);
+      // Remove the sign in event listener and add the sign up event listener.
+      authForm.removeEventListener('submit', signUpClicked);
+      authForm.addEventListener('submit', signInClicked);
+      break;
+    default:
+      throw new Error('Invalid auth state');
   }
 }
 
@@ -208,13 +214,16 @@ export async function switchForms() {
 export async function initAuthForm() {
   const { loginFormHTML } = await import('./components');
 
+  // Add the login form to the DOM
   const authContainer = document.querySelector<HTMLDivElement>('.auth')!;
-
   authContainer.innerHTML = loginFormHTML;
 
+  // Add a listener to the login form to handle `submit` events
   const authForm = document.querySelector<HTMLFormElement>('#auth-form')!;
   authForm.addEventListener('submit', signInClicked);
 
+  // Add a listener to the "switch auth state" link to handle `click` events
   const switchContainer = document.querySelector<HTMLButtonElement>('#switch-auth-state')!;
-  switchContainer.querySelector('a')!.addEventListener('click', switchForms);
+  const switchLink = switchContainer.querySelector('a')!;
+  switchLink.addEventListener('click', switchForms);
 }

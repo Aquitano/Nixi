@@ -56,10 +56,13 @@ Session.doesSessionExist().then(async (exists) => {
     const { setupSaveButton, saveButtonHTML } = await import('./button');
     const { axiosInstance } = await import('./utils');
 
+    // Add the save button to the page
     document.querySelector<HTMLDivElement>('.card')!.innerHTML += saveButtonHTML;
 
+    // Get the save button from the page
     const button = document.querySelector<HTMLButtonElement>('#save-button')!;
 
+    // Make a request to the server to get the user's data
     console.log((await axiosInstance.get('http://localhost:8200/users/me')).data);
     document.querySelector('#app > div > div.card > div.auth');
     setupSaveButton(button);

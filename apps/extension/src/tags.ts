@@ -1,5 +1,14 @@
 const tagArray: string[] = [];
 
+function clearInput(input: HTMLInputElement) {
+  input.value = '';
+}
+
+function removeTag(tag: HTMLSpanElement) {
+  tagArray.splice(tagArray.indexOf(tag.id), 1);
+  tag.remove();
+}
+
 function createTag(e: KeyboardEvent, input: HTMLInputElement, tagPrompt: HTMLDivElement) {
   e.preventDefault();
 
@@ -23,7 +32,16 @@ function createTag(e: KeyboardEvent, input: HTMLInputElement, tagPrompt: HTMLDiv
     tag.innerText = tagInput;
     tag.id = tagInput;
 
-    tagPrompt.querySelector('#tag-input').insertBefore(tag, input);
+    // Give the tag a random color
+    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+
+    tag.style.backgroundColor = `#${randomColor}80`;
+
+    tagPrompt.querySelector('.tags').appendChild(tag);
+
+    tag.addEventListener('click', () => removeTag(tag));
+
+    clearInput(input);
   }
 
   console.log(e);

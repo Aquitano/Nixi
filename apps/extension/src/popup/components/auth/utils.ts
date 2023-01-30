@@ -15,8 +15,8 @@ export type AuthState = 'signIn' | 'signUp';
  * @enum {string} ColorClasses - Tailwind CSS color classes
  */
 export enum ColorClasses {
-  success = 'text-green-400',
-  error = 'text-red-400',
+  success = 'bg-green-400',
+  error = 'bg-red-400',
 }
 
 /**
@@ -185,7 +185,9 @@ const submit = async (form: FormData, authState: AuthState) => {
   const validation = FormDataSchema.safeParse(form);
   if (!validation.success) {
     // handle validation error
+    addMessage('Zod Validation Error!' , ColorClasses.error)
     return;
+
   }
   const { doesSessionExist } = await import('supertokens-web-js/recipe/session');
 

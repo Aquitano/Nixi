@@ -22,14 +22,16 @@ const App: Component = () => {
 
   return (
     <div>
-      <script>
-        {`
-          chrome.runtime.sendMessage({ status: 'popup', content: {} });
-        `}
-      </script>
       <Show when={isLoggedIn()} fallback={<Auth />}>
         <div class={styles.App}>
           <header class={styles.header}>
+
+            <Show when={showPopup().show}>
+              <p>showPopup</p>
+              {/* @ts-expect-error */}
+              <Popup content={showPopup().content} />
+            </Show>
+
             <img src={logo} class={styles.logo} alt="logo" />
             <p>
               Edit <code class="text-emerald-300">src/App.tsx</code> and save to reload.
@@ -48,11 +50,7 @@ const App: Component = () => {
           </header>
         </div>
       </Show>
-      <Show when={showPopup().show}>
-        <p>showPopup</p>
-        {/* @ts-expect-error */}
-        <Popup content={showPopup().content} />
-      </Show>
+
     </div>
   );
 };

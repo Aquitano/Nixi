@@ -1,4 +1,5 @@
 import { Component } from 'solid-js';
+import styles from './Popup.module.css';
 
 type PopupContent = {
   content: object;
@@ -12,14 +13,9 @@ const Popup: Component = (props: PopupContent) => {
     return null;
   }
 
-  const content: { message?: string; colorClass?: string } = props.content;
-
-  // Maybe no reactivity here
-  // NO destructuring
-
   return (
-    <div>
-      <p>{content.message}</p>
+    <div class={"fixed px-2 rounded-xl " + styles.fadeIn + " " + props.content.colorClass}>
+      <p class="text-center">{props.content.message}</p>
     </div>
   );
 };

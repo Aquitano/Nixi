@@ -1,14 +1,11 @@
 {
   "name": "extension-old",
+  "deprecated": true,
   "version": "0.0.0",
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "build:watch": "tsc && vite build --watch",
-    "lint": "eslint \"src/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,vue}\" --fix",
-    "format": "prettier --write \"{src,apps,libs,test}/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,vue,css,scss,html}\" --config ../../.prettierrc"
+    "build:watch": "tsc && vite build --watch"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.205",

@@ -3,14 +3,24 @@ import { AxiosInstance } from 'axios';
 // eslint-disable-next-line import/no-mutable-exports
 let axiosInstance: AxiosInstance;
 
+/**
+ * Check if the current domain is the API domain
+ *
+ * @param str - Domain name
+ * @returns - True if the domain is the API domain
+ */
 function isApiDomain(str: string) {
   return str.startsWith('http://localhost:8200');
 }
 
-// helper function to store cookie string correctly in localstorage
+/**
+ * Helper function to store cookie string correctly in localstorage
+ *
+ * @param respCookies - Cookie string received from backend
+ */
 async function setCookiesInLocalstorage(respCookies: string) {
-  // async import of import { parse as parseSetCookieString, splitCookiesString } from 'set-cookie-parser';
   const { parse: parseSetCookieString, splitCookiesString } = await import('set-cookie-parser');
+
   if (respCookies) {
     // Split and parse cookies received
     const respCookieMap = parseSetCookieString(splitCookiesString(respCookies), {
@@ -45,6 +55,9 @@ async function setCookiesInLocalstorage(respCookies: string) {
   }
 }
 
+/**
+ * Add custom interceptors to fetch
+ */
 export function addCustomInterceptorsToGlobalFetch() {
   const origFetch = window.fetch;
   window.fetch = async (input: any, init) => {
@@ -74,7 +87,17 @@ export function addCustomInterceptorsToGlobalFetch() {
   };
 }
 
-export function addCustomInterceptorToAxios(input: { axiosInstance: AxiosInstance; userContext }) {
+/**
+ * Add custom interceptors to axios
+ *
+ * @param {AxiosInstance} input.axiosInstance - Axios instance
+ * @param {any} input.userContext - User context
+ *
+ */
+export function addCustomInterceptorToAxios(input: {
+  axiosInstance: AxiosInstance;
+  userContext: any;
+}) {
   input.axiosInstance.interceptors.request.use(
     (config) => {
       // Check if the we need to add the cookies
@@ -117,7 +140,43 @@ export function addCustomInterceptorToAxios(input: { axiosInstance: AxiosInstanc
   );
 }
 
-export async function createAxiosInstance() {
+/**
+ * Enum for color classes used in status messages
+ *
+ * @enum {string} ColorClasses - Tailwind CSS color classes
+ */
+export enum ColorClasses {
+  success = 'text-green-400',
+  error = 'text-red-400',
+}
+
+/**
+ * Add status message to popup
+ *
+ * @param {string} message - Message to display
+ * @param  {string} colorClass - Tailwind CSS color class
+ */
+export function addMessage(message: string, colorClass: string) {
+  const statusDiv = document.querySelector<HTMLDivElement>('.status');
+
+  // Check if status already exists
+  if (statusDiv?.firstChild) {
+    statusDiv.removeChild(statusDiv.firstChild);
+  }
+
+  // Create response message
+  const responseMessage = document.createElement('p');
+  responseMessage.classList.add(colorClass, 'mb-1', 'fade-in');
+  responseMessage.innerText = message;
+  statusDiv.appendChild(responseMessage);
+}
+
+/**
+ * Create axios instance with interceptors to add auth headers
+ *
+ * @returns {Promise<AxiosInstance>} - Axios instance
+ */
+export async function createAxiosInstance(): Promise<AxiosInstance> {
   const { default: axios } = await import('axios');
   const Session = await import('supertokens-web-js/recipe/session');
 

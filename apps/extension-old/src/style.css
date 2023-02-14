@@ -32,7 +32,7 @@ body {
   display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 h1 {
@@ -94,38 +94,6 @@ button:focus-visible {
   border-radius: 10px;
   margin-bottom: 10px;
 }
-input {
-  outline: none;
-  border: none;
-}
-#email,
-#password {
-  color: #333333;
-  line-height: 1.2;
-  display: block;
-  width: 100%;
-  background: transparent;
-  border-radius: 10px;
-  height: 40px;
-  padding: 0 24px;
-}
-#email:focus,
-#password:focus {
-  border: 1px solid #fc00ff;
-  border-radius: 10px;
-}
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
 .center {
   display: block;
   margin-left: auto;
@@ -141,4 +109,76 @@ input {
   100% {
     opacity: 1;
   }
+}
+
+/* Tag Prompt */
+div#tag-input {
+  display: inline-flex;
+  position: relative;
+  width: 100%;
+  border-radius: 5px 0 0 5px;
+  font-size: 18px;
+  transition: border 0.25s ease-in-out;
+}
+
+div#tag-list {
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  background-color: green;
+}
+
+#tag-input-field {
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  min-width: 50%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 0;
+  border: none;
+  font-size: 14px;
+  letter-spacing: 1px;
+  margin: 0 10px;
+  text-align: center;
+
+  @apply rounded-2xl;
+}
+
+.tags {
+  @apply pb-4;
+}
+
+.tag {
+  display: inline-block;
+  align-self: center;
+  justify-self: center;
+  font-size: 18px;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  background-color: #efefef;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 0px 2px #444;
+  padding: 4px 4px 4px 10px;
+  margin-left: 10px;
+  transition: all 0.1s ease-in;
+
+  @apply mb-2;
+}
+
+.tag:after {
+  box-sizing: border-box;
+  content: '\0078';
+  margin: 0 5px;
+  transition: all 0.2s ease-in;
+  @apply text-gray-500;
+}
+
+.tag:hover {
+  cursor: pointer;
+  box-shadow: inset 0px 0px 0px 2px #ddd;
+}
+
+.tag:hover:after {
+  color: #ddd;
 }

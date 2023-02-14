@@ -73,4 +73,29 @@ export class ArticleController {
   ) {
     return this.articleService.deleteHighlightById(profileId, highlightId);
   }
+
+  // Tags
+
+  @Get('tags/:id')
+  getTags(@GetUser('id') profileId: string, @Param('id', ParseIntPipe) articleId: number) {
+    return this.articleService.getTagsUsedByArticle(profileId, articleId);
+  }
+
+  @Post('tags/:id')
+  addTag(
+    @GetUser('id') profileId: string,
+    @Param('id', ParseIntPipe) articleId: number,
+    @Body('tagId') tagId: number,
+  ) {
+    return this.articleService.removeTagFromArticle(profileId, articleId, tagId);
+  }
+
+  @Delete('tags/:id')
+  deleteTag(
+    @GetUser('id') profileId: string,
+    @Param('id', ParseIntPipe) articleId: number,
+    @Body('tagId') tagId: number,
+  ) {
+    return this.articleService.removeTagFromArticle(profileId, articleId, tagId);
+  }
 }

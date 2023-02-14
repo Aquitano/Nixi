@@ -9,8 +9,6 @@ import {
   createAxiosInstance,
 } from './utils';
 
-const button = document.querySelector<HTMLButtonElement>('#main-button')!;
-
 addCustomInterceptorsToGlobalFetch();
 
 SuperTokens.init({
@@ -53,36 +51,24 @@ logoutButton.addEventListener('click', async () => {
 
 // Is user logged in?
 Session.doesSessionExist().then(async (exists) => {
+  Session.attemptRefreshingSession();
   if (exists) {
-    const { setupSaveButton } = await import('./button');
+    const { setupSaveButton, saveButtonHTML } = await import('./button');
     const { axiosInstance } = await import('./utils');
 
-    // window.alert(`Welcome ${await Session.getUserId()}`);
+    // Add the save button to the page
+    document.querySelector<HTMLDivElement>('.card')!.innerHTML += saveButtonHTML;
 
-    button.innerText = 'Save Article';
-    button.id = 'save-button';
+    // Get the save button from the page
+    const button = document.querySelector<HTMLButtonElement>('#save-button')!;
 
-    const inputs = document.querySelectorAll('.wrap-input');
-    inputs.forEach((input) => {
-      input.remove();
-    });
-
+    // Make a request to the server to get the user's data
     console.log((await axiosInstance.get('http://localhost:8200/users/me')).data);
-
+    document.querySelector('#app > div > div.card > div.auth');
     setupSaveButton(button);
   } else {
-    const { signInClicked } = await import('./userAuth');
+    const { initAuthForm } = await import('./userAuth');
 
-    button.innerText = 'Login';
-    button.id = 'login-button';
-
-    button.addEventListener('click', () => {
-      chrome.runtime.sendMessage({ type: 'login' });
-      const credentials = {
-        email: document.querySelector<HTMLInputElement>('#email')!.value,
-        password: document.querySelector<HTMLInputElement>('#password')!.value,
-      };
-      signInClicked(credentials.email, credentials.password);
-    });
+    await initAuthForm();
   }
 });

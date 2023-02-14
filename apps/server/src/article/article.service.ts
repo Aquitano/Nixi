@@ -74,7 +74,7 @@ export class ArticleService {
     });
   }
 
-  // Highlights
+  /* Highlights */
 
   async getHighlights(profileId: string, highlightId: number) {
     // get the article by id
@@ -130,6 +130,108 @@ export class ArticleService {
     await this.prisma.highlight.delete({
       where: {
         id: highlightId,
+      },
+    });
+  }
+
+  /* Tags */
+
+  async getTagsUsedByArticle(profileId: string, articleId: number) {
+    // get the article by id
+    const article = await this.prisma.article.findUnique({
+      where: {
+        id: articleId,
+      },
+    });
+
+    // check if user owns the article
+    if (!article || article.profileId !== profileId)
+      throw new ForbiddenException('Access to resources denied');
+
+    // Get all tags used by the article
+    return this.prisma.tag.findMany({
+      where: {
+        articles: {
+          some: {
+            id: articleId,
+          },
+        },
+      },
+    });
+  }
+
+  async addTagToArticle(profileId: string, articleId: number, tagId: number) {
+    // get the article by id
+    const article = await this.prisma.article.findUnique({
+      where: {
+        id: articleId,
+      },
+    });
+
+    // check if user owns the article
+    if (!article || article.profileId !== profileId)
+      throw new ForbiddenException('Access to resources denied');
+
+    // get the tag by id
+    const tag = await this.prisma.tag.findUnique({
+      where: {
+        id: tagId,
+      },
+    });
+
+    // check if user owns the tag
+    if (!tag || tag.profileId !== profileId)
+      throw new ForbiddenException('Access to resources denied');
+
+    // add the tag to the article
+    return this.prisma.article.update({
+      where: {
+        id: articleId,
+      },
+      data: {
+        tags: {
+          connect: {
+            id: tagId,
+          },
+        },
+      },
+    });
+  }
+
+  async removeTagFromArticle(profileId: string, articleId: number, tagId: number) {
+    // get the article by id
+    const article = await this.prisma.article.findUnique({
+      where: {
+        id: articleId,
+      },
+    });
+
+    // check if user owns the article
+    if (!article || article.profileId !== profileId)
+      throw new ForbiddenException('Access to resources denied');
+
+    // get the tag by id
+    const tag = await this.prisma.tag.findUnique({
+      where: {
+        id: tagId,
+      },
+    });
+
+    // check if user owns the tag
+    if (!tag || tag.profileId !== profileId)
+      throw new ForbiddenException('Access to resources denied');
+
+    // add the tag to the article
+    return this.prisma.article.update({
+      where: {
+        id: articleId,
+      },
+      data: {
+        tags: {
+          disconnect: {
+            id: tagId,
+          },
+        },
       },
     });
   }

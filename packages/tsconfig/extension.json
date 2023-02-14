@@ -3,12 +3,17 @@
   "display": "Extension",
   "extends": "./base.json",
   "compilerOptions": {
-    "lib": ["DOM", "ESNext"],
+    "lib": ["DOM", "ESNext", "DOM.Iterable"],
     "module": "ESNext",
     "noEmit": true,
     "noImplicitReturns": true,
+    "moduleResolution": "NodeNext",
     "strictNullChecks": false,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
     "types": ["chrome", "vite/client"],
-    "useDefineForClassFields": true
+    "useDefineForClassFields": true,
+    "isolatedModules": true,
+    "strict": true
   }
 }

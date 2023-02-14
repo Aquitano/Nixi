@@ -2,19 +2,20 @@ import { Component } from 'solid-js';
 import styles from './Popup.module.css';
 
 type PopupContent = {
-  content: object;
+  colorClass: string;
+  message: string;
 };
 
 // @ts-expect-error
-const Popup: Component = (props: PopupContent) => {
+const Popup: Component = (props: { [key: string]: string; content: PopupContent }) => {
   console.log('props', props);
 
-  if (!props) {
-    return null;
+  if (!props.content) {
+    return <div />;
   }
 
   return (
-    <div class={"fixed px-2 rounded-xl " + styles.fadeIn + " " + props.content.colorClass}>
+    <div class={'fixed rounded-xl px-2 ' + styles.fadeIn + ' ' + props.content.colorClass}>
       <p class="text-center">{props.content.message}</p>
     </div>
   );

@@ -1,6 +1,12 @@
 import { createStore } from 'solid-js/store';
+import { lazily } from 'solidjs-lazily';
 import { z } from 'zod';
-import { setShowPopup } from '../../App.jsx';
+import { setIsLoggedIn, setShowPopup } from '../../App.jsx';
+
+const Session = lazily(() => import('supertokens-web-js/recipe/session'));
+const { emailPasswordSignUp, emailPasswordSignIn, doesEmailExist } = lazily(
+  () => import('supertokens-web-js/recipe/thirdpartyemailpassword'),
+);
 
 const FormDataSchema = z.object({
   email: z.string().email(),
@@ -35,8 +41,6 @@ function addMessage(message: any, colorClass: ColorClasses) {
  * @param {string} email - Email address of user
  */
 async function checkEmail(email: string) {
-  const { doesEmailExist } = await import('supertokens-web-js/recipe/thirdpartyemailpassword');
-
   try {
     // Call the doesEmailExist function to check if the email already exists
     const response = await doesEmailExist({ email });
@@ -60,7 +64,6 @@ async function checkEmail(email: string) {
  */
 export async function logout() {
   // Sign out the user
-  const Session = await import('supertokens-web-js/recipe/session');
   await Session.signOut();
 
   // Clear cookies and local storage
@@ -72,6 +75,8 @@ export async function logout() {
     if (userId) {
       // User is still logged in
       addMessage('Logout failed', ColorClasses.error);
+    } else {
+      setIsLoggedIn(false);
     }
   });
 
@@ -86,8 +91,6 @@ export async function logout() {
  * @param {String} password - Password of user
  */
 export async function signUpClicked(email: string, password: string) {
-  const { emailPasswordSignUp } = await import('supertokens-web-js/recipe/thirdpartyemailpassword');
-
   await checkEmail(email);
 
   try {
@@ -137,8 +140,6 @@ export async function signUpClicked(email: string, password: string) {
  * @param {String} password - Password of user
  */
 export async function signInClicked(email: string, password: string) {
-  const { emailPasswordSignIn } = await import('supertokens-web-js/recipe/thirdpartyemailpassword');
-
   try {
     const response = await emailPasswordSignIn({
       formFields: [
@@ -163,8 +164,10 @@ export async function signInClicked(email: string, password: string) {
     } else if (response.status === 'WRONG_CREDENTIALS_ERROR') {
       addMessage('Email password combination is incorrect.', ColorClasses.error);
     } else {
-      // Sign in successful
-      window.location.href = '/index.html';
+      setIsLoggedIn(true);
+      console.log('Login successful');
+
+      // window.location.href = '/index.html';
     }
   } catch (err: any) {
     if (err.isSuperTokensGeneralError === true) {
@@ -185,9 +188,8 @@ const submit = async (form: FormData, authState: AuthState) => {
   const validation = FormDataSchema.safeParse(form);
   if (!validation.success) {
     // handle validation error
-    addMessage('Zod Validation Error!' , ColorClasses.error)
+    addMessage('Zod Validation Error!', ColorClasses.error);
     return;
-
   }
   const { doesSessionExist } = await import('supertokens-web-js/recipe/session');
 

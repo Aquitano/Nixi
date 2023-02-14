@@ -12,8 +12,8 @@ const authText = {
 };
 
 const switchStateText = {
-  signIn: 'Sign Up',
-  signUp: 'Sign In',
+  signIn: 'Sign In',
+  signUp: 'Sign Up',
 };
 
 const Auth: Component = () => {

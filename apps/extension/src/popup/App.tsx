@@ -1,56 +1,38 @@
-import { Component, createSignal, lazy, onMount, Show } from 'solid-js';
+import { Component, createSignal, lazy, onMount, Show, Suspense } from 'solid-js';
 import { lazily } from 'solidjs-lazily';
 
-import logo from '../assets/logo.svg';
-import styles from './App.module.css';
-import Popup from './components/Popup.jsx';
-
+const Save = lazy(() => import('./components/Save.tsx'));
 const Auth = lazy(() => import('./components/auth/Auth.tsx'));
-const { logout } = lazily(() => import('./components/auth/utils.js'));
+const { doesSessionExist } = lazily(() => import('supertokens-web-js/recipe/session'));
 
-export const [showPopup, setShowPopup] = createSignal({ show: false, content: {} });
+export const [showPopup, setShowPopup] = createSignal({ show: false, content: {} } as {
+  show: boolean;
+  content: {};
+});
+export const [isLoggedIn, setIsLoggedIn] = createSignal<boolean>();
 
 const App: Component = () => {
-  const [isLoggedIn, setIsLoggedIn] = createSignal();
-
   // Check if user is logged in
   onMount(async () => {
-    const { doesSessionExist } = lazily(() => import('supertokens-web-js/recipe/session'));
-    const sessionExists = await doesSessionExist();
-    setIsLoggedIn(sessionExists);
+    console.log('Checking if user is logged in');
+    console.log(isLoggedIn());
+    // setIsLoggedIn(sessionExists);
   });
 
   return (
     <div>
-      <Show when={isLoggedIn()} fallback={<Auth />}>
-        <div class={styles.App}>
-          <header class={styles.header}>
-
-            <Show when={showPopup().show}>
-              <p>showPopup</p>
-              {/* @ts-expect-error */}
-              <Popup content={showPopup().content} />
-            </Show>
-
-            <img src={logo} class={styles.logo} alt="logo" />
-            <p>
-              Edit <code class="text-emerald-300">src/App.tsx</code> and save to reload.
-            </p>
-            <a
-              class={styles.link}
-              href="https://github.com/solidjs/solid"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Solid
-            </a>
-            <div>
-              <a onClick={logout}>Logout</a>
-            </div>
-          </header>
-        </div>
+      <Show
+        when={isLoggedIn()}
+        fallback={
+          <Suspense fallback={<p>Loading...</p>}>
+            <Auth />
+          </Suspense>
+        }
+      >
+        <Suspense fallback={<p>Loading...</p>}>
+          <Save />
+        </Suspense>
       </Show>
-
     </div>
   );
 };

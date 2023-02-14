@@ -10,7 +10,7 @@
     "serve": "vite preview"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.212",
+    "@types/chrome": "^0.0.213",
     "@types/node": "^18.11.17",
     "autoprefixer": "^10.4.13",
     "config": "workspace:config",

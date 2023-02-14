@@ -10,7 +10,8 @@
     "serve": "vite preview"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.205",
+    "@types/chrome": "^0.0.212",
+    "@types/node": "^18.11.17",
     "autoprefixer": "^10.4.13",
     "config": "workspace:config",
     "eslint": "^8.32.0",
@@ -26,7 +27,7 @@
     "set-cookie-parser": "^2.5.1",
     "solid-js": "^1.6.6",
     "solidjs-lazily": "^0.1.2",
-    "supertokens-web-js": "^0.3.0",
+    "supertokens-web-js": "^0.4.1",
     "zod": "^3.19.1"
   }
 }

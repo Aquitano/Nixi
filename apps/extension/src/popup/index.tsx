@@ -16,17 +16,7 @@ SuperTokens.init({
   },
   recipeList: [
     Session.init({
-      override: {
-        functions: (oI) => {
-          return {
-            ...oI,
-            async signOut(input) {
-              await oI.signOut(input);
-              localStorage.removeItem('st-cookie');
-            },
-          };
-        },
-      },
+      tokenTransferMethod: 'header',
     }),
     ThirdPartyEmailPassword.init(),
   ],

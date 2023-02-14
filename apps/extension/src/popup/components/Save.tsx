@@ -7,14 +7,11 @@ const { logout } = lazily(
 const Popup = lazy(() => import('./Popup.tsx'));
 
 import { lazily } from 'solidjs-lazily';
-import { doesSessionExist } from 'supertokens-web-js/recipe/session/index.js';
 import logo from '../../assets/logo.svg';
 import styles from './Save.module.css';
 
 const Save: Component = () => {
   onMount(async () => {
-    console.log('Checking if user is logged in - Save');
-    console.log(doesSessionExist());
     fetch('http://localhost:8200/users/me', {
       method: 'GET',
       headers: {

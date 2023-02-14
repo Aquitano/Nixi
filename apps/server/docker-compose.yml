@@ -13,7 +13,7 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ['CMD', 'pg_isready -U supertokens_user']
-      interval: 120s
+      interval: 30m
       timeout: 5s
       retries: 5
   supertokens:
@@ -35,7 +35,7 @@ services:
     healthcheck:
       test: >
         bash -c 'exec 3<>/dev/tcp/127.0.0.1/3567 && echo -e "GET /hello HTTP/1.1\r\nhost: 127.0.0.1:3567\r\nConnection: close\r\n\r\n" >&3 && cat <&3 | grep "Hello"'
-      interval: 120s
+      interval: 30m
       timeout: 5s
       retries: 5
 

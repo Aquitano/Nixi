@@ -1,12 +1,14 @@
 import { createStore } from 'solid-js/store';
 import { lazily } from 'solidjs-lazily';
+import {
+  doesEmailExist,
+  emailPasswordSignIn,
+  emailPasswordSignUp,
+} from 'supertokens-web-js/recipe/thirdpartyemailpassword';
 import { z } from 'zod';
 import { setIsLoggedIn, setShowPopup } from '../../App.jsx';
 
 const Session = lazily(() => import('supertokens-web-js/recipe/session'));
-const { emailPasswordSignUp, emailPasswordSignIn, doesEmailExist } = lazily(
-  () => import('supertokens-web-js/recipe/thirdpartyemailpassword'),
-);
 
 const FormDataSchema = z.object({
   email: z.string().email(),
@@ -71,17 +73,14 @@ export async function logout() {
   localStorage.removeItem('supertokens');
 
   // Check if the user is still logged in
-  Session.doesSessionExist().then((userId) => {
-    if (userId) {
-      // User is still logged in
-      addMessage('Logout failed', ColorClasses.error);
-    } else {
-      setIsLoggedIn(false);
-    }
-  });
+  if (await Session.doesSessionExist()) {
+    addMessage('Logout failed', ColorClasses.error);
+  } else {
+    setIsLoggedIn(false);
 
-  // Redirect the user to the homepage
-  window.location.href = '/index.html';
+    // Redirect the user to the homepage
+    window.location.href = '/index.html';
+  }
 }
 
 /**
@@ -119,6 +118,8 @@ export async function signUpClicked(email: string, password: string) {
           addMessage(formField.error, ColorClasses.error);
         }
       });
+    } else if (response.status === undefined) {
+      addMessage('Oops! Something went wrong.', ColorClasses.error);
     } else {
       // Sign up successful.
       window.location.href = '/index.html';
@@ -154,6 +155,8 @@ export async function signInClicked(email: string, password: string) {
       ],
     });
 
+    console.log('Status:' + response.status);
+
     if (response.status === 'FIELD_ERROR') {
       response.formFields.forEach((formField) => {
         if (formField.id === 'email') {
@@ -163,11 +166,12 @@ export async function signInClicked(email: string, password: string) {
       });
     } else if (response.status === 'WRONG_CREDENTIALS_ERROR') {
       addMessage('Email password combination is incorrect.', ColorClasses.error);
+    } else if (response.status === undefined) {
+      addMessage('Oops! Something went wrong.', ColorClasses.error);
     } else {
-      setIsLoggedIn(true);
       console.log('Login successful');
-
-      // window.location.href = '/index.html';
+      await Session.attemptRefreshingSession();
+      setIsLoggedIn(true);
     }
   } catch (err: any) {
     if (err.isSuperTokensGeneralError === true) {

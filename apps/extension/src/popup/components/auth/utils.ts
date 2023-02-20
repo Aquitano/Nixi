@@ -155,7 +155,7 @@ export async function signInClicked(email: string, password: string) {
       ],
     });
 
-    console.log('Status:' + response.status);
+    console.log(`Status:${response.status}`);
 
     if (response.status === 'FIELD_ERROR') {
       response.formFields.forEach((formField) => {

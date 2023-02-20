@@ -22,7 +22,7 @@ const Popup: Component = () => {
   return (
     <Show when={show()}>
       <div
-        class={'fixed rounded-xl px-2 ' + styles.fadeIn + ' ' + showPopup().content.colorClass}
+        class={`fixed rounded-xl px-2 ${styles.fadeIn} ${showPopup().content.colorClass}`}
         onClick={close}
       >
         <p class="text-center">{showPopup().content.message}</p>

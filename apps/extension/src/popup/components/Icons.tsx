@@ -1,6 +1,6 @@
 import { Component } from 'solid-js';
 
-export const GitHub: Component<{}> = () => {
+export const GitHub: Component = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17.556" viewBox="0 0 18 17.556">
       <path
@@ -13,7 +13,7 @@ export const GitHub: Component<{}> = () => {
   );
 };
 
-export const Google: Component<{}> = () => {
+export const Google: Component = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="18.001" height="18" viewBox="0 0 18.001 18">
       <g id="Group_9292" transform="translate(-534 -389)">

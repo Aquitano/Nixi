@@ -1,8 +1,6 @@
-import { Component, createSignal, For, lazy, Show } from 'solid-js';
-import { showPopup } from '../../App.jsx';
+import { Component, createSignal, For } from 'solid-js';
 import { GitHub, Google } from '../Icons.jsx';
 import { AuthState, useForm } from './utils.js';
-const Popup = lazy(() => import('../Popup.tsx'));
 
 const authText = {
   switchState: {
@@ -29,10 +27,6 @@ const Auth: Component = () => {
 
   return (
     <div class="rounded-xl bg-slate-800 px-8 py-6">
-      <Show when={showPopup().show}>
-        <Popup content={showPopup().content} />
-      </Show>
-
       {/* Header */}
       <div class="flex flex-col items-center justify-center">
         <h1 class="text-lg font-bold text-white">{switchStateText[authState()]}</h1>

@@ -1,23 +1,33 @@
-import { Component } from 'solid-js';
+import { Component, createEffect, createSignal, Show } from 'solid-js';
+import { showPopup } from '../App.jsx';
 import styles from './Popup.module.css';
 
-type PopupContent = {
-  colorClass: string;
-  message: string;
-};
+const Popup: Component = () => {
+  const [show, setShow] = createSignal(true);
 
-// @ts-expect-error
-const Popup: Component = (props: { [key: string]: string; content: PopupContent }) => {
-  console.log('props', props);
+  createEffect(() => {
+    if (showPopup().content) {
+      setShow(true);
+    }
+  });
 
-  if (!props.content) {
+  if (!showPopup().content) {
     return <div />;
   }
 
+  function close() {
+    setShow(false);
+  }
+
   return (
-    <div class={'fixed rounded-xl px-2 ' + styles.fadeIn + ' ' + props.content.colorClass}>
-      <p class="text-center">{props.content.message}</p>
-    </div>
+    <Show when={show()}>
+      <div
+        class={'fixed rounded-xl px-2 ' + styles.fadeIn + ' ' + showPopup().content.colorClass}
+        onClick={close}
+      >
+        <p class="text-center">{showPopup().content.message}</p>
+      </div>
+    </Show>
   );
 };
 

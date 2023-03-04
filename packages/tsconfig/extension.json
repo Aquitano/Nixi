@@ -7,7 +7,7 @@
     "module": "ESNext",
     "noEmit": true,
     "noImplicitReturns": true,
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "nodenext",
     "strictNullChecks": false,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",

@@ -7,11 +7,14 @@ const authText = {
     signIn: 'Not registered yet?',
     signUp: 'Already registered?',
   },
-};
-
-const switchStateText = {
-  signIn: 'Sign In',
-  signUp: 'Sign Up',
+  switchButton: {
+    signIn: 'Sign Up',
+    signUp: 'Sign In',
+  },
+  formButton: {
+    signIn: 'Sign In',
+    signUp: 'Sign Up',
+  },
 };
 
 const Auth: Component = () => {
@@ -29,14 +32,14 @@ const Auth: Component = () => {
     <div class="rounded-xl bg-slate-800 px-8 py-6">
       {/* Header */}
       <div class="flex flex-col items-center justify-center">
-        <h1 class="text-lg font-bold text-white">{switchStateText[authState()]}</h1>
+        <h1 class="text-lg font-bold text-white">{authText.formButton[authState()]}</h1>
         <p class="text-slate-200" id="switch-auth-state">
           <span>{authText.switchState[authState()]}</span>
           <a
             class="cursor-pointer pl-1 text-indigo-500 transition-all duration-300 hover:text-indigo-800"
             onClick={toggleAuthState}
           >
-            {switchStateText[authState()]}
+            {authText.switchButton[authState()]}
           </a>
         </p>
       </div>
@@ -82,7 +85,7 @@ const Auth: Component = () => {
             </div>
             <div class="flex flex-col">
               <button class="rounded-xl bg-indigo-500 py-2 px-4 text-white transition-all duration-300 hover:bg-indigo-600">
-                {switchStateText[authState()]}
+                {authText.formButton[authState()]}
               </button>
             </div>
           </div>

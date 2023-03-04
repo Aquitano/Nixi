@@ -23,7 +23,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       SuperTokensConfig.appInfo.websiteDomain,
-      'chrome-extension://jhdeegckihjocpfhplcialblcfaiahlp',
+      'chrome-extension://kkenfjmihclibmcapadmbdceojeoclok',
     ],
 
     allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders(), 'st-cookie'],

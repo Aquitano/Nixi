@@ -74,6 +74,21 @@ export async function logout() {
 
   // Check if the user is still logged in
   if (await Session.doesSessionExist()) {
+    const response = await fetch('http://localhost:8200/users/me', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json());
+
+    // console.log(response);
+
+    if (response.message === 'unauthorised') {
+      setIsLoggedIn(false);
+      window.location.href = '/index.html';
+      return;
+    }
+
     addMessage('Logout failed', ColorClasses.error);
   } else {
     setIsLoggedIn(false);

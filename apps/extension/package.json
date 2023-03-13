@@ -12,7 +12,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,css,scss}\" --config ../../.prettierrc"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.219",
+    "@types/chrome": "^0.0.222",
     "@types/node": "^18.14.6",
     "autoprefixer": "^10.4.13",
     "config": "workspace:config",

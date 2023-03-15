@@ -8,7 +8,7 @@
     "build:watch": "tsc && vite build --watch"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.219",
+    "@types/chrome": "^0.0.224",
     "@types/node": "^18.11.17",
     "autoprefixer": "^10.4.13",
     "config": "workspace:config",

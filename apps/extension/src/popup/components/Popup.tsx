@@ -1,26 +1,32 @@
-import { Component, createEffect, createSignal, Show } from 'solid-js';
+import { Component, createEffect, createSignal, onMount, Show } from 'solid-js';
 import { showPopup } from '../App.jsx';
 import styles from './Popup.module.css';
 
 const Popup: Component = () => {
-  const [show, setShow] = createSignal(true);
+  const [show, setShow] = createSignal<boolean>(true);
+
+  function close(delay = 0) {
+    setTimeout(() => {
+      setShow(false);
+      showPopup().content = null;
+    }, delay);
+  }
+
+  onMount(() => {
+    close(3000);
+  });
 
   createEffect(() => {
+    setShow(false); // reset animation
+
     if (showPopup().content) {
       setShow(true);
+      close(3000);
     }
   });
 
-  if (!showPopup().content) {
-    return <div />;
-  }
-
-  function close() {
-    setShow(false);
-  }
-
   return (
-    <Show when={show()}>
+    <Show when={show()} fallback={<div />}>
       <div
         class={`fixed rounded-xl px-2 ${styles.fadeIn} ${showPopup().content.colorClass}`}
         onClick={close}

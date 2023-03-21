@@ -38,6 +38,7 @@ const Auth: Component = () => {
           <a
             class="cursor-pointer pl-1 text-indigo-500 transition-all duration-300 hover:text-indigo-800"
             onClick={toggleAuthState}
+            onKeyUp={toggleAuthState}
           >
             {authText.switchButton[authState()]}
           </a>

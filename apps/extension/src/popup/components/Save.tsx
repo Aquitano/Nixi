@@ -39,7 +39,11 @@ const Save: Component = () => {
 
         <div class="absolute inset-x-0 bottom-0 text-sm">
           Built with Vite and TypeScript -{' '}
-          <a onClick={logout} class="font-medium text-fuchsia-500 hover:text-fuchsia-300">
+          <a
+            onClick={logout}
+            onKeyUp={logout}
+            class="font-medium text-fuchsia-500 hover:text-fuchsia-300"
+          >
             Logout
           </a>
         </div>

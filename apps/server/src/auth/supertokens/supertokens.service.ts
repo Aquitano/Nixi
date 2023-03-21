@@ -5,8 +5,7 @@ import { AuthModuleConfig, ConfigInjectionToken } from '../config.interface';
 
 @Injectable()
 export class SupertokensService {
-  // @ts-ignore
-  constructor(@Inject(ConfigInjectionToken) private config: AuthModuleConfig) {
+  constructor(@Inject(ConfigInjectionToken) config: AuthModuleConfig) {
     supertokens.init({
       appInfo: config.appInfo,
       supertokens: {

@@ -7,7 +7,6 @@ const { env } = process;
 const prisma = new PrismaClient();
 
 export const appInfo = {
-  // Learn more about this on https://supertokens.com/docs/thirdpartypasswordless/appinfo
   appName: 'Nixi',
   apiDomain: process.env.BACKEND_DOMAIN,
   websiteDomain: process.env.FRONTEND_DOMAIN,

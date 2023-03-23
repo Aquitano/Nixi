@@ -1,8 +1,13 @@
 /* eslint-disable no-console */
-import { CreateArticleDto } from '../assets/dto';
+import { CreateArticleDto } from '../assets/dto/create-article.dto';
 import { countWords, hashString } from './utils';
 
-async function getArticleData() {
+/**
+ * Get the article data from the current page
+ *
+ * @returns {Promise<CreateArticleDto | undefined>} The article data
+ */
+async function getArticleData(): Promise<CreateArticleDto | undefined> {
   let data: CreateArticleDto | undefined;
 
   // Get only the domain name
@@ -33,13 +38,18 @@ async function getArticleData() {
       link,
       favorite,
       word_count: countWords(content),
-    };
+    } satisfies CreateArticleDto;
   }
 
   return data;
 }
 
-function init() {
+/**
+ * Initialize the content script
+ *
+ * @returns {void}
+ */
+function init(): void {
   chrome.runtime.onMessage.addListener(async (request, _sender, sendResponse) => {
     if (request.task === 'getArticleData') {
       const data = await getArticleData();

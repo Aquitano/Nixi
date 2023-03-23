@@ -7,13 +7,14 @@
     "module": "ESNext",
     "noEmit": true,
     "noImplicitReturns": true,
-    "moduleResolution": "nodenext",
+    "moduleResolution": "bundler",
     "strictNullChecks": false,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "types": ["chrome", "vite/client"],
     "useDefineForClassFields": true,
     "isolatedModules": true,
+    "resolveJsonModule": false,
     "strict": true
   }
 }

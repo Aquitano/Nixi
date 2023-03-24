@@ -1,39 +1,46 @@
-import { Component, createEffect, createSignal, Show } from 'solid-js';
+import { Motion, Presence } from '@motionone/solid';
+import { Rerun } from '@solid-primitives/keyed';
+import { Component, Show, createEffect, createSignal } from 'solid-js';
 import { showPopup } from '../App.jsx';
-import styles from './Popup.module.css';
 
 const Popup: Component = () => {
   const [show, setShow] = createSignal(true);
-  const [fadeIn, setFadeIn] = createSignal(true);
 
   function close(delay = 0) {
     setTimeout(() => {
-      setFadeIn(false);
-      setTimeout(() => {
-        setShow(false);
-      }, 500);
+      setShow(false);
     }, delay);
   }
 
   createEffect(() => {
     if (showPopup().content) {
       setShow(true);
-      setFadeIn(true);
       close(3000);
     }
   });
 
   return (
-    <Show when={show()}>
-      <div
-        class={`fixed rounded-xl px-2 ${fadeIn() ? styles.fadeIn : styles.fadeOut} ${
-          showPopup()?.content?.colorClass
-        }`}
-        onClick={() => close()}
-      >
-        <p class="text-center">{showPopup()?.content?.message}</p>
-      </div>
-    </Show>
+    <Presence exitBeforeEnter>
+      <Show when={show()}>
+        <Rerun on={showPopup().content}>
+          <Motion
+            class={`fixed rounded-xl px-2`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div
+              class={`fixed rounded-xl px-2 ${showPopup()?.content?.colorClass}`}
+              onClick={() => close()}
+              onKeyDown={() => close()}
+            >
+              <p class="text-center">{showPopup()?.content?.message}</p>
+            </div>
+          </Motion>
+        </Rerun>
+      </Show>
+    </Presence>
   );
 };
 

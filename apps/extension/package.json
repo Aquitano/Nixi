@@ -4,31 +4,31 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "vite",
+    "start": "vite build --watch",
     "build": "vite build",
-    "build:watch": "vite build --watch",
     "serve": "vite preview",
     "lint": "eslint \"src/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\" --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,css,scss}\" --config ../../.prettierrc"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.226",
-    "@types/node": "^18.15.5",
+    "@types/node": "^18.15.11",
     "autoprefixer": "^10.4.14",
     "config": "workspace:config",
-    "eslint": "^8.36.0",
+    "eslint": "^8.37.0",
     "postcss": "^8.4.21",
-    "prettier-plugin-tailwindcss": "^0.2.5",
-    "tailwindcss": "^3.2.7",
+    "prettier-plugin-tailwindcss": "^0.2.6",
+    "tailwindcss": "^3.3.0",
     "tsconfig": "workspace:tsconfig",
+    "typescript": "^5.0.2",
     "vite": "^4.2.1",
-    "vite-plugin-solid": "^2.6.1",
-    "typescript": "^5.0.2"
+    "vite-plugin-solid": "^2.6.1"
   },
   "dependencies": {
     "@motionone/solid": "^10.16.0",
     "@solid-primitives/keyed": "^1.1.10",
-    "solid-js": "^1.6.15",
+    "@yaireo/tagify": "^4.17.7",
+    "solid-js": "^1.6.16",
     "solidjs-lazily": "^0.1.2",
     "supertokens-web-js": "^0.5.0",
     "zod": "^3.21.4"

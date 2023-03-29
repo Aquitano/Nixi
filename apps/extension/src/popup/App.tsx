@@ -1,9 +1,9 @@
 import { Component, createSignal, lazy, onMount, Show, Suspense } from 'solid-js';
 import Session from 'supertokens-web-js/recipe/session';
 
-const Save = lazy(() => import('./components/Save.tsx'));
-const Auth = lazy(() => import('./components/auth/Auth.tsx'));
-const Popup = lazy(() => import('./components/Popup.tsx'));
+const Save = lazy(() => import('./components/Save'));
+const Auth = lazy(() => import('./components/auth/Auth'));
+const Popup = lazy(() => import('./components/Popup'));
 
 type PopupContent = {
   colorClass: string;

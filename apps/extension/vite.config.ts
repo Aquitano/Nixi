@@ -12,7 +12,7 @@ export default defineConfig({
       input: {
         // Index should be placed in dist not in dist/src/popup
         popup: fileURLToPath(new URL('./index.html', import.meta.url)),
-        content: fileURLToPath(new URL('./src/content/index.ts', import.meta.url)),
+        contentScript: fileURLToPath(new URL('./src/content/index.ts', import.meta.url)),
       },
       output: {
         entryFileNames: '[name].js',

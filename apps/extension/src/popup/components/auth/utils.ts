@@ -6,7 +6,8 @@ import {
   emailPasswordSignUp,
 } from 'supertokens-web-js/recipe/thirdpartyemailpassword';
 import { z } from 'zod';
-import { setIsLoggedIn, setShowPopup } from '../../App.jsx';
+import { setIsLoggedIn } from '../../App.jsx';
+import { ColorClasses, addMessage } from '../../utils.js';
 
 const Session = lazily(() => import('supertokens-web-js/recipe/session'));
 
@@ -16,26 +17,6 @@ const FormDataSchema = z.object({
 });
 type FormData = z.infer<typeof FormDataSchema>;
 export type AuthState = 'signIn' | 'signUp';
-
-/**
- * Enum for color classes used in status messages
- *
- * @enum {string} ColorClasses - Tailwind CSS color classes
- */
-export enum ColorClasses {
-  success = 'bg-green-400',
-  error = 'bg-red-400',
-}
-
-/**
- * Show a status message in the popup
- *
- * @param message - Message to display
- * @param colorClass - Tailwind CSS color class
- */
-function addMessage(message: any, colorClass: ColorClasses) {
-  setShowPopup({ show: true, content: { message, colorClass } });
-}
 
 /**
  * Check if a user with the given email address already exists
@@ -89,7 +70,7 @@ export async function logout() {
       return;
     }
 
-    addMessage('Logout failed', ColorClasses.error);
+    addMessage('Logout failed - please reload page', ColorClasses.error);
   } else {
     setIsLoggedIn(false);
 

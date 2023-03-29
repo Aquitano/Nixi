@@ -1,5 +1,8 @@
 import { Component } from 'solid-js';
 
+/**
+ * GitHub icon
+ */
 export const GitHub: Component = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17.556" viewBox="0 0 18 17.556">
@@ -13,6 +16,9 @@ export const GitHub: Component = () => {
   );
 };
 
+/**
+ * Google icon
+ */
 export const Google: Component = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="18.001" height="18" viewBox="0 0 18.001 18">

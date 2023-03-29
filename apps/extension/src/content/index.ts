@@ -51,7 +51,8 @@ async function getArticleData(): Promise<CreateArticleDto | undefined> {
  */
 function init(): void {
   chrome.runtime.onMessage.addListener(async (request, _sender, sendResponse) => {
-    if (request.task === 'getArticleData') {
+    console.log(request);
+    if (request.action === 'getArticleData') {
       const data = await getArticleData();
       console.log(data);
 
@@ -59,8 +60,11 @@ function init(): void {
       if (data) {
         sendResponse({ message: 'success', data });
       } else {
+        console.log('Error: No data found');
         sendResponse({ message: 'error', data: null });
       }
+    } else {
+      sendResponse({ message: 'error', data: null });
     }
   });
 

@@ -1,7 +1,10 @@
 import { Component, createSignal, For } from 'solid-js';
-import { GitHub, Google } from '../Icons.jsx';
-import { AuthState, useForm } from './utils.js';
+import { GitHub, Google } from '../Icons';
+import { AuthState, useForm } from './utils';
 
+/**
+ * Text for the auth form - switch state, switch button, form button
+ */
 const authText = {
   switchState: {
     signIn: 'Not registered yet?',

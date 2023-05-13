@@ -9,6 +9,6 @@
     "web.json"
   ],
   "devDependencies": {
-    "@vue/tsconfig": "^0.3.2"
+    "@vue/tsconfig": "^0.4.0"
   }
 }

@@ -7,59 +7,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Content
 model Profile {
-  userId String                @id @unique
-  user   all_auth_recipe_users @relation(fields: [userId], references: [user_id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  userId    String                @id @unique
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
   firstName String?
   lastName  String?
-
   articles  Article[]
-  Tag       Tag[]
   Highlight Highlight[]
+  user      all_auth_recipe_users @relation(fields: [userId], references: [user_id], onDelete: Cascade)
+  Tag       Tag[]
 
   @@map("profiles")
 }
 
 model Article {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id            Int         @id @default(autoincrement())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   title         String
   link          String
-  content       String
   author        String
   top_image_url String?
   favorite      Boolean
   word_count    Int
-
-  description String?
-
-  profileId String
-  profile   Profile @relation(fields: [profileId], references: [userId], onDelete: Cascade)
-
-  tags       Tag[]
-  highlights Highlight[]
+  description   String?
+  content       String
+  profileId     String
+  profile       Profile     @relation(fields: [profileId], references: [userId], onDelete: Cascade)
+  highlights    Highlight[]
+  tags          Tag[]       @relation("ArticleToTag")
 
   @@map("articles")
 }
 
 model Tag {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  name String
-
-  articles Article[]
-
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  name      String
   profileId String
-  profile   Profile @relation(fields: [profileId], references: [userId], onDelete: Cascade)
+  profile   Profile   @relation(fields: [profileId], references: [userId], onDelete: Cascade)
+  articles  Article[] @relation("ArticleToTag")
 
   @@map("tags")
 }
@@ -68,29 +57,23 @@ model Highlight {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  content String
-  start   Int
-  end     Int
-
+  content   String
+  start     Int
+  end       Int
   articleId Int
-  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
-
   profileId String
-  profile   Profile @relation(fields: [profileId], references: [userId], onDelete: Cascade)
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  profile   Profile  @relation(fields: [profileId], references: [userId], onDelete: Cascade)
 
   @@map("highlights")
 }
-
-// Supertokens
 
 model all_auth_recipe_users {
   user_id        String          @id @db.Char(36)
   recipe_id      String          @db.VarChar(128)
   time_joined    BigInt
+  Profile        Profile?
   userid_mapping userid_mapping?
-
-  Profile Profile?
 
   @@index([time_joined(sort: Desc), user_id(sort: Desc)], map: "all_auth_recipe_users_pagination_index")
 }
@@ -201,6 +184,7 @@ model session_info {
   expires_at           BigInt
   created_at_time      BigInt
   jwt_user_payload     String?
+  use_static_key       Boolean
 }
 
 model thirdparty_users {
@@ -234,4 +218,57 @@ model userid_mapping {
   all_auth_recipe_users all_auth_recipe_users @relation(fields: [supertokens_user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([supertokens_user_id, external_user_id])
+}
+
+model dashboard_user_sessions {
+  session_id      String          @id @db.Char(36)
+  user_id         String          @db.Char(36)
+  time_created    BigInt
+  expiry          BigInt
+  dashboard_users dashboard_users @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+
+  @@index([expiry], map: "dashboard_user_sessions_expiry_index")
+}
+
+model dashboard_users {
+  user_id                 String                    @id @db.Char(36)
+  email                   String                    @unique @db.VarChar(256)
+  password_hash           String                    @db.VarChar(256)
+  time_joined             BigInt
+  dashboard_user_sessions dashboard_user_sessions[]
+}
+
+model totp_used_codes {
+  user_id         String     @db.VarChar(128)
+  code            String     @db.VarChar(8)
+  is_valid        Boolean
+  expiry_time_ms  BigInt
+  created_time_ms BigInt
+  totp_users      totp_users @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([user_id, created_time_ms])
+  @@index([expiry_time_ms], map: "totp_used_codes_expiry_time_ms_index")
+}
+
+model totp_user_devices {
+  user_id     String     @db.VarChar(128)
+  device_name String     @db.VarChar(256)
+  secret_key  String     @db.VarChar(256)
+  period      Int
+  skew        Int
+  verified    Boolean
+  totp_users  totp_users @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([user_id, device_name])
+}
+
+model totp_users {
+  user_id           String              @id @db.VarChar(128)
+  totp_used_codes   totp_used_codes[]
+  totp_user_devices totp_user_devices[]
+}
+
+model user_last_active {
+  user_id          String  @id @db.VarChar(128)
+  last_active_time BigInt?
 }

@@ -15,6 +15,7 @@ export const [showPopup, setShowPopup] = createSignal({ show: false, content: {}
   content: PopupContent;
 });
 export const [isLoggedIn, setIsLoggedIn] = createSignal<boolean>();
+export const [articleId, setArticleId] = createSignal<string>();
 
 const App: Component = () => {
   onMount(async () => {

@@ -8,10 +8,8 @@ export const GetUser = createParamDecorator(
 
     const userInfo = await ThirdPartyEmailPassword.getUserById(session.getUserId());
 
-    if (data) {
-      return userInfo[data];
-    }
-
-    return userInfo;
+    // if a specific data field is requested, return that field
+    // otherwise, return the entire user info object
+    return data ? userInfo[data] : userInfo;
   },
 );

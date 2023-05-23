@@ -16,6 +16,21 @@ export const appInfo = {
 
 export const connectionUri = process.env.SUPERTOKENS_DOMAIN;
 
+// function to create a profile for a new user
+async function createProfileForNewUser(response) {
+  if (response.status === 'OK') {
+    const { id: userId } = response.user;
+
+    await prisma.profile.create({
+      data: {
+        userId,
+      },
+    });
+  }
+
+  return response;
+}
+
 export const recipeList = [
   ThirdPartyEmailPassword.init({
     providers: [
@@ -49,17 +64,7 @@ export const recipeList = [
 
             const response = await originalImplementation.emailPasswordSignUpPOST(input);
 
-            if (response.status === 'OK') {
-              const userId = response.user.id;
-
-              await prisma.profile.create({
-                data: {
-                  userId,
-                },
-              });
-            }
-
-            return response;
+            return createProfileForNewUser(response);
           },
 
           // override the thirdparty sign in / up API
@@ -70,16 +75,8 @@ export const recipeList = [
 
             const response = await originalImplementation.thirdPartySignInUpPOST(input);
 
-            if (response.status === 'OK') {
-              if (response.createdNewUser) {
-                const userId = response.user.id;
-
-                await prisma.profile.create({
-                  data: {
-                    userId,
-                  },
-                });
-              }
+            if (response.status === 'OK' && response.createdNewUser) {
+              return createProfileForNewUser(response);
             }
 
             return response;

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { CreateArticleDto } from '../assets/dto/create-article.dto';
+import { CreateArticleDto } from '../assets/dto';
 import { countWords, hashString } from './utils';
 
 /**

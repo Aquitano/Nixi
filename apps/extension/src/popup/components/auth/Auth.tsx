@@ -51,7 +51,7 @@ const Auth: Component = () => {
       <div class="mx-auto mt-2 flex max-w-md items-center justify-center gap-4">
         <For each={['GitHub', 'Google']}>
           {(provider) => (
-            <button class="flex items-center justify-center rounded-xl bg-black py-2 px-4 transition-all duration-300 hover:bg-gray-800">
+            <button class="flex items-center justify-center rounded-xl bg-black px-4 py-2 transition-all duration-300 hover:bg-gray-800">
               <div class="providerButton">{provider === 'GitHub' ? <GitHub /> : <Google />}</div>
               <div class="mx-3 h-4 border-l border-gray-300"></div>
               <div class="text-white">{provider}</div>
@@ -88,7 +88,7 @@ const Auth: Component = () => {
               />
             </div>
             <div class="flex flex-col">
-              <button class="rounded-xl bg-indigo-500 py-2 px-4 text-white transition-all duration-300 hover:bg-indigo-600">
+              <button class="rounded-xl bg-indigo-500 px-4 py-2 text-white transition-all duration-300 hover:bg-indigo-600">
                 {authText.formButton[authState()]}
               </button>
             </div>

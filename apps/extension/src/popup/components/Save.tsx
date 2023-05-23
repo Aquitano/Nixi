@@ -6,6 +6,7 @@ import styles from './Save.module.css';
 
 import Tags from './Tags';
 
+import { setArticleId } from '../App';
 import { logout } from './auth/utils';
 
 /**
@@ -37,12 +38,16 @@ async function sendArticle(data: CreateArticleDto): Promise<void> {
   const result = await fetch('http://localhost:8200/articles', {
     method: 'POST',
     body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 
   const resultData = await result.json();
 
   if (result.ok) {
-    addMessage(`Article saved successfully - ${resultData.data.id} `, ColorClasses.success);
+    addMessage(`Article saved successfully - ${resultData.id} `, ColorClasses.success);
+    setArticleId(resultData.id);
   } else {
     addMessage(`Error saving article - ${resultData.message}`, ColorClasses.error);
   }

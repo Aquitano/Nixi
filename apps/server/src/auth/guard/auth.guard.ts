@@ -6,16 +6,16 @@ import { verifySession } from 'supertokens-node/recipe/session/framework/express
 @Injectable()
 export class AuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const ctx = context.switchToHttp();
+    const httpContext = context.switchToHttp();
+    const response = httpContext.getResponse();
 
+    // verify the session and handle any errors
     let err: any;
-    const resp = ctx.getResponse();
-    // You can create an optional version of this by passing {sessionRequired: false} to verifySession
-    await verifySession()(ctx.getRequest(), resp, (res) => {
+    await verifySession()(httpContext.getRequest(), response, (res) => {
       err = res;
     });
 
-    if (resp.headersSent) {
+    if (response.headersSent) {
       throw new STError({
         message: 'RESPONSE_SENT',
         type: 'RESPONSE_SENT',

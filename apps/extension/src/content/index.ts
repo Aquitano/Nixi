@@ -17,7 +17,7 @@ async function getArticleData(): Promise<CreateArticleDto | undefined> {
     const title = document.querySelector('#__next > main > article > header > h1')?.textContent;
 
     const author = document.querySelector(
-      '#__next > main > article > header > div.a1ryita6 > div.a5fas5x > span',
+      '#__next > main > article > header > div.css-17pf1cy > div.css-1ba1zfw > span',
     )?.textContent;
 
     const link = document.querySelector<HTMLAnchorElement>(

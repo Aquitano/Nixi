@@ -81,13 +81,24 @@ export class ArticleController {
     return this.articleService.getTagsUsedByArticle(profileId, articleId);
   }
 
+  // get tag by value
+  @Get('tags/name/:name')
+  getTag(@GetUser('id') profileId: string, @Param('name') name: string) {
+    return this.articleService.getTag(profileId, name);
+  }
+
+  @Post('tags')
+  createTag(@GetUser('id') profileId: string, @Body('name') name: string) {
+    return this.articleService.createTag(profileId, name);
+  }
+
   @Post('tags/:id')
   addTag(
     @GetUser('id') profileId: string,
     @Param('id', ParseIntPipe) articleId: number,
     @Body('tagId') tagId: number,
   ) {
-    return this.articleService.removeTagFromArticle(profileId, articleId, tagId);
+    return this.articleService.addTagToArticle(profileId, articleId, tagId);
   }
 
   @Delete('tags/:id')

@@ -160,6 +160,26 @@ export class ArticleService {
     });
   }
 
+  async getTag(profileId: string, tagName: string) {
+    return this.prisma.tag.findUnique({
+      where: {
+        name_profile: {
+          name: tagName,
+          profileId,
+        },
+      },
+    });
+  }
+
+  async createTag(profileId: string, name: string) {
+    return this.prisma.tag.create({
+      data: {
+        profileId,
+        name,
+      },
+    });
+  }
+
   async addTagToArticle(profileId: string, articleId: number, tagId: number) {
     // get the article by id
     const article = await this.prisma.article.findUnique({

@@ -50,6 +50,7 @@ model Tag {
   profile   Profile   @relation(fields: [profileId], references: [userId], onDelete: Cascade)
   articles  Article[] @relation("ArticleToTag")
 
+  @@unique(fields: [name, profileId], name: "name_profile")
   @@map("tags")
 }
 

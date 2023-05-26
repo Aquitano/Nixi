@@ -106,20 +106,9 @@ async function fetchPage(): Promise<void> {
 
 const Save: Component = () => {
   onMount(async () => {
-    fetch('http://localhost:8200/users/me', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
+    await articleAlreadyExists();
 
-    articleAlreadyExists();
-
-    injectContentScript();
+    await injectContentScript();
   });
 
   return (

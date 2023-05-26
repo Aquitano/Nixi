@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import DOMPurify from 'dompurify';
@@ -21,7 +21,7 @@ export class CreateArticleDto {
   })
   content: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString()
   @IsOptional()
   description?: string;
@@ -36,7 +36,7 @@ export class CreateArticleDto {
   @IsNotEmpty()
   author: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString()
   @IsOptional()
   top_image_url?: string;

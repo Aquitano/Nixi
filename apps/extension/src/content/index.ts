@@ -5,9 +5,9 @@ import { countWords, hashString } from './utils';
 /**
  * Get the article data from the current page
  *
- * @returns {Promise<CreateArticleDto | undefined>} The article data
+ * @returns {CreateArticleDto | undefined} The article data
  */
-async function getArticleData(): Promise<CreateArticleDto | undefined> {
+function getArticleData(): CreateArticleDto | undefined {
   let data: CreateArticleDto | undefined;
 
   // Get only the domain name

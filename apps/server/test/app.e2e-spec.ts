@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import * as pactum from 'pactum';
+import pactum from 'pactum';
 import { AppModule } from '../src/app.module';
 import { AddHighlightDto, CreateArticleDto, EditArticleDto } from '../src/article/dto';
 import { SupertokensExceptionFilter } from '../src/auth/auth.filter';
@@ -158,7 +158,8 @@ describe('App e2e', () => {
 
     describe('Create article', () => {
       const dto: CreateArticleDto = {
-        title: `This 30-year-old makes $114,000 a month in passive income: \u20184 businesses you can start today for $99 or less'`,
+        title:
+          "This 30-year-old makes $114,000 a month in passive income: \u20184 businesses you can start today for $99 or less'",
         link: 'https://www.cnbc.com/2022/08/23/i-make-119000-a-month-in-passive-income-here-are-businesses-you-can-start-for-99-dollars-or-less.html',
         author: 'Charlie Chang',
         top_image_url:
@@ -176,7 +177,7 @@ describe('App e2e', () => {
           .withBody(dto)
           .expectStatus(201)
           .stores('articleId', 'id')
-          .expectBodyContains(`Hello World! XSS Test: <a>Click Me</a>`)); // XSS protection test
+          .expectBodyContains('Hello World! XSS Test: <a>Click Me</a>')); // XSS protection test
     });
 
     describe('Get articles', () => {
@@ -220,7 +221,7 @@ describe('App e2e', () => {
           .expectStatus(200)
           .expectBodyContains(dto.title)
           .expectBodyContains(dto.description)
-          .expectBodyContains(`Hello World! XSS Test: <a>Click Me</a>`)); // XSS protection test
+          .expectBodyContains('Hello World! XSS Test: <a>Click Me</a>')); // XSS protection test
     });
 
     describe('Add highlight', () => {

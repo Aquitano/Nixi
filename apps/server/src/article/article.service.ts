@@ -6,7 +6,7 @@ import { AddHighlightDto, CreateArticleDto, EditArticleDto } from './dto';
 export class ArticleService {
   constructor(private prisma: PrismaService) {}
 
-  async createArticle(profileId: string, dto: CreateArticleDto) {
+  createArticle(profileId: string, dto: CreateArticleDto) {
     return this.prisma.article.create({
       data: {
         profileId,
@@ -15,7 +15,7 @@ export class ArticleService {
     });
   }
 
-  async getArticles(profileId: string) {
+  getArticles(profileId: string) {
     return this.prisma.article.findMany({
       where: {
         profileId,
@@ -180,7 +180,7 @@ export class ArticleService {
     });
   }
 
-  async getTag(profileId: string, tagName: string) {
+  getTag(profileId: string, tagName: string) {
     return this.prisma.tag.findUnique({
       where: {
         name_profile: {
@@ -191,7 +191,7 @@ export class ArticleService {
     });
   }
 
-  async createTag(profileId: string, name: string) {
+  createTag(profileId: string, name: string) {
     return this.prisma.tag.create({
       data: {
         profileId,

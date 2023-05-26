@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import supertokens from 'supertokens-node';
 import { AppModule } from './app.module';
 import { SupertokensExceptionFilter } from './auth/auth.filter';
-import * as SuperTokensConfig from './config';
+import SuperTokensConfig from './config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

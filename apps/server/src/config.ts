@@ -89,3 +89,10 @@ export const recipeList = [
     getTokenTransferMethod: () => 'header',
   }),
 ];
+
+// Export *
+export default {
+  appInfo,
+  connectionUri,
+  recipeList,
+};

@@ -11,10 +11,10 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get('me')
-  async getMe(
+  getMe(
     @GetUser() user: all_auth_recipe_users,
     /* @Session() session: SessionContainer @GetUser('email') _email: string */
-  ): Promise<object> {
+  ): all_auth_recipe_users {
     return user;
   }
 

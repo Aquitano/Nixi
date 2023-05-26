@@ -24,7 +24,7 @@ const Popup: Component = () => {
       <Show when={show()}>
         <Rerun on={showPopup().content}>
           <Motion
-            class={`fixed rounded-xl px-2`}
+            class={'fixed rounded-xl px-2'}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

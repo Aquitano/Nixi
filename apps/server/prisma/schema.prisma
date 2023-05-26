@@ -38,6 +38,7 @@ model Article {
   highlights    Highlight[]
   tags          Tag[]       @relation("ArticleToTag")
 
+  @@unique([link, profileId], name: "link_profile")
   @@map("articles")
 }
 

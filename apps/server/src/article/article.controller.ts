@@ -36,6 +36,11 @@ export class ArticleController {
     return this.articleService.getArticleById(profileId, articleId);
   }
 
+  @Get('url/:url')
+  getArticleByUrl(@GetUser('id') profileId: string, @Param('url') url: string) {
+    return this.articleService.getArticleByUrl(profileId, url);
+  }
+
   @Patch(':id')
   editArticleById(
     @GetUser('id') profileId: string,

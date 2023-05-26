@@ -6,8 +6,30 @@ import styles from './Save.module.css';
 
 import Tags from './Tags';
 
-import { setArticleId } from '../App';
+import { articleId, setArticleId } from '../App';
 import { logout } from './auth/utils';
+
+/**
+ * Checks if the article already exists in the database
+ *
+ * @param {string} url
+ * @returns {Promise<boolean>}
+ */
+async function articleAlreadyExists(url?: string): Promise<boolean> {
+  if (!url) {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    url = tab.url;
+  }
+
+  const result = await fetch(`http://localhost:8200/articles/url/${encodeURIComponent(url)}`);
+
+  if (result.status === 200) {
+    const data = await result.json();
+    setArticleId(data.id);
+  }
+
+  return result.ok;
+}
 
 /**
  * Injects content script into the current tab
@@ -35,6 +57,11 @@ async function injectContentScript(): Promise<void> {
  * @returns {Promise<void>}
  */
 async function sendArticle(data: CreateArticleDto): Promise<void> {
+  if (await articleAlreadyExists(data.link)) {
+    addMessage(`Article already exists - ${articleId()}`, ColorClasses.error);
+    return;
+  }
+
   const result = await fetch('http://localhost:8200/articles', {
     method: 'POST',
     body: JSON.stringify(data),
@@ -89,6 +116,8 @@ const Save: Component = () => {
       .then((data) => {
         console.log(data);
       });
+
+    articleAlreadyExists();
 
     injectContentScript();
   });

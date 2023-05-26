@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AddHighlightDto, CreateArticleDto, EditArticleDto } from './dto';
 
@@ -30,6 +30,26 @@ export class ArticleService {
         profileId,
       },
     });
+    return output;
+  }
+
+  async getArticleByUrl(profileId: string, url: string) {
+    const output = await this.prisma.article.findUnique({
+      where: {
+        link_profile: {
+          link: url,
+          profileId,
+        },
+      },
+    });
+
+    if (output === null) {
+      console.log('Article not found');
+      console.log(output);
+      console.log(url);
+      throw new NotFoundException('Article not found');
+    }
+
     return output;
   }
 

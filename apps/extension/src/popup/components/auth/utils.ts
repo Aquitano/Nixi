@@ -19,6 +19,23 @@ type FormData = z.infer<typeof FormDataSchema>;
 export type AuthState = 'signIn' | 'signUp';
 
 /**
+ * Type guard function to check if an error is a SuperTokens error.
+ *
+ * @param {unknown} err - The error to check.
+ * @returns {boolean} Returns true if the error is a SuperTokens error, false otherwise.
+ */
+function isSuperTokensError(
+  err: unknown,
+): err is { isSuperTokensGeneralError: true; message: string } {
+  return (
+    typeof err === 'object' &&
+    err !== null &&
+    'isSuperTokensGeneralError' in err &&
+    err.isSuperTokensGeneralError === true
+  );
+}
+
+/**
  * Check if a user with the given email address already exists
  *
  * @param {string} email - Email address of user
@@ -31,8 +48,8 @@ async function checkEmail(email: string) {
       // If the email already exists, display an error message
       addMessage('Email already exists. Please sign in instead', ColorClasses.error);
     }
-  } catch (err: any) {
-    if (err.isSuperTokensGeneralError === true) {
+  } catch (err: unknown) {
+    if (isSuperTokensError(err)) {
       // If the error is a SuperTokens error, display the error message from the API
       addMessage(err.message, ColorClasses.error);
     } else {
@@ -120,8 +137,8 @@ export async function signUpClicked(email: string, password: string) {
       // Sign up successful.
       window.location.href = '/index.html';
     }
-  } catch (err: any) {
-    if (err.isSuperTokensGeneralError === true) {
+  } catch (err: unknown) {
+    if (isSuperTokensError(err)) {
       // Custom error message sent from the API
       addMessage(err.message, ColorClasses.error);
     } else {
@@ -169,8 +186,8 @@ export async function signInClicked(email: string, password: string) {
       await Session.attemptRefreshingSession();
       setIsLoggedIn(true);
     }
-  } catch (err: any) {
-    if (err.isSuperTokensGeneralError === true) {
+  } catch (err: unknown) {
+    if (isSuperTokensError(err)) {
       // Custom error message sent from the API
       addMessage(err.message, ColorClasses.error);
     } else {

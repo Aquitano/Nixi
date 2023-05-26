@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import supertokens from 'supertokens-node';
 import { AppModule } from './app.module';
 import { SupertokensExceptionFilter } from './auth/auth.filter';
-import SuperTokensConfig from './config';
+import { appInfo } from './config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -22,10 +22,7 @@ async function bootstrap() {
   app.useGlobalFilters(new SupertokensExceptionFilter());
 
   app.enableCors({
-    origin: [
-      SuperTokensConfig.appInfo.websiteDomain,
-      'chrome-extension://kkenfjmihclibmcapadmbdceojeoclok',
-    ],
+    origin: [appInfo.websiteDomain, 'chrome-extension://kkenfjmihclibmcapadmbdceojeoclok'],
 
     allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders(), 'st-cookie'],
     exposedHeaders: ['st-cookie'],

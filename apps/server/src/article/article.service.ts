@@ -44,9 +44,6 @@ export class ArticleService {
     });
 
     if (output === null) {
-      console.log('Article not found');
-      console.log(output);
-      console.log(url);
       throw new NotFoundException('Article not found');
     }
 

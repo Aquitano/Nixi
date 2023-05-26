@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import supertokens from 'supertokens-node';
-import SuperTokensConfig from '../../config';
+import { recipeList } from '../../config';
 import { AuthModuleConfig, ConfigInjectionToken } from '../config.interface';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class SupertokensService {
         connectionURI: config.connectionURI,
         apiKey: config.apiKey,
       },
-      recipeList: SuperTokensConfig.recipeList,
+      recipeList,
     });
   }
 }

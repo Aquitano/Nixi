@@ -20,21 +20,41 @@ export interface Tag {
 
 const API_URL = 'http://localhost:8200/articles';
 
-async function fetchAPI(path: string, options = {}) {
+/**
+ * Fetches data from the API
+ *
+ * @param {string} path
+ * @param {object} [options={}]
+ * @returns {Promise<any>}
+ * @throws {Error}
+ */
+async function fetchAPI(path: string, options: object = {}): Promise<unknown> {
   const response = await fetch(`${API_URL}/${path}`, options);
   if (!response.ok) throw new Error(`API request failed: ${response.statusText}`);
   return response.json();
 }
 
-async function doesTagExist(tag: string) {
+/**
+ * Checks if the tag already exists in the database
+ *
+ * @param {string} tag
+ * @returns {Promise<Tag>}
+ */
+async function doesTagExist(tag: string): Promise<Tag> {
   try {
-    return await fetchAPI(`tags/name/${tag}`);
+    return (await fetchAPI(`tags/name/${tag}`)) as Tag;
   } catch {
     return null;
   }
 }
 
-async function addTags(tag: BeforeAddDetails) {
+/**
+ * Adds a tag to the database
+ *
+ * @param {BeforeAddDetails} tag
+ * @returns {Promise<void>}
+ */
+async function addTags(tag: BeforeAddDetails): Promise<void> {
   const dbTag = await doesTagExist(tag.data.value);
   let data: Tag;
 
@@ -61,14 +81,29 @@ async function addTags(tag: BeforeAddDetails) {
 const Tags: Component = () => {
   const [tagify, setTagify] = createSignal<Tagify>(null);
 
-  function beforeAdd(e) {
-    const details: BeforeAddDetails = e.detail;
+  /**
+   * Handles the beforeAdd event from Tagify
+   *
+   * @param {CustomEvent} e
+   * @returns {void}
+   */
+  function beforeAdd(e: { detail: BeforeAddDetails }): void {
+    const details = e.detail as BeforeAddDetails;
     console.log(details.data.value);
 
     // eslint-disable-next-line no-underscore-dangle
     if (details.data.__isValid) {
       addTags(details);
     }
+  }
+
+  /**
+   * Handles the click event on the add button
+   *
+   * @returns {void}
+   */
+  function onAddButtonClick(): void {
+    tagify().addEmptyTag();
   }
 
   onMount(() => {
@@ -88,10 +123,6 @@ const Tags: Component = () => {
 
     setTagify(tag);
   });
-
-  function onAddButtonClick() {
-    tagify().addEmptyTag();
-  }
 
   return (
     <div class="border-none">

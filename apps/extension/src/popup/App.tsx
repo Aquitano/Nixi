@@ -27,7 +27,7 @@ const App: Component = () => {
   return (
     <div>
       <Show when={showPopup().show}>
-        <Popup id="Error" />
+        <Popup />
       </Show>
       <Show
         when={isLoggedIn()}

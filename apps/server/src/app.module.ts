@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ArticleModule } from './article/article.module';
 import { AuthModule } from './auth/auth.module';
-import SuperTokensConfig from './config';
+import { appInfo, connectionUri } from './config';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 
@@ -13,8 +13,8 @@ import { UserModule } from './user/user.module';
     ArticleModule,
     PrismaModule,
     AuthModule.forRoot({
-      connectionURI: SuperTokensConfig.connectionUri,
-      appInfo: SuperTokensConfig.appInfo,
+      connectionURI: connectionUri,
+      appInfo,
     }),
   ],
 })

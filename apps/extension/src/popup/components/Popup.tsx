@@ -6,6 +6,11 @@ import { showPopup } from '../App.jsx';
 const Popup: Component = () => {
   const [show, setShow] = createSignal(true);
 
+  /**
+   * Close the popup after a delay
+   *
+   * @param delay The delay in milliseconds
+   */
   function close(delay = 0) {
     setTimeout(() => {
       setShow(false);

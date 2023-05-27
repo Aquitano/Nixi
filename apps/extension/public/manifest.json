@@ -2,9 +2,6 @@
   "name": "Nixi",
   "version": "0.1.0",
   "description": "Capture and save content from your browser to Nixi.",
-  "background": {
-    "service_worker": "background.js"
-  },
   "permissions": ["storage", "activeTab", "scripting"],
   "action": {
     "default_popup": "index.html"

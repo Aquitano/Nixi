@@ -1,11 +1,15 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { SessionContainer } from 'supertokens-node/recipe/session';
+import ThirdPartyEmailPassword from 'supertokens-node/recipe/thirdpartyemailpassword';
 
-export const GetUser = createParamDecorator((data: string | undefined, ctx: ExecutionContext) => {
-  const request = ctx.switchToHttp().getRequest();
+export const GetUser = createParamDecorator(
+  async (data: string | undefined, ctx: ExecutionContext) => {
+    const { session }: { session: SessionContainer } = ctx.switchToHttp().getRequest();
 
-  if (data) {
-    return request.user[data];
-  }
+    const userInfo = await ThirdPartyEmailPassword.getUserById(session.getUserId());
 
-  return request.user;
-});
+    // if a specific data field is requested, return that field
+    // otherwise, return the entire user info object
+    return data ? userInfo[data] : userInfo;
+  },
+);

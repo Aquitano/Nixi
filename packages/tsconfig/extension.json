@@ -3,11 +3,18 @@
   "display": "Extension",
   "extends": "./base.json",
   "compilerOptions": {
-    "useDefineForClassFields": true,
+    "lib": ["DOM", "ESNext", "DOM.Iterable"],
     "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
     "noEmit": true,
     "noImplicitReturns": true,
-    "types": ["chrome", "vite/client"]
+    "moduleResolution": "bundler",
+    "strictNullChecks": false,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "types": ["chrome", "vite/client"],
+    "useDefineForClassFields": true,
+    "isolatedModules": true,
+    "resolveJsonModule": false,
+    "strict": true
   }
 }

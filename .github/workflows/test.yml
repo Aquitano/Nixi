@@ -15,6 +15,7 @@ jobs:
           node-version: 16
           cache: 'pnpm'
       - run: pnpm install --no-frozen-lockfile
+      - run: cd apps/server && pnpm prisma generate && cd ../../
       - run: pnpm run lint
   production-build:
     runs-on: ubuntu-latest
@@ -28,4 +29,5 @@ jobs:
           node-version: 16
           cache: 'pnpm'
       - run: pnpm install --no-frozen-lockfile
+      - run: cd apps/server && pnpm prisma generate && cd ../../
       - run: pnpm run build

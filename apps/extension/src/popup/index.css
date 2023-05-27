@@ -1,0 +1,82 @@
+@import '@yaireo/tagify/dist/tagify.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #282c34;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* Tags */
+.customLook {
+  --tag-bg: #0052bf;
+  --tag-hover: #ce0078;
+  --tag-text-color: #fff;
+  --tag-text-color--edit: #fff;
+  --tags-border-color: silver;
+  --tag-border-radius: 25px;
+  --tag-remove-bg: var(--tag-hover);
+  --tag-pad: 0.6em 1.2em 0.6em 1em;
+  --tag-inset-shadow-size: 1.35em;
+  --tag-remove-btn-bg--hover: black;
+
+  display: inline-block;
+  min-width: 0;
+  border: none;
+}
+
+.tagify {
+  border: none;
+}
+
+.customLook .tagify__tag {
+  margin-top: 0;
+}
+
+.customLook .tagify__tag__removeBtn {
+  opacity: 0;
+  transform: translateX(-6px) scale(0.5);
+  margin-left: -3ch;
+  transition: 0.12s;
+}
+
+.customLook .tagify__tag:hover .tagify__tag__removeBtn {
+  transform: none;
+  opacity: 1;
+  margin-left: -1ch;
+}
+
+.customLook + button {
+  color: #0052bf;
+  font: bold 1.4em/1.65 Arial, sans-serif;
+  border: 0;
+  background: none;
+  box-shadow: 0 0 0 2px inset currentColor;
+  border-radius: 50%;
+  width: 1.65em;
+  height: 1.65em;
+  cursor: pointer;
+  outline: none;
+  transition: 0.1s ease-out;
+  margin: 0 0 0 5px;
+  vertical-align: top;
+  padding: 0;
+}
+
+.customLook + button:hover {
+  box-shadow: 0 0 0 5px inset currentColor;
+}
+
+.customLook .tagify__input {
+  display: none;
+}

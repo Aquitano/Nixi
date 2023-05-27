@@ -21,5 +21,8 @@ module.exports = {
   rules: {
     '@typescript-eslint/ban-ts-comment': 'warn',
     'import/prefer-default-export': 'off',
+    'no-console': 'off',
+    'no-param-reassign': 'off',
+    'import/extensions': 'off',
   },
 };

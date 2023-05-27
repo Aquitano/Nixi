@@ -16,11 +16,8 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-config-turbo": "^0.0.3",
-    "husky": "^8.0.1",
-    "prettier": "latest",
-    "turbo": "latest"
+    "husky": "^8.0.3",
+    "turbo": "^1.9.9"
   },
   "engines": {
     "npm": ">=7.0.0",

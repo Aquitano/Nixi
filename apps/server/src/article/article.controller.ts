@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { GetUser } from '../auth/decorator';
@@ -57,6 +58,15 @@ export class ArticleController {
     @Param('id', ParseIntPipe) articleId: number,
   ) {
     return this.articleService.deleteArticleById(profileId, articleId);
+  }
+
+  @Get('export')
+  exportArticle(
+    @GetUser('id') profileId: string,
+    @Query('format') format: string,
+    @Query('id') articleId: number,
+  ) {
+    return this.articleService.exportArticle(profileId, format, articleId);
   }
 
   // Highlights

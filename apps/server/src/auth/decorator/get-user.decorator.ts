@@ -10,6 +10,6 @@ export const GetUser = createParamDecorator(
 
     // if a specific data field is requested, return that field
     // otherwise, return the entire user info object
-    return data ? userInfo[data] : userInfo;
+    return data ? userInfo?.[data] : userInfo;
   },
 );

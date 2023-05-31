@@ -161,6 +161,32 @@ export class ArticleService {
     });
   }
 
+  async generateHTML(data: Article & { tags: Tag[]; highlights: Highlight[] }) {
+    return `<!DOCTYPE html>
+    <html>
+    <head>
+      <title>${data.title}</title>
+      <style>
+      :root{--color-canvas:hsl(27,14%,15%);--color-textPrimary:hsl(33,59%,88%);--color-textLinkHover:#00a69c;--font-main:'Iosevka Curly Medium'}*,:after,:before{box-sizing:border-box}body{background-color:var(--color-canvas);color:var(--color-textPrimary);font-family:var(--font-main),sans-serif}main{max-width:850px;margin:2.5rem auto;width:100%;line-height:1.5;font-size:22px}h1{font-size:40px;font-weight:900;text-align:center;line-height:1.2;padding-bottom:.625em;margin:0}p{margin:0 0 1em;text-align:justify}a{cursor:pointer;color:var(--color-textPrimary);-webkit-text-decoration:none;text-decoration:none;position:relative;text-shadow:-1px -1px 0 var(--color-canvas),1px -1px 0 var(--color-canvas),-1px 1px 0 var(--color-canvas),1px 1px 0 var(--color-canvas);background-image:linear-gradient(to top,transparent,transparent 1px,var(--color-textPrimary) 1px,var(--color-textPrimary) 2px,transparent 2px);transition:color .1s ease-out}a:hover{color:var(--color-textLinkHover);background-image:linear-gradient(to top,transparent,transparent 1px,var(--color-textLinkHover) 1px,var(--color-textLinkHover) 2px,transparent 2px)}a span{text-shadow:-1px -1px 0 #fbf099,1px -1px 0 #fbf099,-1px 1px 0 #fbf099,1px 1px 0 #fbf099!important;background-image:linear-gradient(0deg,transparent,transparent 1px,#333 0,#333 2px,transparent 0)}span{position:relative;background-color:#fbf099;color:#1a1a1a}img{display:block;object-fit:cover;border-radius:1px;pointer-events:auto;width:100%}.front-matter{line-height:1rem;border-radius:12px;border-style:solid;padding:10px;margin:1em 0;font-family:var(--font-main),sans-serif;white-space:pre-wrap;background:hsl(30,15%,13%);color:hsla(43,100%,42%,.747)}hr{margin-bottom:1em}
+      </style>
+    </head>
+    <body>
+      <main>
+        <pre class="front-matter">
+          <li>Author: ${data.author}</li>
+          <li>Created at: ${new Date(data.createdAt).toLocaleString()}</li>
+          <li>Updated at: ${new Date(data.updatedAt).toLocaleString()}</li>
+          <li>Word count: ${data.word_count}</li>
+          <li>Tags: ${data.tags.map((tag: Tag) => tag.name).join(', ')}</li>
+        </pre>
+        <h1>${data.title}</h1>
+        <hr />
+        <div>${data.content}</div>
+      </main>
+    </body>
+    </html>`;
+  }
+
   async exportArticle(profileId: string, format: string, articleId: number) {
     // get the article by id
     const article = await this.prisma.article.findUnique({
@@ -178,14 +204,10 @@ export class ArticleService {
       throw new ForbiddenException('Access to resources denied');
 
     if (format === 'json') {
-      return {
-        article,
-        highlights: article.highlights,
-        tags: article.tags,
-      };
+      return article;
     }
     if (format === 'html') {
-      // TODO: Implement HTML export
+      return this.generateHTML(article);
     } else if (format === 'markdown') {
       // TODO: Implement Markdown export
     } else {

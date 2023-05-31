@@ -22,9 +22,18 @@ import { AddHighlightDto, CreateArticleDto, EditArticleDto } from './dto';
 export class ArticleController {
   constructor(private articleService: ArticleService) {}
 
-  @Post()
-  createArticle(@GetUser('id') profileId: string, @Body() dto: CreateArticleDto) {
-    return this.articleService.createArticle(profileId, dto);
+  @Get('export')
+  exportArticle(
+    @GetUser('id') profileId: string,
+    @Query('format') format: string,
+    @Query('id', ParseIntPipe) articleId: number,
+  ) {
+    return this.articleService.exportArticle(profileId, format, articleId);
+  }
+
+  @Get('url/:url')
+  getArticleByUrl(@GetUser('id') profileId: string, @Param('url') url: string) {
+    return this.articleService.getArticleByUrl(profileId, url);
   }
 
   @Get()
@@ -37,9 +46,9 @@ export class ArticleController {
     return this.articleService.getArticleById(profileId, articleId);
   }
 
-  @Get('url/:url')
-  getArticleByUrl(@GetUser('id') profileId: string, @Param('url') url: string) {
-    return this.articleService.getArticleByUrl(profileId, url);
+  @Post()
+  createArticle(@GetUser('id') profileId: string, @Body() dto: CreateArticleDto) {
+    return this.articleService.createArticle(profileId, dto);
   }
 
   @Patch(':id')
@@ -58,15 +67,6 @@ export class ArticleController {
     @Param('id', ParseIntPipe) articleId: number,
   ) {
     return this.articleService.deleteArticleById(profileId, articleId);
-  }
-
-  @Get('export')
-  exportArticle(
-    @GetUser('id') profileId: string,
-    @Query('format') format: string,
-    @Query('id') articleId: number,
-  ) {
-    return this.articleService.exportArticle(profileId, format, articleId);
   }
 
   // Highlights

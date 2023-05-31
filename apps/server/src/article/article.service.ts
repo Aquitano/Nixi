@@ -9,6 +9,8 @@ enum ErrorMessages {
   ARTICLE_NOT_FOUND = 'Article not found',
 }
 
+type ArticleData = Article & { tags: Tag[]; highlights: Highlight[] };
+
 @Injectable()
 export class ArticleService {
   constructor(private prisma: PrismaService) {}
@@ -161,7 +163,13 @@ export class ArticleService {
     });
   }
 
-  async generateHTML(data: Article & { tags: Tag[]; highlights: Highlight[] }) {
+  /**
+   * Generates an HTML file for an article.
+   *
+   * @param {ArticleData} data - The article data.
+   * @returns {Promise<string>} A promise that resolves to the generated HTML.
+   */
+  async generateHTML(data: ArticleData): Promise<string> {
     return `<!DOCTYPE html>
     <html>
     <head>
@@ -187,7 +195,22 @@ export class ArticleService {
     </html>`;
   }
 
-  async exportArticle(profileId: string, format: string, articleId: number) {
+  /**
+   * Exports an article in a specific format.
+   *
+   * @param {string} profileId - The ID of the user's profile.
+   * @param {string} format - The format to export the article in.
+   * @param {number} articleId - The ID of the article to export.
+   * @returns {Promise<Article | string>} A promise that resolves to the exported article.
+   * @throws {ForbiddenException} If the user does not own the article.
+   * @throws {NotFoundException} If the article does not exist.
+   * @throws {NotFoundException} If the format does not exist.
+   */
+  async exportArticle(
+    profileId: string,
+    format: string,
+    articleId: number,
+  ): Promise<Article | string> {
     // get the article by id
     const article = await this.prisma.article.findUnique({
       where: {
@@ -199,19 +222,23 @@ export class ArticleService {
       },
     });
 
-    // check if user owns the article
-    if (!article || article.profileId !== profileId)
-      throw new ForbiddenException('Access to resources denied');
+    // check if article exists
+    if (!article) throw new NotFoundException(ErrorMessages.ARTICLE_NOT_FOUND);
 
-    if (format === 'json') {
-      return article;
-    }
-    if (format === 'html') {
-      return this.generateHTML(article);
-    } else if (format === 'markdown') {
-      // TODO: Implement Markdown export
-    } else {
-      throw new NotFoundException('Format not found');
+    // check if user owns the article
+    if (article.profileId !== profileId)
+      throw new ForbiddenException(ErrorMessages.RESOURCE_ACCESS_DENIED);
+
+    switch (format) {
+      case 'json':
+        return article;
+      case 'html':
+        return this.generateHTML(article);
+      case 'markdown':
+        // TODO: Implement Markdown export
+        break;
+      default:
+        throw new NotFoundException('Format not found');
     }
 
     return null;

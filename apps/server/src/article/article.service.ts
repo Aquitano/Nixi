@@ -1,5 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { Article, Highlight, Tag } from '@prisma/client';
+import TurndownService from 'turndown';
 import { PrismaService } from '../prisma/prisma.service';
 import { AddHighlightDto, CreateArticleDto, EditArticleDto } from './dto';
 
@@ -10,6 +11,16 @@ enum ErrorMessages {
 }
 
 type ArticleData = Article & { tags: Tag[]; highlights: Highlight[] };
+
+const turndownService = new TurndownService({
+  headingStyle: 'atx',
+  hr: '---',
+  bulletListMarker: '-',
+  codeBlockStyle: 'fenced',
+  fence: '```',
+  emDelimiter: '_',
+  strongDelimiter: '**',
+});
 
 @Injectable()
 export class ArticleService {
@@ -86,13 +97,10 @@ export class ArticleService {
       case 'html':
         return this.generateHTML(article);
       case 'markdown':
-        // TODO: Implement Markdown export
-        break;
+        return this.generateMarkdown(article);
       default:
         throw new NotFoundException('Format not found');
     }
-
-    return null;
   }
 
   /**
@@ -219,6 +227,22 @@ export class ArticleService {
       </main>
     </body>
     </html>`;
+  }
+
+  async generateMarkdown(data: ArticleData): Promise<string> {
+    const md = turndownService.turndown(`<h1>${data.title}</h1><hr /><div>${data.content}</div>`);
+
+    // Add front matter
+    const frontMatter =
+      `---\n` +
+      `Author: ${data.author}\n` +
+      `Created at: ${new Date(data.createdAt).toLocaleString()}\n` +
+      `Updated at: ${new Date(data.updatedAt).toLocaleString()}\n` +
+      `Word count: ${data.word_count}\n` +
+      `Tags: ${data.tags.map((tag: any) => tag.name).join(', ')}\n` +
+      `---\n\n`;
+
+    return frontMatter + md;
   }
 
   /* Highlights */

@@ -50,23 +50,49 @@ export class ArticleService {
    *
    * @param {string} profileId - The ID of the user's profile.
    * @param {number} articleId - The ID of the article to be retrieved.
-   * @returns {Promise<Article>} A promise that resolves to the retrieved article.
+   * @param {string} format - The format to export the article in.
+   * @returns {Promise<Article | string>} A promise that resolves to the retrieved article.
+   * @throws {ForbiddenException} If the user does not own the article.
    * @throws {NotFoundException} If the article does not exist.
+   * @throws {NotFoundException} If the format does not exist.
    */
-  async getArticleById(profileId: string, articleId: number): Promise<Article> {
+  async getArticleById(
+    profileId: string,
+    articleId: number,
+    format: string,
+  ): Promise<Article | string> {
     // get the article by id
     const article = await this.prisma.article.findFirst({
       where: {
         id: articleId,
         profileId,
       },
+      include: {
+        tags: true,
+        highlights: true,
+      },
     });
 
     // check if article exists
     if (!article) throw new NotFoundException(ErrorMessages.ARTICLE_NOT_FOUND);
 
-    // Return the article
-    return article;
+    // check if user owns the article
+    if (article.profileId !== profileId)
+      throw new ForbiddenException(ErrorMessages.RESOURCE_ACCESS_DENIED);
+
+    switch (format) {
+      case 'json':
+        return article;
+      case 'html':
+        return this.generateHTML(article);
+      case 'markdown':
+        // TODO: Implement Markdown export
+        break;
+      default:
+        throw new NotFoundException('Format not found');
+    }
+
+    return null;
   }
 
   /**
@@ -193,55 +219,6 @@ export class ArticleService {
       </main>
     </body>
     </html>`;
-  }
-
-  /**
-   * Exports an article in a specific format.
-   *
-   * @param {string} profileId - The ID of the user's profile.
-   * @param {string} format - The format to export the article in.
-   * @param {number} articleId - The ID of the article to export.
-   * @returns {Promise<Article | string>} A promise that resolves to the exported article.
-   * @throws {ForbiddenException} If the user does not own the article.
-   * @throws {NotFoundException} If the article does not exist.
-   * @throws {NotFoundException} If the format does not exist.
-   */
-  async exportArticle(
-    profileId: string,
-    format: string,
-    articleId: number,
-  ): Promise<Article | string> {
-    // get the article by id
-    const article = await this.prisma.article.findUnique({
-      where: {
-        id: articleId,
-      },
-      include: {
-        highlights: true,
-        tags: true,
-      },
-    });
-
-    // check if article exists
-    if (!article) throw new NotFoundException(ErrorMessages.ARTICLE_NOT_FOUND);
-
-    // check if user owns the article
-    if (article.profileId !== profileId)
-      throw new ForbiddenException(ErrorMessages.RESOURCE_ACCESS_DENIED);
-
-    switch (format) {
-      case 'json':
-        return article;
-      case 'html':
-        return this.generateHTML(article);
-      case 'markdown':
-        // TODO: Implement Markdown export
-        break;
-      default:
-        throw new NotFoundException('Format not found');
-    }
-
-    return null;
   }
 
   /* Highlights */

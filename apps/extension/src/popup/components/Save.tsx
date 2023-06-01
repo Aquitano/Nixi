@@ -59,7 +59,7 @@ async function injectContentScript(): Promise<void> {
 async function sendArticle(data: CreateArticleDto): Promise<void> {
   if (await articleAlreadyExists(data.link)) {
     addMessage(`Article already exists - ${articleId()}`, ColorClasses.error);
-    const a = await fetch(`http://localhost:8200/articles/export?id=${articleId()}&format=html`);
+    const a = await fetch(`http://localhost:8200/articles/${articleId()}?format=html`);
     console.log(await a.json());
     return;
   }

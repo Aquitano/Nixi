@@ -22,13 +22,9 @@ import { AddHighlightDto, CreateArticleDto, EditArticleDto } from './dto';
 export class ArticleController {
   constructor(private articleService: ArticleService) {}
 
-  @Get('export')
-  exportArticle(
-    @GetUser('id') profileId: string,
-    @Query('format') format: string,
-    @Query('id', ParseIntPipe) articleId: number,
-  ) {
-    return this.articleService.exportArticle(profileId, format, articleId);
+  @Get()
+  getArticles(@GetUser('id') profileId: string) {
+    return this.articleService.getArticles(profileId);
   }
 
   @Get('url/:url')
@@ -36,14 +32,13 @@ export class ArticleController {
     return this.articleService.getArticleByUrl(profileId, url);
   }
 
-  @Get()
-  getArticles(@GetUser('id') profileId: string) {
-    return this.articleService.getArticles(profileId);
-  }
-
   @Get(':id')
-  getArticleById(@GetUser('id') profileId: string, @Param('id', ParseIntPipe) articleId: number) {
-    return this.articleService.getArticleById(profileId, articleId);
+  getArticleById(
+    @GetUser('id') profileId: string,
+    @Param('id', ParseIntPipe) articleId: number,
+    @Query('format') format = 'json',
+  ) {
+    return this.articleService.getArticleById(profileId, articleId, format);
   }
 
   @Post()

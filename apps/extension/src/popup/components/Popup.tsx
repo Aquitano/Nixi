@@ -35,13 +35,15 @@ const Popup: Component = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div
-              class={`fixed rounded-xl px-2 ${showPopup()?.content?.colorClass}`}
+            <button
+              type="button"
+              class={`fixed rounded-xl border-2 p-0 px-2 hover:opacity-75 ${
+                showPopup()?.content?.colorClass
+              }`}
               onClick={() => close()}
-              onKeyDown={() => close()}
             >
               <p class="text-center">{showPopup()?.content?.message}</p>
-            </div>
+            </button>
           </Motion>
         </Rerun>
       </Show>

@@ -80,3 +80,17 @@ code {
 .customLook .tagify__input {
   display: none;
 }
+
+.reset {
+  background-color: transparent;
+  border-width: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+.reset:focus {
+  outline: none;
+}

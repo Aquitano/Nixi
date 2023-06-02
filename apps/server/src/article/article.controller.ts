@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { GetUser } from '../auth/decorator';
@@ -21,24 +22,28 @@ import { AddHighlightDto, CreateArticleDto, EditArticleDto } from './dto';
 export class ArticleController {
   constructor(private articleService: ArticleService) {}
 
-  @Post()
-  createArticle(@GetUser('id') profileId: string, @Body() dto: CreateArticleDto) {
-    return this.articleService.createArticle(profileId, dto);
-  }
-
   @Get()
   getArticles(@GetUser('id') profileId: string) {
     return this.articleService.getArticles(profileId);
   }
 
-  @Get(':id')
-  getArticleById(@GetUser('id') profileId: string, @Param('id', ParseIntPipe) articleId: number) {
-    return this.articleService.getArticleById(profileId, articleId);
-  }
-
   @Get('url/:url')
   getArticleByUrl(@GetUser('id') profileId: string, @Param('url') url: string) {
     return this.articleService.getArticleByUrl(profileId, url);
+  }
+
+  @Get(':id')
+  getArticleById(
+    @GetUser('id') profileId: string,
+    @Param('id', ParseIntPipe) articleId: number,
+    @Query('format') format = 'json',
+  ) {
+    return this.articleService.getArticleById(profileId, articleId, format);
+  }
+
+  @Post()
+  createArticle(@GetUser('id') profileId: string, @Body() dto: CreateArticleDto) {
+    return this.articleService.createArticle(profileId, dto);
   }
 
   @Patch(':id')

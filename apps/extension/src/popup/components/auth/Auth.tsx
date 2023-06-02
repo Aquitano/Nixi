@@ -38,13 +38,13 @@ const Auth: Component = () => {
         <h1 class="text-lg font-bold text-white">{authText.formButton[authState()]}</h1>
         <p class="text-slate-200" id="switch-auth-state">
           <span>{authText.switchState[authState()]}</span>
-          <a
-            class="cursor-pointer pl-1 text-indigo-500 transition-all duration-300 hover:text-indigo-800"
+          <button
+            type="button"
+            class="reset cursor-pointer pl-1 text-indigo-500 transition-all duration-300 hover:text-indigo-800"
             onClick={toggleAuthState}
-            onKeyUp={toggleAuthState}
           >
             {authText.switchButton[authState()]}
-          </a>
+          </button>
         </p>
       </div>
       {/* oAuth */}

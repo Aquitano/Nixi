@@ -59,6 +59,8 @@ async function injectContentScript(): Promise<void> {
 async function sendArticle(data: CreateArticleDto): Promise<void> {
   if (await articleAlreadyExists(data.link)) {
     addMessage(`Article already exists - ${articleId()}`, ColorClasses.error);
+    const response = await fetch(`http://localhost:8200/articles/${articleId()}?format=markdown`);
+    console.log(await response.json());
     return;
   }
 
@@ -121,9 +123,8 @@ const Save: Component = () => {
         <div class="px-8 py-8">
           <button
             type="button"
-            class="rounded-2xl bg-emerald-500 transition duration-500 ease-in-out hover:bg-green-500"
+            class="rounded-2xl bg-emerald-500 transition duration-500 ease-in-out hover:bg-green-600"
             onClick={fetchPage}
-            onKeyUp={fetchPage}
           >
             Save Article
           </button>
@@ -134,13 +135,13 @@ const Save: Component = () => {
 
         <div class="absolute inset-x-0 bottom-0 text-sm">
           Built with Vite and TypeScript -{' '}
-          <a
+          <button
+            type="button"
             onClick={logout}
-            onKeyUp={logout}
-            class="font-medium text-fuchsia-500 hover:text-fuchsia-300"
+            class="reset p-0 font-medium text-fuchsia-500 transition-all duration-150 hover:text-fuchsia-300"
           >
             Logout
-          </a>
+          </button>
         </div>
       </header>
     </div>

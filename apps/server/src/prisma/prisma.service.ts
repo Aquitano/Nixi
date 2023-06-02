@@ -11,7 +11,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     return this.$transaction([this.article.deleteMany(), this.all_auth_recipe_users.deleteMany()]);
   }
 
-  async enableShutdownHooks(app: INestApplication) {
+  enableShutdownHooks(app: INestApplication) {
     this.$on('beforeExit', async () => {
       await app.close();
     });

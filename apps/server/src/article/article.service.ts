@@ -203,7 +203,7 @@ export class ArticleService {
    * @param {ArticleData} data - The article data.
    * @returns {Promise<string>} A promise that resolves to the generated HTML.
    */
-  async generateHTML(data: ArticleData): Promise<string> {
+  generateHTML(data: ArticleData): string {
     return `<!DOCTYPE html>
     <html>
     <head>
@@ -229,18 +229,24 @@ export class ArticleService {
     </html>`;
   }
 
-  async generateMarkdown(data: ArticleData): Promise<string> {
+  /**
+   * Generates a Markdown file for an article.
+   *
+   * @param {ArticleData} data - The article data.
+   * @returns {string} The generated Markdown.
+   */
+  generateMarkdown(data: ArticleData): string {
     const md = turndownService.turndown(`<h1>${data.title}</h1><hr /><div>${data.content}</div>`);
 
     // Add front matter
     const frontMatter =
-      `---\n` +
+      '---\n' +
       `Author: ${data.author}\n` +
       `Created at: ${new Date(data.createdAt).toLocaleString()}\n` +
       `Updated at: ${new Date(data.updatedAt).toLocaleString()}\n` +
       `Word count: ${data.word_count}\n` +
-      `Tags: ${data.tags.map((tag: any) => tag.name).join(', ')}\n` +
-      `---\n\n`;
+      `Tags: ${data.tags.map((tag: Tag) => tag.name).join(', ')}\n` +
+      '---\n\n';
 
     return frontMatter + md;
   }

@@ -1,11 +1,13 @@
 import { Component, onMount } from 'solid-js';
+import wretch from 'wretch';
 import { CreateArticleDto } from '../../assets/dto';
 import logo from '../../assets/logo.svg';
-import { ColorClasses, addMessage } from '../utils';
+import { ColorClasses, addMessage, assertIsDefined } from '../utils';
 import styles from './Save.module.css';
 
 import Tags from './Tags';
 
+import { ArticleSchema } from '../../assets/schema';
 import { articleId, setArticleId } from '../App';
 import { logout } from './auth/utils';
 
@@ -20,15 +22,23 @@ async function articleAlreadyExists(url?: string): Promise<boolean> {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     url = tab.url;
   }
+  assertIsDefined(url);
 
-  const result = await fetch(`http://localhost:8200/articles/url/${encodeURIComponent(url)}`);
-
-  if (result.status === 200) {
-    const data = await result.json();
-    setArticleId(data.id);
-  }
-
-  return result.ok;
+  return wretch(`http://localhost:8200/articles/url/${encodeURIComponent(url)}`)
+    .get()
+    .notFound(() => {
+      return false;
+    })
+    .json((data: unknown) => {
+      const article = ArticleSchema.parse(data);
+      setArticleId(article.id.toString());
+      return true;
+    })
+    .catch((error) => {
+      addMessage(`Error checking if article exists - ${error}`, ColorClasses.error);
+      console.error(error);
+      return false;
+    });
 }
 
 /**
@@ -59,27 +69,24 @@ async function injectContentScript(): Promise<void> {
 async function sendArticle(data: CreateArticleDto): Promise<void> {
   if (await articleAlreadyExists(data.link)) {
     addMessage(`Article already exists - ${articleId()}`, ColorClasses.error);
-    const response = await fetch(`http://localhost:8200/articles/${articleId()}?format=markdown`);
-    console.log(await response.json());
+    const response = await wretch(`http://localhost:8200/articles/${articleId()}?format=markdown`)
+      .get()
+      .json();
+    console.log(response);
     return;
   }
 
-  const result = await fetch('http://localhost:8200/articles', {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  const resultData = await result.json();
-
-  if (result.ok) {
-    addMessage(`Article saved successfully - ${resultData.id} `, ColorClasses.success);
-    setArticleId(resultData.id);
-  } else {
-    addMessage(`Error saving article - ${resultData.message}`, ColorClasses.error);
-  }
+  await wretch('http://localhost:8200/articles')
+    .post(data)
+    .json((result: unknown) => {
+      const article = ArticleSchema.parse(result);
+      addMessage(`Article saved successfully - ${article.id} `, ColorClasses.success);
+      setArticleId(article.id.toString());
+    })
+    .catch((error) => {
+      addMessage(`Error saving article - ${error}`, ColorClasses.error);
+      console.error(error);
+    });
 }
 
 /**
@@ -89,6 +96,7 @@ async function sendArticle(data: CreateArticleDto): Promise<void> {
  */
 async function fetchPage(): Promise<void> {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  assertIsDefined(tab.id);
 
   try {
     chrome.tabs.sendMessage(tab.id, { action: 'getArticleData' }, (response) => {

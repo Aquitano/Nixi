@@ -22,4 +22,5 @@ SuperTokens.init({
   ],
 });
 
+// @ts-expect-error This is necessary because the `getElementById` method may return null, but we know that it will always return an element with the ID 'root'.
 render(() => <App />, document.getElementById('root'));

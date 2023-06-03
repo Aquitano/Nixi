@@ -37,8 +37,8 @@ function getArticleData(): CreateArticleDto | undefined {
       content,
       link,
       favorite,
-      word_count: countWords(content),
-    } satisfies CreateArticleDto;
+      word_count: countWords(content || ''),
+    } as CreateArticleDto;
   }
 
   return data;

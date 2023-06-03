@@ -8,13 +8,14 @@
     "noEmit": true,
     "noImplicitReturns": true,
     "moduleResolution": "bundler",
-    "strictNullChecks": false,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "types": ["chrome", "vite/client"],
     "useDefineForClassFields": true,
     "isolatedModules": true,
     "resolveJsonModule": false,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": false,
     "strict": true
   }
 }

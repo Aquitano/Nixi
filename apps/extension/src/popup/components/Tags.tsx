@@ -1,5 +1,7 @@
 import Tagify from '@yaireo/tagify';
 import { Component, createSignal, onMount } from 'solid-js';
+import wretch from 'wretch';
+import { Tag } from '../../assets/dto';
 import { articleId } from '../App';
 
 interface BeforeAddDetails {
@@ -10,39 +12,17 @@ interface BeforeAddDetails {
   };
 }
 
-export interface Tag {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  name: string;
-  profileId: string;
-}
-
 const API_URL = 'http://localhost:8200/articles';
-
-/**
- * Fetches data from the API
- *
- * @param {string} path
- * @param {object} [options={}]
- * @returns {Promise<any>}
- * @throws {Error}
- */
-async function fetchAPI(path: string, options: object = {}): Promise<unknown> {
-  const response = await fetch(`${API_URL}/${path}`, options);
-  if (!response.ok) throw new Error(`API request failed: ${response.statusText}`);
-  return response.json();
-}
 
 /**
  * Checks if the tag already exists in the database
  *
  * @param {string} tag
- * @returns {Promise<Tag>}
+ * @returns {Promise<Tag | null>}
  */
-async function doesTagExist(tag: string): Promise<Tag> {
+async function doesTagExist(tag: string): Promise<Tag | null> {
   try {
-    return (await fetchAPI(`tags/name/${tag}`)) as Tag;
+    return await wretch(`${API_URL}/tags/name/${tag}`).get().json();
   } catch {
     return null;
   }
@@ -59,23 +39,14 @@ async function addTags(tag: BeforeAddDetails): Promise<void> {
   let data: Tag;
 
   if (!dbTag) {
-    const response = await fetchAPI('tags', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: tag.data.value }),
-    });
-    data = response as Tag;
+    data = (await wretch(`${API_URL}/tags`).post({ name: tag.data.value }).json()) as Tag;
   } else {
     data = dbTag as Tag;
   }
 
   console.log(`Tag: ${data.name} ID: ${data.id}`);
 
-  await fetchAPI(`tags/${articleId()}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tagId: data.id }),
-  });
+  wretch(`${API_URL}/tags/${articleId()}`).post({ tagId: data.id });
 }
 
 const Tags: Component = () => {

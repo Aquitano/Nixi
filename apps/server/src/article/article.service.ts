@@ -33,7 +33,20 @@ export class ArticleService {
    * @param {CreateArticleDto} dto - Data transfer object containing the details of the article to be created.
    * @returns {Promise<Article>} A promise that resolves to the created article.
    */
-  createArticle(profileId: string, dto: CreateArticleDto): Promise<Article> {
+  async createArticle(profileId: string, dto: CreateArticleDto): Promise<Article> {
+    // check if the article already exists
+    const article = await this.prisma.article.findUnique({
+      where: {
+        link_profile: {
+          link: dto.link,
+          profileId,
+        },
+      },
+    });
+
+    // if the article already exists, throw an error
+    if (article) throw new ForbiddenException('Article already exists');
+
     return this.prisma.article.create({
       data: {
         profileId,

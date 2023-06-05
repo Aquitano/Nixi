@@ -1,15 +1,14 @@
-import { Component, onMount } from 'solid-js';
+import { Component, lazy, onMount, Show, Suspense } from 'solid-js';
 import wretch from 'wretch';
 import { CreateArticleDto } from '../../assets/dto';
 import logo from '../../assets/logo.svg';
-import { ColorClasses, addMessage, assertIsDefined } from '../utils';
-import styles from './Save.module.css';
-
-import Tags from './Tags';
-
 import { ArticleSchema } from '../../assets/schema';
 import { articleId, setArticleId } from '../App';
+import { addMessage, assertIsDefined, ColorClasses } from '../utils';
 import { logout } from './auth/utils';
+import styles from './Save.module.css';
+
+const Tags = lazy(() => import('./Tags'));
 
 /**
  * Checks if the article already exists in the database
@@ -136,9 +135,14 @@ const Save: Component = () => {
           >
             Save Article
           </button>
-          <div class="mt-4 w-full">
-            <Tags />
-          </div>
+
+          <Show when={articleId() !== undefined}>
+            <div class="mt-4 w-full">
+              <Suspense fallback={<div>Loading...</div>}>
+                <Tags />
+              </Suspense>
+            </div>
+          </Show>
         </div>
 
         <div class="absolute inset-x-0 bottom-0 text-sm">

@@ -1,10 +1,9 @@
 import { z } from 'zod';
-import { Article } from '../dto';
 
 export const ArticleSchema = z.object({
   id: z.number(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.string().transform((val) => new Date(val)),
+  updatedAt: z.string().transform((val) => new Date(val)),
   title: z.string(),
   link: z.string(),
   author: z.string(),
@@ -16,19 +15,25 @@ export const ArticleSchema = z.object({
   profileId: z.string(),
 });
 
-/* Check if the schema matches the type from the API */
-type IfEquals<T, U, Y = unknown, N = never> = (<G>() => G extends T ? 1 : 2) extends <
-  G,
->() => G extends U ? 1 : 2
-  ? Y
-  : N;
+export const tagSchema = z.object({
+  id: z.number(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  name: z.string(),
+  profileId: z.string(),
+});
 
-/** Trigger a compiler error when a value is _not_ an exact type. */
-declare const exactType: <T, U>(
-  draft: T & IfEquals<T, U>,
-  expected: U & IfEquals<T, U>,
-) => IfEquals<T, U>;
+export const highlightSchema = z.object({
+  id: z.number(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  content: z.string(),
+  start: z.number(),
+  end: z.number(),
+  articleId: z.number(),
+  profileId: z.string(),
+});
 
-type ArticleType = z.infer<typeof ArticleSchema>;
-
-exactType({} as ArticleType, {} as Article);
+export type Article = z.infer<typeof ArticleSchema>;
+export type Tag = z.infer<typeof tagSchema>;
+export type Highlight = z.infer<typeof highlightSchema>;

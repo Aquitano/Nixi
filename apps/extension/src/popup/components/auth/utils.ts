@@ -1,5 +1,5 @@
 import { createStore } from 'solid-js/store';
-import { lazily } from 'solidjs-lazily';
+import Session from 'supertokens-web-js/recipe/session';
 import {
   doesEmailExist,
   emailPasswordSignIn,
@@ -8,8 +8,6 @@ import {
 import { z } from 'zod';
 import { setIsLoggedIn } from '../../App.jsx';
 import { ColorClasses, addMessage } from '../../utils.js';
-
-const Session = lazily(() => import('supertokens-web-js/recipe/session'));
 
 const FormDataSchema = z.object({
   email: z.string().email(),
@@ -183,7 +181,7 @@ export async function signInClicked(email: string, password: string) {
       addMessage('Oops! Something went wrong.', ColorClasses.error);
     } else {
       console.log('Login successful');
-      await Session.attemptRefreshingSession();
+      // await Session.attemptRefreshingSession();
       setIsLoggedIn(true);
     }
   } catch (err: unknown) {

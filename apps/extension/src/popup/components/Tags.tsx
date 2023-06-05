@@ -1,8 +1,9 @@
 import Tagify from '@yaireo/tagify';
-import { Component, createSignal, onMount } from 'solid-js';
+import { Component, For, createSignal, onMount } from 'solid-js';
 import wretch from 'wretch';
-import { Tag } from '../../assets/dto';
+import { Tag } from '../../assets/schema';
 import { articleId } from '../App';
+import Badge from './Badge';
 
 interface BeforeAddDetails {
   data: {
@@ -28,6 +29,10 @@ async function doesTagExist(tag: string): Promise<Tag | null> {
   }
 }
 
+async function getTags(): Promise<Tag[]> {
+  return wretch(`${API_URL}/tags/${articleId()}`).get().json();
+}
+
 /**
  * Adds a tag to the database
  *
@@ -51,6 +56,7 @@ async function addTags(tag: BeforeAddDetails): Promise<void> {
 
 const Tags: Component = () => {
   const [tagify, setTagify] = createSignal<Tagify>(null);
+  const [tags, setTags] = createSignal<Tag[]>([]);
 
   /**
    * Handles the beforeAdd event from Tagify
@@ -64,6 +70,8 @@ const Tags: Component = () => {
 
     // eslint-disable-next-line no-underscore-dangle
     if (details.data.__isValid) {
+      // TODO: Add error message
+      if (details.data.value.length > 40) return;
       addTags(details);
     }
   }
@@ -93,15 +101,25 @@ const Tags: Component = () => {
     tag.on('edit:updated', beforeAdd);
 
     setTagify(tag);
+
+    if (articleId()) {
+      getTags().then((data) => {
+        setTags(data);
+        console.log(data);
+      });
+    }
   });
 
   return (
-    <div class="border-none">
-      <input class="customLook" />
-      <button type="button" onClick={onAddButtonClick}>
-        +
-      </button>
-    </div>
+    <>
+      <For each={tags()}>{(tag) => <Badge name={tag.name} />}</For>
+      <div class="mt-4 border-none">
+        <input class="customLook" />
+        <button type="button" onClick={onAddButtonClick}>
+          +
+        </button>
+      </div>
+    </>
   );
 };
 

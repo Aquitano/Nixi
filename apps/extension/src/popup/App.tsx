@@ -39,6 +39,7 @@ const App: Component = () => {
 			</Show>
 
 			<Switch fallback={<h1>Error</h1>}>
+				{/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
 				<Match when={!userLoggedIn()}>
 					<Suspense fallback={<Skeleton />}>
 						<Auth />

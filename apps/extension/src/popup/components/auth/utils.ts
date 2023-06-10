@@ -75,11 +75,12 @@ export async function logout() {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-		}).then((res) => res.json());
+		});
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+		const data = await response.json();
 
-		// console.log(response);
-
-		if (response.message === 'unauthorised') {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+		if (data.message === 'unauthorised') {
 			setIsLoggedIn(false);
 			window.location.href = '/index.html';
 			return;

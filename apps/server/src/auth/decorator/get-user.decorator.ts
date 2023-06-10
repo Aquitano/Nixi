@@ -10,6 +10,7 @@ export const GetUser = createParamDecorator(
 
 		// if a specific data field is requested, return that field
 		// otherwise, return the entire user info object
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		return data ? userInfo?.[data] : userInfo;
 	},
 );

@@ -32,6 +32,7 @@ async function articleAlreadyExists(url?: string): Promise<boolean> {
 			return true;
 		})
 		.catch((error) => {
+			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 			addMessage(`Error checking if article exists - ${error}`, ColorClasses.error);
 			console.error(error);
 			return false;
@@ -65,7 +66,9 @@ async function injectContentScript(): Promise<void> {
  */
 async function sendArticle(data: CreateArticleDto): Promise<void> {
 	if (await articleAlreadyExists(data.link)) {
+		// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 		addMessage(`Article already exists - ${articleId()}`, ColorClasses.error);
+		// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 		const response = await wretch(`http://localhost:8200/articles/${articleId()}?format=markdown`)
 			.get()
 			.json();
@@ -81,6 +84,7 @@ async function sendArticle(data: CreateArticleDto): Promise<void> {
 			setArticleId(article.id.toString());
 		})
 		.catch((error) => {
+			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 			addMessage(`Error saving article - ${error}`, ColorClasses.error);
 			console.error(error);
 		});
@@ -97,7 +101,8 @@ async function fetchPage(): Promise<void> {
 
 	try {
 		chrome.tabs.sendMessage(tab.id, { action: 'getArticleData' }, (response) => {
-			if (response?.message === 'success') {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+			if (response && response?.message === 'success') {
 				const { data } = response as {
 					data: CreateArticleDto;
 				};
@@ -112,6 +117,7 @@ async function fetchPage(): Promise<void> {
 }
 
 const Save: Component = () => {
+	// eslint-disable-next-line @typescript-eslint/no-misused-promises
 	onMount(async () => {
 		await articleAlreadyExists();
 
@@ -129,6 +135,7 @@ const Save: Component = () => {
 					<button
 						type="button"
 						class="rounded-2xl bg-emerald-500 transition duration-500 ease-in-out hover:bg-green-600"
+						// eslint-disable-next-line @typescript-eslint/no-misused-promises
 						onClick={fetchPage}
 					>
 						Save Article
@@ -147,6 +154,7 @@ const Save: Component = () => {
 					Built with Vite and TypeScript -{' '}
 					<button
 						type="button"
+						// eslint-disable-next-line @typescript-eslint/no-misused-promises
 						onClick={logout}
 						class="reset p-0 font-medium text-fuchsia-500 transition-all duration-150 hover:text-fuchsia-300"
 					>

@@ -4,12 +4,15 @@ import { createStore } from 'solid-js/store';
 import wretch from 'wretch';
 import { Tag } from '../../assets/schema/index';
 import { articleId } from '../App';
+import { assertIsDefined } from '../utils';
 
 const [items, setItems] = createStore<{ id: number; name: string; checked: boolean }[]>([]);
 const API_URL = 'http://localhost:8200/articles';
 
 function getTags(): Promise<Tag[]> {
-	return wretch(`${API_URL}/tags/${articleId()}`).get().json();
+	const id = articleId();
+	assertIsDefined(id);
+	return wretch(`${API_URL}/tags/${id}`).get().json();
 }
 
 const DropdownItem: Component<{ name: string; checked: boolean }> = (props) => {
@@ -64,6 +67,7 @@ const DropdownMain: Component = () => {
 		delay: 300,
 	};
 
+	// eslint-disable-next-line @typescript-eslint/no-misused-promises
 	onMount(async () => {
 		const tags = await getTags();
 
@@ -133,6 +137,7 @@ const DropdownMain: Component = () => {
 							id="input-group-search"
 							class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
 							placeholder="Search tags"
+							// eslint-disable-next-line @typescript-eslint/no-misused-promises
 							onInput={(e) => handleSearch(e.currentTarget.value)}
 						/>
 					</div>

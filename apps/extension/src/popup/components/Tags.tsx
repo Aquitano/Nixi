@@ -3,6 +3,7 @@ import { Component, For, createSignal, onMount } from 'solid-js';
 import wretch from 'wretch';
 import { Tag } from '../../assets/schema';
 import { articleId } from '../App';
+import { assertIsDefined } from '../utils';
 import Badge from './Badge';
 import DropdownMain from './Dropdown';
 
@@ -31,7 +32,9 @@ async function doesTagExist(tag: string): Promise<Tag | null> {
 }
 
 function getTags(): Promise<Tag[]> {
-	return wretch(`${API_URL}/tags/${articleId()}`).get().json();
+	const id = articleId();
+	assertIsDefined(id);
+	return wretch(`${API_URL}/tags/${id}`).get().json();
 }
 
 /**
@@ -52,7 +55,9 @@ async function addTags(tag: BeforeAddDetails): Promise<void> {
 
 	console.log(`Tag: ${data.name} ID: ${data.id}`);
 
-	wretch(`${API_URL}/tags/${articleId()}`).post({ tagId: data.id });
+	const id = articleId();
+	assertIsDefined(id);
+	wretch(`${API_URL}/tags/${id}`).post({ tagId: data.id });
 }
 
 const Tags: Component = () => {
@@ -83,13 +88,16 @@ const Tags: Component = () => {
 	 * @returns {void}
 	 */
 	function onAddButtonClick(): void {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
 		tagify().addEmptyTag();
 	}
 
 	onMount(() => {
 		const input = document.querySelector('.customLook');
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 		const tag = new Tagify(input, {
 			callbacks: {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 				invalid: (e) => console.log('invalid', e.detail),
 			},
 			trim: true,
@@ -99,6 +107,7 @@ const Tags: Component = () => {
 			},
 			editTags: false,
 		});
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
 		tag.on('edit:updated', beforeAdd);
 
 		setTagify(tag);

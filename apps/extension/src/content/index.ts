@@ -50,10 +50,12 @@ function getArticleData(): CreateArticleDto | undefined {
  * @returns {void}
  */
 function init(): void {
+	// eslint-disable-next-line @typescript-eslint/no-misused-promises
 	chrome.runtime.onMessage.addListener(async (request, _sender, sendResponse) => {
 		console.log(request);
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 		if (request.action === 'getArticleData') {
-			const data = await getArticleData();
+			const data = getArticleData();
 			console.log(data);
 
 			// Check if data is valid/not empty

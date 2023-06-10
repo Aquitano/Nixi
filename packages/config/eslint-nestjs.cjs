@@ -1,3 +1,4 @@
+/** @type {import("@types/eslint").Linter.Config} */
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -9,10 +10,18 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'airbnb-base',
     'airbnb-typescript/base',
-    'plugin:prettier/recommended',
     'prettier',
+  ],
+  overrides: [
+    {
+      files: ['test/**'],
+      plugins: ['jest'],
+      extends: ['plugin:jest/recommended'],
+      rules: { 'jest/prefer-expect-assertions': 'off' },
+    },
   ],
   root: true,
   env: {

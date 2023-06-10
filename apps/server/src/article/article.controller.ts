@@ -1,16 +1,16 @@
 import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  ParseIntPipe,
-  Patch,
-  Post,
-  Query,
-  UseGuards,
+	Body,
+	Controller,
+	Delete,
+	Get,
+	HttpCode,
+	HttpStatus,
+	Param,
+	ParseIntPipe,
+	Patch,
+	Post,
+	Query,
+	UseGuards,
 } from '@nestjs/common';
 import { GetUser } from '../auth/decorator';
 import { AuthGuard } from '../auth/guard';
@@ -20,103 +20,103 @@ import { AddHighlightDto, CreateArticleDto, EditArticleDto } from './dto';
 @UseGuards(AuthGuard)
 @Controller('articles')
 export class ArticleController {
-  constructor(private articleService: ArticleService) {}
+	constructor(private articleService: ArticleService) {}
 
-  @Get()
-  getArticles(@GetUser('id') profileId: string) {
-    return this.articleService.getArticles(profileId);
-  }
+	@Get()
+	getArticles(@GetUser('id') profileId: string) {
+		return this.articleService.getArticles(profileId);
+	}
 
-  @Get('url/:url')
-  getArticleByUrl(@GetUser('id') profileId: string, @Param('url') url: string) {
-    return this.articleService.getArticleByUrl(profileId, url);
-  }
+	@Get('url/:url')
+	getArticleByUrl(@GetUser('id') profileId: string, @Param('url') url: string) {
+		return this.articleService.getArticleByUrl(profileId, url);
+	}
 
-  @Get(':id')
-  getArticleById(
-    @GetUser('id') profileId: string,
-    @Param('id', ParseIntPipe) articleId: number,
-    @Query('format') format = 'json',
-  ) {
-    return this.articleService.getArticleById(profileId, articleId, format);
-  }
+	@Get(':id')
+	getArticleById(
+		@GetUser('id') profileId: string,
+		@Param('id', ParseIntPipe) articleId: number,
+		@Query('format') format = 'json',
+	) {
+		return this.articleService.getArticleById(profileId, articleId, format);
+	}
 
-  @Post()
-  createArticle(@GetUser('id') profileId: string, @Body() dto: CreateArticleDto) {
-    return this.articleService.createArticle(profileId, dto);
-  }
+	@Post()
+	createArticle(@GetUser('id') profileId: string, @Body() dto: CreateArticleDto) {
+		return this.articleService.createArticle(profileId, dto);
+	}
 
-  @Patch(':id')
-  editArticleById(
-    @GetUser('id') profileId: string,
-    @Param('id', ParseIntPipe) articleId: number,
-    @Body() dto: EditArticleDto,
-  ) {
-    return this.articleService.editArticleById(profileId, articleId, dto);
-  }
+	@Patch(':id')
+	editArticleById(
+		@GetUser('id') profileId: string,
+		@Param('id', ParseIntPipe) articleId: number,
+		@Body() dto: EditArticleDto,
+	) {
+		return this.articleService.editArticleById(profileId, articleId, dto);
+	}
 
-  @HttpCode(HttpStatus.NO_CONTENT)
-  @Delete(':id')
-  deleteArticleById(
-    @GetUser('id') profileId: string,
-    @Param('id', ParseIntPipe) articleId: number,
-  ) {
-    return this.articleService.deleteArticleById(profileId, articleId);
-  }
+	@HttpCode(HttpStatus.NO_CONTENT)
+	@Delete(':id')
+	deleteArticleById(
+		@GetUser('id') profileId: string,
+		@Param('id', ParseIntPipe) articleId: number,
+	) {
+		return this.articleService.deleteArticleById(profileId, articleId);
+	}
 
-  // Highlights
+	// Highlights
 
-  @Get('highlights/:id')
-  getHighlights(@GetUser('id') profileId: string, @Param('id', ParseIntPipe) highlightId: number) {
-    return this.articleService.getHighlights(profileId, highlightId);
-  }
+	@Get('highlights/:id')
+	getHighlights(@GetUser('id') profileId: string, @Param('id', ParseIntPipe) highlightId: number) {
+		return this.articleService.getHighlights(profileId, highlightId);
+	}
 
-  @Post('highlights/:id')
-  addHighlight(@GetUser('id') profileId: string, @Body() dto: AddHighlightDto) {
-    return this.articleService.addHighlight(profileId, dto);
-  }
+	@Post('highlights/:id')
+	addHighlight(@GetUser('id') profileId: string, @Body() dto: AddHighlightDto) {
+		return this.articleService.addHighlight(profileId, dto);
+	}
 
-  @Delete('highlights/:id')
-  deleteHighlight(
-    @GetUser('id') profileId: string,
-    @Param('id', ParseIntPipe) highlightId: number,
-  ) {
-    return this.articleService.deleteHighlightById(profileId, highlightId);
-  }
+	@Delete('highlights/:id')
+	deleteHighlight(
+		@GetUser('id') profileId: string,
+		@Param('id', ParseIntPipe) highlightId: number,
+	) {
+		return this.articleService.deleteHighlightById(profileId, highlightId);
+	}
 
-  // Tags
+	// Tags
 
-  @Get('tags/:id')
-  getTags(@GetUser('id') profileId: string, @Param('id', ParseIntPipe) articleId: number) {
-    return this.articleService.getTagsUsedByArticle(profileId, articleId);
-  }
+	@Get('tags/:id')
+	getTags(@GetUser('id') profileId: string, @Param('id', ParseIntPipe) articleId: number) {
+		return this.articleService.getTagsUsedByArticle(profileId, articleId);
+	}
 
-  // get tag by value
-  @Get('tags/name/:name')
-  getTag(@GetUser('id') profileId: string, @Param('name') name: string) {
-    return this.articleService.getTag(profileId, name);
-  }
+	// get tag by value
+	@Get('tags/name/:name')
+	getTag(@GetUser('id') profileId: string, @Param('name') name: string) {
+		return this.articleService.getTag(profileId, name);
+	}
 
-  @Post('tags')
-  createTag(@GetUser('id') profileId: string, @Body('name') name: string) {
-    return this.articleService.createTag(profileId, name);
-  }
+	@Post('tags')
+	createTag(@GetUser('id') profileId: string, @Body('name') name: string) {
+		return this.articleService.createTag(profileId, name);
+	}
 
-  @Post('tags/:id')
-  addTag(
-    @GetUser('id') profileId: string,
-    @Param('id', ParseIntPipe) articleId: number,
-    @Body('tagId') tagId: number,
-  ) {
-    return this.articleService.addTagToArticle(profileId, articleId, tagId);
-  }
+	@Post('tags/:id')
+	addTag(
+		@GetUser('id') profileId: string,
+		@Param('id', ParseIntPipe) articleId: number,
+		@Body('tagId') tagId: number,
+	) {
+		return this.articleService.addTagToArticle(profileId, articleId, tagId);
+	}
 
-  @Delete('tags/:id')
-  deleteTag(
-    @GetUser('id') profileId: string,
-    @Param('id', ParseIntPipe) articleId: number,
-    @Body('tagId') tagId: number,
-  ) {
-    return this.articleService.removeTagFromArticle(profileId, articleId, tagId);
-  }
+	@Delete('tags/:id')
+	deleteTag(
+		@GetUser('id') profileId: string,
+		@Param('id', ParseIntPipe) articleId: number,
+		@Body('tagId') tagId: number,
+	) {
+		return this.articleService.removeTagFromArticle(profileId, articleId, tagId);
+	}
 }

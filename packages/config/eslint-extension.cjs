@@ -1,3 +1,4 @@
+/** @type {import("@types/eslint").Linter.Config} */
 module.exports = {
   env: {
     browser: true,
@@ -7,16 +8,18 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'airbnb-base',
     'airbnb-typescript/base',
-    'plugin:prettier/recommended',
     'prettier',
   ],
+  parser: '@typescript-eslint/parser',
   root: true,
   overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
+    project: true,
   },
   rules: {
     '@typescript-eslint/ban-ts-comment': 'warn',

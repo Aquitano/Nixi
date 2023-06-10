@@ -1,5 +1,5 @@
 module.exports = {
-  ...require('config/eslint-nestjs.js'),
+  ...require('config/eslint-nestjs.cjs'),
   root: true,
   parserOptions: {
     root: true,

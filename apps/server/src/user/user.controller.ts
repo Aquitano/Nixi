@@ -8,18 +8,18 @@ import { UserService } from './user.service';
 @UseGuards(AuthGuard)
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) {}
+	constructor(private userService: UserService) {}
 
-  @Get('me')
-  getMe(
-    @GetUser() user: all_auth_recipe_users,
-    /* @Session() session: SessionContainer @GetUser('email') _email: string */
-  ): all_auth_recipe_users {
-    return user;
-  }
+	@Get('me')
+	getMe(
+		@GetUser() user: all_auth_recipe_users,
+		/* @Session() session: SessionContainer @GetUser('email') _email: string */
+	): all_auth_recipe_users {
+		return user;
+	}
 
-  @Patch('')
-  editUser(@GetUser('id') profileId: string, @Body() dto: EditUserDto) {
-    return this.userService.editProfile(profileId, dto);
-  }
+	@Patch('')
+	editUser(@GetUser('id') profileId: string, @Body() dto: EditUserDto) {
+		return this.userService.editProfile(profileId, dto);
+	}
 }

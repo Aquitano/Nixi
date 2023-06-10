@@ -5,14 +5,14 @@ import { AuthModuleConfig, ConfigInjectionToken } from '../config.interface';
 
 @Injectable()
 export class SupertokensService {
-  constructor(@Inject(ConfigInjectionToken) config: AuthModuleConfig) {
-    supertokens.init({
-      appInfo: config.appInfo,
-      supertokens: {
-        connectionURI: config.connectionURI,
-        apiKey: config.apiKey,
-      },
-      recipeList,
-    });
-  }
+	constructor(@Inject(ConfigInjectionToken) config: AuthModuleConfig) {
+		supertokens.init({
+			appInfo: config.appInfo,
+			supertokens: {
+				connectionURI: config.connectionURI,
+				apiKey: config.apiKey,
+			},
+			recipeList,
+		});
+	}
 }

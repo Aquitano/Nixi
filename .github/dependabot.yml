@@ -2,16 +2,15 @@
 
 version: 2
 updates:
-    - package-ecosystem: npm
-      directory: /
-      schedule:
-          interval: daily
-      labels:
-          - dependencies
-      open-pull-requests-limit: 15
-      target-branch: "development"
-      commit-message:
-          prefix: fix
-          prefix-development: chore
-          include: scope
-        
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+    labels:
+      - dependencies
+    open-pull-requests-limit: 15
+    target-branch: 'development'
+    commit-message:
+      prefix: fix
+      prefix-development: chore
+      include: scope

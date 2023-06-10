@@ -9,49 +9,50 @@ const Auth = lazy(() => import('./components/auth/Auth'));
 const Popup = lazy(() => import('./components/Popup'));
 
 type PopupContent = {
-  colorClass: string;
-  message: string;
+	colorClass: string;
+	message: string;
 };
 
 export const [showPopup, setShowPopup] = createSignal({ show: false, content: {} } as {
-  show: boolean;
-  content: PopupContent;
+	show: boolean;
+	content: PopupContent;
 });
 export const [isLoggedIn, setIsLoggedIn] = createSignal<boolean>(false);
 export const [articleId, setArticleId] = createSignal<string>();
 
 const App: Component = () => {
-  /**
-   * Checks if the user is logged in
-   *
-   * @returns {Promise<boolean>}
-   */
-  async function userLoggedIn(): Promise<boolean> {
-    const session = await Session.doesSessionExist();
-    setIsLoggedIn(session);
-    return session;
-  }
+	/**
+	 * Checks if the user is logged in
+	 *
+	 * @returns {Promise<boolean>}
+	 */
+	async function userLoggedIn(): Promise<boolean> {
+		const session = await Session.doesSessionExist();
+		setIsLoggedIn(session);
+		return session;
+	}
 
-  return (
-    <div>
-      <Show when={showPopup().show}>
-        <Popup />
-      </Show>
+	return (
+		<div>
+			<Show when={showPopup().show}>
+				<Popup />
+			</Show>
 
-      <Switch fallback={<h1>Error</h1>}>
-        <Match when={!userLoggedIn()}>
-          <Suspense fallback={<Skeleton />}>
-            <Auth />
-          </Suspense>
-        </Match>
-        <Match when={userLoggedIn()}>
-          <Suspense fallback={<Skeleton />}>
-            <Save />
-          </Suspense>
-        </Match>
-      </Switch>
-    </div>
-  );
+			<Switch fallback={<h1>Error</h1>}>
+				{/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+				<Match when={!userLoggedIn()}>
+					<Suspense fallback={<Skeleton />}>
+						<Auth />
+					</Suspense>
+				</Match>
+				<Match when={userLoggedIn()}>
+					<Suspense fallback={<Skeleton />}>
+						<Save />
+					</Suspense>
+				</Match>
+			</Switch>
+		</div>
+	);
 };
 
 export default App;

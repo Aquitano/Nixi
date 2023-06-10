@@ -7,15 +7,15 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    UserModule,
-    ArticleModule,
-    PrismaModule,
-    AuthModule.forRoot({
-      connectionURI: connectionUri,
-      appInfo,
-    }),
-  ],
+	imports: [
+		ConfigModule.forRoot({ isGlobal: true }),
+		UserModule,
+		ArticleModule,
+		PrismaModule,
+		AuthModule.forRoot({
+			connectionURI: connectionUri,
+			appInfo,
+		}),
+	],
 })
 export class AppModule {}

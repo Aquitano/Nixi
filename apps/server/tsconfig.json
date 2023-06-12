@@ -1,9 +1,9 @@
 {
-  "extends": "tsconfig/nestjs.json",
-  "compilerOptions": {
-    "module": "commonjs",
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true
-  }
+	"extends": "tsconfig/nestjs.json",
+	"compilerOptions": {
+		"module": "commonjs",
+		"outDir": "./dist",
+		"baseUrl": "./",
+		"incremental": true
+	}
 }

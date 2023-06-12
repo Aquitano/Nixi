@@ -17,6 +17,5 @@ _Provide an overview..._
 - [ ] Have you successfully ran tests with your changes locally?
 - [ ] Have you checked to ensure there aren't other open Pull Requests for the same update/change?
 
-Thanks for submitting a pull request! Please provide enough information so that others can review your pull request:
-
-For more information, see the `CONTRIBUTING` guide.
+<!-- Thanks for submitting a pull request! Please provide enough information so that others can review your pull request: -->
+<!-- For more information, see the `CONTRIBUTING` guide. -->

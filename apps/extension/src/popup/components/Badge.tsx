@@ -1,4 +1,5 @@
-import { Component, onMount } from 'solid-js';
+import { Component } from 'solid-js';
+import { removeTag } from './article/TagHandler';
 
 // Function to select a random color from tailwindcss's color palette
 function randomColor(): string {
@@ -25,11 +26,10 @@ function randomColor(): string {
 	return colors[Math.floor(Math.random() * colors.length)];
 }
 
-const Badge: Component<{ name: string }> = (props) => {
-	onMount(() => {
-		console.log(randomColor());
-	});
-
+const Badge: Component<{ name: string; id: number }> = (props) => {
+	function handleRemove() {
+		removeTag(props.id);
+	}
 	return (
 		<span
 			id="badge-dismiss-pink"
@@ -41,6 +41,7 @@ const Badge: Component<{ name: string }> = (props) => {
 				class="ml-2 inline-flex items-center rounded-sm bg-transparent p-0.5 text-sm text-blue-400 hover:bg-blue-200 hover:text-blue-900 dark:hover:bg-blue-800 dark:hover:text-blue-300"
 				data-dismiss-target="#badge-dismiss-default"
 				aria-label="Remove"
+				onClick={handleRemove}
 			>
 				<svg
 					aria-hidden="true"

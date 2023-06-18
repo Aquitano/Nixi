@@ -1,6 +1,6 @@
 import { Component, createSignal, For } from 'solid-js';
 import { GitHub, Google } from '../Icons';
-import { AuthState, useForm } from './utils';
+import { AuthState, useForm } from './AuthManager';
 
 /**
  * Text for the auth form - switch state, switch button, form button

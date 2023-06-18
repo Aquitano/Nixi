@@ -5,7 +5,7 @@ import logo from '../../assets/logo.svg';
 import { ArticleSchema } from '../../assets/schema';
 import { articleId, setArticleId } from '../App';
 import { addMessage, assertIsDefined, ColorClasses } from '../utils';
-import { logout } from './auth/utils';
+import { logout } from './auth/LogoutHandler';
 import styles from './Save.module.css';
 
 const Tags = lazy(() => import('./Tags'));
@@ -69,7 +69,7 @@ async function sendArticle(data: CreateArticleDto): Promise<void> {
 		// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 		addMessage(`Article already exists - ${articleId()}`, ColorClasses.error);
 		// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-		const response = await wretch(`http://localhost:8200/articles/${articleId()}?format=markdown`)
+		const response = await wretch(`http://localhost:8200/articles/${articleId()}?format=json`)
 			.get()
 			.json();
 		console.log(response);

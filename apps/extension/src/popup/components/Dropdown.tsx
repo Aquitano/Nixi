@@ -1,28 +1,26 @@
 import { Dropdown, DropdownOptions } from 'flowbite';
 import { Component, For, createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import wretch from 'wretch';
 import { Tag } from '../../assets/schema/index';
-import { articleId } from '../App';
-import { assertIsDefined } from '../utils';
+import { addTag, removeTag } from './article/TagHandler';
+import { getUserTags } from './article/TagRetriever';
 
 const [items, setItems] = createStore<{ id: number; name: string; checked: boolean }[]>([]);
-const API_URL = 'http://localhost:8200/articles';
 
-function getTags(): Promise<Tag[]> {
-	const id = articleId();
-	assertIsDefined(id);
-	return wretch(`${API_URL}/tags/${id}`).get().json();
-}
+const DropdownItem: Component<{ id: number; name: string; checked: boolean }> = (props) => {
+	const toggleTag = (name: string, id: number) => {
+		// If not checked, add tag to database
+		if (!props.checked) {
+			addTag(id);
+		} else {
+			removeTag(id);
+		}
 
-const DropdownItem: Component<{ name: string; checked: boolean }> = (props) => {
-	const toggleTag = (name: string) => {
 		setItems(
 			(todo) => todo.name === name,
 			'checked',
 			(checked) => !checked,
 		);
-		console.log('items', items);
 	};
 
 	return (
@@ -34,7 +32,7 @@ const DropdownItem: Component<{ name: string; checked: boolean }> = (props) => {
 					value=""
 					checked={props.checked}
 					class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600 dark:ring-offset-gray-700 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-700"
-					onChange={() => toggleTag(props.name)}
+					onChange={() => toggleTag(props.name, props.id)}
 				/>
 				<label
 					for="checkbox-item-11"
@@ -48,7 +46,7 @@ const DropdownItem: Component<{ name: string; checked: boolean }> = (props) => {
 	);
 };
 
-const DropdownMain: Component = () => {
+const DropdownMain: Component<{ articleTags: Tag[] }> = (props) => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [search, setSearch] = createSignal('');
 	let dropdownButton: HTMLButtonElement | undefined;
@@ -57,23 +55,29 @@ const DropdownMain: Component = () => {
 	async function handleSearch(searchData: string) {
 		setSearch(searchData);
 
+		console.log('search', search());
+
 		// TODO: filter dropdown items (fetch from API)
 	}
 
-	const options: DropdownOptions = {
-		triggerType: 'click',
-		offsetSkidding: 0,
-		offsetDistance: 10,
-		delay: 300,
-	};
-
 	// eslint-disable-next-line @typescript-eslint/no-misused-promises
 	onMount(async () => {
-		const tags = await getTags();
+		const options: DropdownOptions = {
+			triggerType: 'click',
+			offsetSkidding: 0,
+			offsetDistance: 10,
+			delay: 300,
+		};
 
-		setItems(tags.map((tag) => ({ id: tag.id, name: tag.name, checked: true })));
+		const tags = await getUserTags();
 
-		console.log('items', items);
+		const checkedTags = props.articleTags.map((tag) => tag.id);
+
+		console.log('checkedTags', checkedTags);
+
+		setItems(
+			tags.map((tag) => ({ id: tag.id, name: tag.name, checked: checkedTags.includes(tag.id) })),
+		);
 
 		// eslint-disable-next-line no-new
 		new Dropdown(dropdownMenu, dropdownButton, options);
@@ -147,7 +151,7 @@ const DropdownMain: Component = () => {
 					aria-labelledby="dropdownSearchButton"
 				>
 					<For each={items}>
-						{(item) => <DropdownItem name={item.name} checked={item.checked} />}
+						{(item) => <DropdownItem name={item.name} checked={item.checked} id={item.id} />}
 					</For>
 				</ul>
 			</div>

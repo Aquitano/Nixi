@@ -15,7 +15,7 @@ import {
 import { GetUser } from '../auth/decorator';
 import { AuthGuard } from '../auth/guard';
 import { ArticleService } from './article.service';
-import { AddHighlightDto, CreateArticleDto, EditArticleDto } from './dto';
+import { CreateArticleDto, EditArticleDto } from './dto';
 
 @UseGuards(AuthGuard)
 @Controller('articles')
@@ -30,6 +30,11 @@ export class ArticleController {
 	@Get('url/:url')
 	getArticleByUrl(@GetUser('id') profileId: string, @Param('url') url: string) {
 		return this.articleService.getArticleByUrl(profileId, url);
+	}
+
+	@Get(':id/tags')
+	getArticleTags(@GetUser('id') profileId: string, @Param('id', ParseIntPipe) articleId: number) {
+		return this.articleService.getTagsUsedByArticle(profileId, articleId);
 	}
 
 	@Get(':id')
@@ -62,61 +67,5 @@ export class ArticleController {
 		@Param('id', ParseIntPipe) articleId: number,
 	) {
 		return this.articleService.deleteArticleById(profileId, articleId);
-	}
-
-	// Highlights
-
-	@Get('highlights/:id')
-	getHighlights(@GetUser('id') profileId: string, @Param('id', ParseIntPipe) highlightId: number) {
-		return this.articleService.getHighlights(profileId, highlightId);
-	}
-
-	@Post('highlights/:id')
-	addHighlight(@GetUser('id') profileId: string, @Body() dto: AddHighlightDto) {
-		return this.articleService.addHighlight(profileId, dto);
-	}
-
-	@Delete('highlights/:id')
-	deleteHighlight(
-		@GetUser('id') profileId: string,
-		@Param('id', ParseIntPipe) highlightId: number,
-	) {
-		return this.articleService.deleteHighlightById(profileId, highlightId);
-	}
-
-	// Tags
-
-	@Get('tags/:id')
-	getTags(@GetUser('id') profileId: string, @Param('id', ParseIntPipe) articleId: number) {
-		return this.articleService.getTagsUsedByArticle(profileId, articleId);
-	}
-
-	// get tag by value
-	@Get('tags/name/:name')
-	getTag(@GetUser('id') profileId: string, @Param('name') name: string) {
-		return this.articleService.getTag(profileId, name);
-	}
-
-	@Post('tags')
-	createTag(@GetUser('id') profileId: string, @Body('name') name: string) {
-		return this.articleService.createTag(profileId, name);
-	}
-
-	@Post('tags/:id')
-	addTag(
-		@GetUser('id') profileId: string,
-		@Param('id', ParseIntPipe) articleId: number,
-		@Body('tagId') tagId: number,
-	) {
-		return this.articleService.addTagToArticle(profileId, articleId, tagId);
-	}
-
-	@Delete('tags/:id')
-	deleteTag(
-		@GetUser('id') profileId: string,
-		@Param('id', ParseIntPipe) articleId: number,
-		@Body('tagId') tagId: number,
-	) {
-		return this.articleService.removeTagFromArticle(profileId, articleId, tagId);
 	}
 }

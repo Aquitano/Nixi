@@ -14,7 +14,7 @@ importers:
     specifiers:
       '@motionone/solid': ^10.16.2
       '@solid-primitives/keyed': ^1.2.0
-      '@types/chrome': ^0.0.237
+      '@types/chrome': ^0.0.239
       '@types/node': ^20.3.1
       '@yaireo/tagify': ^4.17.8
       autoprefixer: ^10.4.14
@@ -44,7 +44,7 @@ importers:
       wretch: 2.5.2
       zod: 3.21.4
     devDependencies:
-      '@types/chrome': 0.0.237
+      '@types/chrome': 0.0.239
       '@types/node': 20.3.2
       autoprefixer: 10.4.14_postcss@8.4.24
       config: link:../../packages/config
@@ -1747,8 +1747,8 @@ packages:
       '@types/connect': 3.4.35
       '@types/node': 20.3.2
 
-  /@types/chrome/0.0.237:
-    resolution: {integrity: sha512-krsRmyfMlck5r+H1EapsrrucDRq6iRm0NAi5fapr93CgnpVMDdK+h2+z4x79GegdW7BNH9Vb//gkptORwwwVIQ==}
+  /@types/chrome/0.0.239:
+    resolution: {integrity: sha512-s/v0pAdpjqfYdwYPDIRiIQDyXfaLi5u+OyHW2NexhqoTm/KZVqKqS1isK11DVu/iUrAUULtbfKtzLKt3+kHgXQ==}
     dependencies:
       '@types/filesystem': 0.0.32
       '@types/har-format': 1.2.11

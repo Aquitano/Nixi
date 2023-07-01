@@ -87,7 +87,7 @@ importers:
       jsdom: ^22.1.0
       pactum: ^3.4.1
       prettier: ^2.8.8
-      prisma: ^4.15.0
+      prisma: ^4.16.2
       reflect-metadata: ^0.1.13
       rimraf: ^5.0.1
       rxjs: ^7.8.1
@@ -106,7 +106,7 @@ importers:
       '@nestjs/core': 10.0.3_qt7li3nwwshj34ys7443ufbxta
       '@nestjs/platform-express': 10.0.3_uw5udq5dia6g3eu27qypsmjr7q
       '@nestjs/swagger': 7.0.6_4zkvzubyf7id3hke7wouurgv4m
-      '@prisma/client': 4.16.1_prisma@4.16.1
+      '@prisma/client': 4.16.1_prisma@4.16.2
       argon2: 0.30.3
       class-transformer: 0.5.1
       class-validator: 0.14.0
@@ -135,7 +135,7 @@ importers:
       jest: 29.5.0_mcg36zosyiwaum4polc7rxa5vm
       pactum: 3.4.1
       prettier: 2.8.8
-      prisma: 4.16.1
+      prisma: 4.16.2
       source-map-support: 0.5.21
       ts-jest: 29.1.0_shrihwlgjpvtm635xvgioyipwu
       ts-loader: 9.4.3_mxlkf4ifym2ofbsylkx3agz4vu
@@ -1607,7 +1607,7 @@ packages:
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
     dev: false
 
-  /@prisma/client/4.16.1_prisma@4.16.1:
+  /@prisma/client/4.16.1_prisma@4.16.2:
     resolution: {integrity: sha512-CoDHu7Bt+NuDo40ijoeHP79EHtECsPBTy3yte5Yo3op8TqXt/kV0OT5OrsWewKvQGKFMHhYQ+ePed3zzjYdGAw==}
     engines: {node: '>=14.17'}
     requiresBuild: true
@@ -1618,15 +1618,15 @@ packages:
         optional: true
     dependencies:
       '@prisma/engines-version': 4.16.0-66.b20ead4d3ab9e78ac112966e242ded703f4a052c
-      prisma: 4.16.1
+      prisma: 4.16.2
     dev: false
 
   /@prisma/engines-version/4.16.0-66.b20ead4d3ab9e78ac112966e242ded703f4a052c:
     resolution: {integrity: sha512-tMWAF/qF00fbUH1HB4Yjmz6bjh7fzkb7Y3NRoUfMlHu6V+O45MGvqwYxqwBjn1BIUXkl3r04W351D4qdJjrgvA==}
     dev: false
 
-  /@prisma/engines/4.16.1:
-    resolution: {integrity: sha512-gpZG0kGGxfemgvK/LghHdBIz+crHkZjzszja94xp4oytpsXrgt/Ice82MvPsWMleVIniKuARrowtsIsim0PFJQ==}
+  /@prisma/engines/4.16.2:
+    resolution: {integrity: sha512-vx1nxVvN4QeT/cepQce68deh/Turxy5Mr+4L4zClFuK1GlxN3+ivxfuv+ej/gvidWn1cE1uAhW7ALLNlYbRUAw==}
     requiresBuild: true
 
   /@rushstack/eslint-patch/1.3.2:
@@ -6325,13 +6325,13 @@ packages:
       react-is: 18.2.0
     dev: true
 
-  /prisma/4.16.1:
-    resolution: {integrity: sha512-C2Xm7yxHxjFjjscBEW4tmoraPHH/Vyu/A0XABdbaFtoiOZARsxvOM7rwc2iZ0qVxbh0bGBGBWZUSXO/52/nHBQ==}
+  /prisma/4.16.2:
+    resolution: {integrity: sha512-SYCsBvDf0/7XSJyf2cHTLjLeTLVXYfqp7pG5eEVafFLeT0u/hLFz/9W196nDRGUOo1JfPatAEb+uEnTQImQC1g==}
     engines: {node: '>=14.17'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      '@prisma/engines': 4.16.1
+      '@prisma/engines': 4.16.2
 
   /process-nextick-args/2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}

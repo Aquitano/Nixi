@@ -31,7 +31,7 @@ importers:
       typescript: ^5.1.3
       vite: ^4.3.9
       vite-plugin-solid: ^2.7.0
-      wretch: ^2.5.2
+      wretch: ^2.6.0
       zod: ^3.21.4
     dependencies:
       '@motionone/solid': 10.16.2_solid-js@1.7.7
@@ -41,7 +41,7 @@ importers:
       solid-js: 1.7.7
       solidjs-lazily: 0.1.2_solid-js@1.7.7
       supertokens-web-js: 0.6.0
-      wretch: 2.5.2
+      wretch: 2.6.0
       zod: 3.21.4
     devDependencies:
       '@types/chrome': 0.0.239
@@ -7889,8 +7889,8 @@ packages:
   /wrappy/1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  /wretch/2.5.2:
-    resolution: {integrity: sha512-6Pd1GvoNYzf17WH1jggzsq8E00UQqiO0kJvLS1dmIEnX8IE0zBfd77Sid5IqTGYVKhad88ygTudbvHdsvPvmCA==}
+  /wretch/2.6.0:
+    resolution: {integrity: sha512-7A4TFHSX+cpxxO6Hd4f0ZE9f8wAgO9wRqX3JeOAtHlJy+kdYP+oPjkF1LYmnTSiTMhODR2YWOdMEc4hCCXEw2w==}
     engines: {node: '>=14'}
     dev: false
 

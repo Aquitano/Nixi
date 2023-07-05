@@ -20,7 +20,7 @@ importers:
       autoprefixer: ^10.4.14
       config: workspace:config
       eslint: ^8.43.0
-      flowbite: ^1.6.6
+      flowbite: ^1.7.0
       postcss: ^8.4.24
       prettier-plugin-tailwindcss: ^0.3.0
       solid-js: ^1.7.7
@@ -37,7 +37,7 @@ importers:
       '@motionone/solid': 10.16.2_solid-js@1.7.7
       '@solid-primitives/keyed': 1.2.0_solid-js@1.7.7
       '@yaireo/tagify': 4.17.8_prop-types@15.8.1
-      flowbite: 1.6.6
+      flowbite: 1.7.0
       solid-js: 1.7.7
       solidjs-lazily: 0.1.2_solid-js@1.7.7
       supertokens-web-js: 0.6.0
@@ -4040,8 +4040,8 @@ packages:
   /flatted/3.2.7:
     resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}
 
-  /flowbite/1.6.6:
-    resolution: {integrity: sha512-T+IaFikHELo1PBKfT/axDqhAmKQLfm/dxVch2r07TZ+IcKwkorZjzwkVuw3OslTETniRIUf2qQvEhxk3bQCaew==}
+  /flowbite/1.7.0:
+    resolution: {integrity: sha512-OTTmnhRgv85Rs+mcMaVU7zB6EvRQs7BaQziyMUsZLRjW9aUpeQyqKjLmxsVMMCdr8isYPCLd6UL7X1IaSVI0WQ==}
     dependencies:
       '@popperjs/core': 2.11.8
       mini-svg-data-uri: 1.4.4

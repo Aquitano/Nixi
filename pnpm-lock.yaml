@@ -94,7 +94,7 @@ importers:
       source-map-support: ^0.5.21
       supertokens-node: ^14.1.3
       ts-jest: ^29.1.0
-      ts-loader: ^9.4.3
+      ts-loader: ^9.4.4
       ts-node: ^10.9.1
       tsconfig: workspace:*
       tsconfig-paths: ^4.2.0
@@ -138,7 +138,7 @@ importers:
       prisma: 4.16.2
       source-map-support: 0.5.21
       ts-jest: 29.1.0_ttbjv54wthnkrxvtt2jo3kjxuu
-      ts-loader: 9.4.3_iqnhbtgxoinocksnhymigcqca4
+      ts-loader: 9.4.4_iqnhbtgxoinocksnhymigcqca4
       ts-node: 10.9.1_xj5cs2fmhcigm4w5bhhtewqeja
       tsconfig: link:../../packages/tsconfig
       tsconfig-paths: 4.2.0
@@ -1788,15 +1788,8 @@ packages:
   /@types/eslint-scope/3.7.4:
     resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
     dependencies:
-      '@types/eslint': 8.40.2
+      '@types/eslint': 8.44.0
       '@types/estree': 1.0.1
-    dev: true
-
-  /@types/eslint/8.40.2:
-    resolution: {integrity: sha512-PRVjQ4Eh9z9pmmtaq8nTjZjQwKFk7YIHIud3lRoKRBgUQjgjRmoGxxGEPXQkF+lH7QkHJRNr5F4aBgYCW0lqpQ==}
-    dependencies:
-      '@types/estree': 1.0.1
-      '@types/json-schema': 7.0.12
     dev: true
 
   /@types/eslint/8.44.0:
@@ -7321,8 +7314,8 @@ packages:
       yargs-parser: 21.1.1
     dev: true
 
-  /ts-loader/9.4.3_iqnhbtgxoinocksnhymigcqca4:
-    resolution: {integrity: sha512-n3hBnm6ozJYzwiwt5YRiJZkzktftRpMiBApHaJPoWLA+qetQBAXkHqCLM6nwSdRDimqVtA5ocIkcTRLMTt7yzA==}
+  /ts-loader/9.4.4_iqnhbtgxoinocksnhymigcqca4:
+    resolution: {integrity: sha512-MLukxDHBl8OJ5Dk3y69IsKVFRA/6MwzEqBgh+OXMPB/OD01KQuWPFd1WAQP8a5PeSCAxfnkhiuWqfmFJzJQt9w==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       typescript: '*'

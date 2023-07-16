@@ -79,7 +79,7 @@ importers:
       class-transformer: ^0.5.1
       class-validator: ^0.14.0
       config: workspace:*
-      dompurify: ^3.0.3
+      dompurify: ^3.0.5
       dotenv-cli: ^7.2.1
       eslint: ^8.44.0
       helmet: ^7.0.0
@@ -110,7 +110,7 @@ importers:
       argon2: 0.30.3
       class-transformer: 0.5.1
       class-validator: 0.14.0
-      dompurify: 3.0.3
+      dompurify: 3.0.5
       helmet: 7.0.0
       jsdom: 22.1.0
       reflect-metadata: 0.1.13
@@ -3314,8 +3314,8 @@ packages:
     resolution: {integrity: sha512-3VdM/SXBZX2omc9JF9nOPCtDaYQ67BGp5CoLpIQlO2KCAPETs8TcDHacF26jXadGbvUteZzRTeos2fhID5+ucQ==}
     dev: false
 
-  /dompurify/3.0.3:
-    resolution: {integrity: sha512-axQ9zieHLnAnHh0sfAamKYiqXMJAVwu+LM/alQ7WDagoWessyWvMSFyW65CqF3owufNu8HBcE4cM2Vflu7YWcQ==}
+  /dompurify/3.0.5:
+    resolution: {integrity: sha512-F9e6wPGtY+8KNMRAVfxeCOHU0/NPWMSENNq4pQctuXRqqdEPW7q3CrLbR5Nse044WwacyjHGOMlvNsBe1y6z9A==}
     dev: false
 
   /dotenv-cli/7.2.1:

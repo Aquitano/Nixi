@@ -62,7 +62,7 @@ importers:
       '@nestjs/cli': ^10.0.2
       '@nestjs/common': ^10.0.1
       '@nestjs/config': ^3.0.0
-      '@nestjs/core': ^10.0.1
+      '@nestjs/core': ^10.1.0
       '@nestjs/platform-express': ^10.0.1
       '@nestjs/schematics': ^10.0.1
       '@nestjs/swagger': ^7.1.1
@@ -103,9 +103,9 @@ importers:
     dependencies:
       '@nestjs/common': 10.0.3_j3td4gnlgk75ora6o6suo62byy
       '@nestjs/config': 3.0.0_ut2lz3i2emxvmaagk3nrd4vcuy
-      '@nestjs/core': 10.0.3_qt7li3nwwshj34ys7443ufbxta
-      '@nestjs/platform-express': 10.0.3_uw5udq5dia6g3eu27qypsmjr7q
-      '@nestjs/swagger': 7.1.1_4zkvzubyf7id3hke7wouurgv4m
+      '@nestjs/core': 10.1.0_qt7li3nwwshj34ys7443ufbxta
+      '@nestjs/platform-express': 10.0.3_wbu4wwpdmwvyhqqbg6layau7ui
+      '@nestjs/swagger': 7.1.1_lo3mr3kq2eqegxjn6onrhcq7fm
       '@prisma/client': 4.16.2_prisma@4.16.2
       argon2: 0.30.3
       class-transformer: 0.5.1
@@ -121,7 +121,7 @@ importers:
     devDependencies:
       '@nestjs/cli': 10.0.5
       '@nestjs/schematics': 10.0.1_agrgdhceu4ykhvsul7qhqysi6e
-      '@nestjs/testing': 10.0.3_ushlzcms54vfr5tyqmkniz3zwi
+      '@nestjs/testing': 10.0.3_qjh4fhlqjobqt7ixt6iwx67zya
       '@types/dompurify': 3.0.2
       '@types/express': 4.17.17
       '@types/jest': 29.5.2
@@ -1269,7 +1269,7 @@ packages:
       detect-libc: 2.0.1
       https-proxy-agent: 5.0.1
       make-dir: 3.1.0
-      node-fetch: 2.6.11
+      node-fetch: 2.6.12
       nopt: 5.0.0
       npmlog: 5.0.1
       rimraf: 3.0.2
@@ -1416,8 +1416,8 @@ packages:
       uuid: 9.0.0
     dev: false
 
-  /@nestjs/core/10.0.3_qt7li3nwwshj34ys7443ufbxta:
-    resolution: {integrity: sha512-LPZrUaGk9ZXXkOOoqNn2EwBN7bBV2+KKbNxkmJKZ/7wMO+qGE1hCLaYuwoPdwUEwmDMchFpUOydfMIeC1s/3bg==}
+  /@nestjs/core/10.1.0_qt7li3nwwshj34ys7443ufbxta:
+    resolution: {integrity: sha512-3ogHxrRAktQZNBSV709QxhNJQPsVInZRqxAK2fV7JDnfoBMu1lM3xI7cO498iViqq5xme3o/46+AdfjW9W2E2A==}
     requiresBuild: true
     peerDependencies:
       '@nestjs/common': ^10.0.0
@@ -1435,14 +1435,14 @@ packages:
         optional: true
     dependencies:
       '@nestjs/common': 10.0.3_j3td4gnlgk75ora6o6suo62byy
-      '@nestjs/platform-express': 10.0.3_uw5udq5dia6g3eu27qypsmjr7q
+      '@nestjs/platform-express': 10.0.3_wbu4wwpdmwvyhqqbg6layau7ui
       '@nuxtjs/opencollective': 0.3.2
       fast-safe-stringify: 2.1.1
       iterare: 1.2.1
       path-to-regexp: 3.2.0
       reflect-metadata: 0.1.13
       rxjs: 7.8.1
-      tslib: 2.5.3
+      tslib: 2.6.0
       uid: 2.0.2
     transitivePeerDependencies:
       - encoding
@@ -1466,14 +1466,14 @@ packages:
       reflect-metadata: 0.1.13
     dev: false
 
-  /@nestjs/platform-express/10.0.3_uw5udq5dia6g3eu27qypsmjr7q:
+  /@nestjs/platform-express/10.0.3_wbu4wwpdmwvyhqqbg6layau7ui:
     resolution: {integrity: sha512-8wA4Onhu6/dQrzTsg6n3pe1WbK9vWFPhagX10eGesX2YvgpVT4ccL0lbJbzGM2CY94RkaxBBW46Q3NJ6Bf566g==}
     peerDependencies:
       '@nestjs/common': ^10.0.0
       '@nestjs/core': ^10.0.0
     dependencies:
       '@nestjs/common': 10.0.3_j3td4gnlgk75ora6o6suo62byy
-      '@nestjs/core': 10.0.3_qt7li3nwwshj34ys7443ufbxta
+      '@nestjs/core': 10.1.0_qt7li3nwwshj34ys7443ufbxta
       body-parser: 1.20.2
       cors: 2.8.5
       express: 4.18.2
@@ -1512,7 +1512,7 @@ packages:
       - chokidar
     dev: true
 
-  /@nestjs/swagger/7.1.1_4zkvzubyf7id3hke7wouurgv4m:
+  /@nestjs/swagger/7.1.1_lo3mr3kq2eqegxjn6onrhcq7fm:
     resolution: {integrity: sha512-gIG1aVCegZlIppXZizKHqWkqZvQkvptTBR1C5CzZoDwGoVVKJBmJ2i9FAcsnzzb0j7hncFKhcBuWYOBJOsCvug==}
     peerDependencies:
       '@fastify/static': ^6.0.0
@@ -1530,7 +1530,7 @@ packages:
         optional: true
     dependencies:
       '@nestjs/common': 10.0.3_j3td4gnlgk75ora6o6suo62byy
-      '@nestjs/core': 10.0.3_qt7li3nwwshj34ys7443ufbxta
+      '@nestjs/core': 10.1.0_qt7li3nwwshj34ys7443ufbxta
       '@nestjs/mapped-types': 2.0.2_7ng7as5pjtzlqmgsd2pvnfmsju
       class-transformer: 0.5.1
       class-validator: 0.14.0
@@ -1541,7 +1541,7 @@ packages:
       swagger-ui-dist: 5.1.0
     dev: false
 
-  /@nestjs/testing/10.0.3_ushlzcms54vfr5tyqmkniz3zwi:
+  /@nestjs/testing/10.0.3_qjh4fhlqjobqt7ixt6iwx67zya:
     resolution: {integrity: sha512-Rhm+E7yr499DIOuYbqskdNVo/NJjLKDS7Wp6NWl37woef4u7eVsSKN8VUCXKxNlYUrSw2Nu2AekpLzvl169SXg==}
     peerDependencies:
       '@nestjs/common': ^10.0.0
@@ -1555,8 +1555,8 @@ packages:
         optional: true
     dependencies:
       '@nestjs/common': 10.0.3_j3td4gnlgk75ora6o6suo62byy
-      '@nestjs/core': 10.0.3_qt7li3nwwshj34ys7443ufbxta
-      '@nestjs/platform-express': 10.0.3_uw5udq5dia6g3eu27qypsmjr7q
+      '@nestjs/core': 10.1.0_qt7li3nwwshj34ys7443ufbxta
+      '@nestjs/platform-express': 10.0.3_wbu4wwpdmwvyhqqbg6layau7ui
       tslib: 2.5.3
     dev: true
 
@@ -5830,18 +5830,6 @@ packages:
     dependencies:
       lodash: 4.17.21
     dev: true
-
-  /node-fetch/2.6.11:
-    resolution: {integrity: sha512-4I6pdBY1EthSqDmJkiNk3JIT8cswwR9nfeW/cPdUagJYEQG7R95WRH74wpz7ma8Gh/9dI9FP+OU+0E4FvtA55w==}
-    engines: {node: 4.x || >=6.0.0}
-    peerDependencies:
-      encoding: ^0.1.0
-    peerDependenciesMeta:
-      encoding:
-        optional: true
-    dependencies:
-      whatwg-url: 5.0.0
-    dev: false
 
   /node-fetch/2.6.12:
     resolution: {integrity: sha512-C/fGU2E8ToujUivIO0H+tpQ6HWo4eEmchoPIoXtxCrVghxdKq+QOHqEZW7tuP3KlV3bC8FRMO5nMCC7Zm1VP6g==}

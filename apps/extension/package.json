@@ -17,7 +17,7 @@
 		"config": "workspace:config",
 		"eslint": "^8.44.0",
 		"postcss": "^8.4.26",
-		"prettier-plugin-tailwindcss": "^0.3.0",
+		"prettier-plugin-tailwindcss": "^0.4.1",
 		"tailwindcss": "^3.3.2",
 		"tsconfig": "workspace:tsconfig",
 		"typescript": "^5.1.6",

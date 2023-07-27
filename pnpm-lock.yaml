@@ -26,7 +26,7 @@ importers:
       solid-js: ^1.7.7
       solidjs-lazily: ^0.1.2
       supertokens-web-js: ^0.6.0
-      tailwindcss: ^3.3.2
+      tailwindcss: ^3.3.3
       tsconfig: workspace:tsconfig
       typescript: ^5.1.6
       vite: ^4.4.4
@@ -51,7 +51,7 @@ importers:
       eslint: 8.44.0
       postcss: 8.4.26
       prettier-plugin-tailwindcss: 0.4.1_prettier@2.8.8
-      tailwindcss: 3.3.2
+      tailwindcss: 3.3.3
       tsconfig: link:../../packages/tsconfig
       typescript: 5.1.6
       vite: 4.4.4_@types+node@20.4.5
@@ -7076,8 +7076,8 @@ packages:
       tslib: 2.6.0
     dev: false
 
-  /tailwindcss/3.3.2:
-    resolution: {integrity: sha512-9jPkMiIBXvPc2KywkraqsUfbfj+dHDb+JPWtSJa9MLFdrPyazI7q6WX2sUrm7R9eVR7qqv3Pas7EvQFzxKnI6w==}
+  /tailwindcss/3.3.3:
+    resolution: {integrity: sha512-A0KgSkef7eE4Mf+nKJ83i75TMyq8HqY3qmFIJSWy8bNt0v1lG7jUcpGpoTFxAwYcWOphcTBLPPJg+bDfhDf52w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -7101,7 +7101,6 @@ packages:
       postcss-load-config: 4.0.1_postcss@8.4.26
       postcss-nested: 6.0.1_postcss@8.4.26
       postcss-selector-parser: 6.0.13
-      postcss-value-parser: 4.2.0
       resolve: 1.22.2
       sucrase: 3.32.0
     transitivePeerDependencies:

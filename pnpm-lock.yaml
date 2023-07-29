@@ -153,7 +153,7 @@ importers:
       eslint-config-airbnb: ^19.0.4
       eslint-config-airbnb-base: ^15.0.0
       eslint-config-airbnb-typescript: ^17.1.0
-      eslint-config-prettier: ^8.8.0
+      eslint-config-prettier: ^8.9.0
       eslint-config-turbo: ^1.10.7
       eslint-import-resolver-typescript: ^3.5.5
     dependencies:
@@ -163,7 +163,7 @@ importers:
       eslint-config-airbnb: 19.0.4_fvk5gqq34fi7qseqtjceaytyfi
       eslint-config-airbnb-base: 15.0.0_y6rmwjtr5yvlso6fqpdnmscdtq
       eslint-config-airbnb-typescript: 17.1.0_b5j3gkkrdda2tj2mkovwcifenu
-      eslint-config-prettier: 8.8.0_eslint@8.46.0
+      eslint-config-prettier: 8.9.0_eslint@8.46.0
       eslint-config-turbo: 1.10.7_eslint@8.46.0
       eslint-import-resolver-typescript: 3.5.5_utinswkqi7i6n6dabrl5vik2za
     devDependencies:
@@ -947,7 +947,7 @@ packages:
       eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
     dependencies:
       eslint: 8.46.0
-      eslint-visitor-keys: 3.4.1
+      eslint-visitor-keys: 3.4.2
 
   /@eslint-community/regexpp/4.5.1:
     resolution: {integrity: sha512-Z5ba73P98O1KUYCCJTUeVpja9RcGoMdncZ6T49FCUl2lN38JtCJ+3WgIDBv0AuY4WChU5PmtJmOCTlN6FZTFKQ==}
@@ -3594,8 +3594,8 @@ packages:
       object.entries: 1.1.6
     dev: false
 
-  /eslint-config-prettier/8.8.0_eslint@8.46.0:
-    resolution: {integrity: sha512-wLbQiFre3tdGgpDv67NQKnJuTlcUVYHas3k+DZCc2U2BadthoEY4B7hLPvAxaqdyOGCzuLfii2fqGph10va7oA==}
+  /eslint-config-prettier/8.9.0_eslint@8.46.0:
+    resolution: {integrity: sha512-+sbni7NfVXnOpnRadUA8S28AUlsZt9GjgFvABIRL9Hkn8KqNzOp+7Lw4QWtrwn20KzU3wqu1QoOj2m+7rKRqkA==}
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
@@ -3822,6 +3822,7 @@ packages:
   /eslint-visitor-keys/3.4.1:
     resolution: {integrity: sha512-pZnmmLwYzf+kWaM/Qgrvpen51upAktaaiI01nsJD/Yr3lMOdNtq0cxkrrg16w64VtisN6okbs7Q8AfGqj4c9fA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: false
 
   /eslint-visitor-keys/3.4.2:
     resolution: {integrity: sha512-8drBzUEyZ2llkpCA67iYrgEssKDUu68V8ChqqOfFupIaG/LCVPUT+CoGJpT77zJprs4T/W7p07LP7zAIMuweVw==}

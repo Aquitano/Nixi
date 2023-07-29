@@ -65,7 +65,7 @@ importers:
       '@nestjs/core': ^10.1.0
       '@nestjs/platform-express': ^10.1.2
       '@nestjs/schematics': ^10.0.1
-      '@nestjs/swagger': ^7.1.2
+      '@nestjs/swagger': ^7.1.4
       '@nestjs/testing': ^10.1.2
       '@prisma/client': ^4.16.2
       '@types/dompurify': ^3.0.2
@@ -105,7 +105,7 @@ importers:
       '@nestjs/config': 3.0.0_depjfxqmof6nw7dutohfq6amfu
       '@nestjs/core': 10.1.0_xpin2nofh4ca4hs5unq6mvqz2a
       '@nestjs/platform-express': 10.1.2_d2dhkjscqwws2t33r4esuhaxri
-      '@nestjs/swagger': 7.1.2_u5f55ncq2klrqbpo5w6cjyuqru
+      '@nestjs/swagger': 7.1.4_u5f55ncq2klrqbpo5w6cjyuqru
       '@prisma/client': 4.16.2_prisma@4.16.2
       argon2: 0.30.3
       class-transformer: 0.5.1
@@ -1532,8 +1532,8 @@ packages:
       - chokidar
     dev: true
 
-  /@nestjs/swagger/7.1.2_u5f55ncq2klrqbpo5w6cjyuqru:
-    resolution: {integrity: sha512-/eWlV3YuMpvEAGi3FcP0SbRGI+gqIJ93mxXaRc/GRKAOHLj5UzQ22jsUVqmSLmNMCSmp6PTLNcRGoLW++SExJA==}
+  /@nestjs/swagger/7.1.4_u5f55ncq2klrqbpo5w6cjyuqru:
+    resolution: {integrity: sha512-OO3V/84L71ISmVwP3PCJztTzDp3CUm1Kx5objmhvYhVRB2dal1RhiwnFlSn5GfD5O+05zqbUOzU1jFCQJH1E4g==}
     peerDependencies:
       '@fastify/static': ^6.0.0
       '@nestjs/common': ^9.0.0 || ^10.0.0

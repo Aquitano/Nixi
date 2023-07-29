@@ -1,14 +1,4 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	ParseIntPipe,
-	Post,
-	Query,
-	UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { GetUser } from '../../auth/decorator';
 import { AuthGuard } from '../../auth/guard';
 import { TagService } from './tag.service';
@@ -24,7 +14,7 @@ export class TagController {
 	}
 
 	@Get(':id')
-	getTags(@GetUser('id') profileId: string, @Param('id', ParseIntPipe) tagId: number) {
+	getTags(@GetUser('id') profileId: string, @Param('id') tagId: string) {
 		return this.tagService.getTagById(profileId, tagId);
 	}
 
@@ -42,8 +32,8 @@ export class TagController {
 	@Post(':id')
 	addTag(
 		@GetUser('id') profileId: string,
-		@Param('id', ParseIntPipe) articleId: number,
-		@Body('tagId', ParseIntPipe) tagId: number,
+		@Param('id') articleId: string,
+		@Body('tagId') tagId: string,
 	) {
 		return this.tagService.addTagToArticle(profileId, articleId, tagId);
 	}
@@ -51,8 +41,8 @@ export class TagController {
 	@Delete(':id')
 	removeTag(
 		@GetUser('id') profileId: string,
-		@Param('id', ParseIntPipe) articleId: number,
-		@Query('tagId', ParseIntPipe) tagId: number,
+		@Param('id') articleId: string,
+		@Query('tagId') tagId: string,
 	) {
 		return this.tagService.removeTagFromArticle(profileId, articleId, tagId);
 	}

@@ -1,9 +1,24 @@
 version: '3.8'
 services:
   db:
-    image: postgres:15.1
+    image: postgres:15
     ports:
       - ${DATABASE_PORT}:5432
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'pg_isready']
+      interval: 30m
+      timeout: 5s
+      retries: 5
+
+  db-auth:
+    image: postgres:15
+    ports:
+      - ${DATABASE_PORT_AUTH}:5432
     environment:
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
@@ -12,10 +27,11 @@ services:
       - app_network
     restart: unless-stopped
     healthcheck:
-      test: ['CMD', 'pg_isready -U supertokens_user']
+      test: ['CMD', 'pg_isready -U supertokens_user_auth']
       interval: 30m
       timeout: 5s
       retries: 5
+
   supertokens:
     image: registry.supertokens.io/supertokens/supertokens-postgresql
     depends_on:
@@ -23,7 +39,7 @@ services:
     ports:
       - ${SUPERTOKENS_PORT}:3567
     environment:
-      POSTGRESQL_CONNECTION_URI: 'postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@db:5432/${DATABASE_NAME}'
+      POSTGRESQL_CONNECTION_URI: 'postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@db-auth:5432/${DATABASE_NAME}'
       PASSWORD_HASHING_ALG: ${SUPERTOKENS_HASHING_ALGORITHM}
       ARGON2_ITERATIONS: ${ARGON2_ITERATIONS}
       ARGON2_MEMORY_KB: ${ARGON2_MEMORY_KB}

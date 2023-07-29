@@ -16,12 +16,12 @@ export class HighlightService {
 	 * Retrieves all highlights for a specific article.
 	 *
 	 * @param {string} profileId - The ID of the user's profile.
-	 * @param {number} highlightId - The ID of the highlight.
+	 * @param {string} highlightId - The ID of the highlight.
 	 * @returns {Promise<Highlight[]>} A promise that resolves to the highlights of the article.
 	 * @throws {NotFoundException} If the article does not exist.
 	 * @throws {ForbiddenException} If the user does not own the article.
 	 */
-	async getHighlights(profileId: string, highlightId: number): Promise<Highlight[]> {
+	async getHighlights(profileId: string, highlightId: string): Promise<Highlight[]> {
 		// get the article by id
 		const article = await this.prisma.article.findUnique({
 			where: { id: highlightId },
@@ -40,7 +40,11 @@ export class HighlightService {
 		// Get all highlights for the article
 		return this.prisma.highlight.findMany({
 			where: {
-				articleId: highlightId,
+				articles: {
+					some: {
+						id: highlightId,
+					},
+				},
 			},
 		});
 	}
@@ -83,10 +87,10 @@ export class HighlightService {
 	 * Deletes a highlight by its ID.
 	 *
 	 * @param {string} profileId - The ID of the user's profile.
-	 * @param {number} highlightId - The ID of the highlight to be deleted.
+	 * @param {string} highlightId - The ID of the highlight to be deleted.
 	 * @throws {ForbiddenException} If the user does not own the highlight.
 	 */
-	async deleteHighlightById(profileId: string, highlightId: number) {
+	async deleteHighlightById(profileId: string, highlightId: string) {
 		// get the highlight by id
 		const highlight = await this.prisma.highlight.findUnique({
 			where: {

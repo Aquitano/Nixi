@@ -37,22 +37,43 @@ async function createProfileForNewUser(response) {
 export const recipeList = [
 	ThirdPartyEmailPassword.init({
 		providers: [
-			ThirdPartyEmailPassword.Google({
-				clientId: env.GOOGLE_CLIENT_ID,
-				clientSecret: env.GOOGLE_CLIENT_SECRET,
-			}),
-			ThirdPartyEmailPassword.Github({
-				clientId: env.GITHUB_CLIENT_ID,
-				clientSecret: env.GITHUB_CLIENT_SECRET,
-			}),
-			ThirdPartyEmailPassword.Apple({
-				clientId: env.APPLE_CLIENT_ID,
-				clientSecret: {
-					keyId: env.APPLE_KEY_ID,
-					privateKey: env.APPLE_PRIVATE_KEY,
-					teamId: env.APPLE_TEAM_ID,
+			{
+				config: {
+					thirdPartyId: 'google',
+					clients: [
+						{
+							clientId: env.GOOGLE_CLIENT_ID,
+							clientSecret: env.GOOGLE_CLIENT_SECRET,
+						},
+					],
 				},
-			}),
+			},
+			{
+				config: {
+					thirdPartyId: 'github',
+					clients: [
+						{
+							clientId: env.GITHUB_CLIENT_ID,
+							clientSecret: env.GITHUB_CLIENT_SECRET,
+						},
+					],
+				},
+			},
+			{
+				config: {
+					thirdPartyId: 'apple',
+					clients: [
+						{
+							clientId: env.APPLE_CLIENT_ID,
+							additionalConfig: {
+								keyId: env.APPLE_KEY_ID,
+								privateKey: env.APPLE_PRIVATE_KEY,
+								teamId: env.APPLE_TEAM_ID,
+							},
+						},
+					],
+				},
+			},
 		],
 		override: {
 			apis: (originalImplementation) => ({

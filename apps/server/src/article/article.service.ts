@@ -73,7 +73,7 @@ export class ArticleService {
 	 * Retrieves an article by its ID.
 	 *
 	 * @param {string} profileId - The ID of the user's profile.
-	 * @param {number} articleId - The ID of the article to be retrieved.
+	 * @param {string} articleId - The ID of the article to be retrieved.
 	 * @param {string} format - The format to export the article in.
 	 * @returns {Promise<Article | string>} A promise that resolves to the retrieved article.
 	 * @throws {ForbiddenException} If the user does not own the article.
@@ -82,7 +82,7 @@ export class ArticleService {
 	 */
 	async getArticleById(
 		profileId: string,
-		articleId: number,
+		articleId: string,
 		format: string,
 	): Promise<Article | string> {
 		// get the article by id
@@ -146,12 +146,12 @@ export class ArticleService {
 	 * Get tags for a specific article.
 	 *
 	 * @param {string} profileId - The ID of the user's profile.
-	 * @param {number} articleId - The ID of the article to get tags for.
+	 * @param {string} articleId - The ID of the article to get tags for.
 	 * @returns {Promise<Tag[]>} A promise that resolves to the retrieved tags.
 	 * @throws {ForbiddenException} If the user does not own the article.
 	 * @throws {NotFoundException} If the article does not exist.
 	 */
-	async getTagsUsedByArticle(profileId: string, articleId: number): Promise<Tag[]> {
+	async getTagsUsedByArticle(profileId: string, articleId: string): Promise<Tag[]> {
 		// get the article by id
 		const article = await this.prisma.article.findFirst({
 			where: {
@@ -179,7 +179,7 @@ export class ArticleService {
 	 * Edits an article by its ID.
 	 *
 	 * @param {string} profileId - The ID of the user's profile.
-	 * @param {number} articleId - The ID of the article to be edited.
+	 * @param {string} articleId - The ID of the article to be edited.
 	 * @param {EditArticleDto} dto - Data transfer object containing the new details of the article.
 	 * @returns {Promise<Article>} A promise that resolves to the updated article.
 	 * @throws {NotFoundException} If the article does not exist.
@@ -187,7 +187,7 @@ export class ArticleService {
 	 */
 	async editArticleById(
 		profileId: string,
-		articleId: number,
+		articleId: string,
 		dto: EditArticleDto,
 	): Promise<Article> {
 		// get the article by id
@@ -217,12 +217,12 @@ export class ArticleService {
 	 * Deletes an article by its ID.
 	 *
 	 * @param {string} profileId - The ID of the user's profile.
-	 * @param {number} articleId - The ID of the article to be deleted.
+	 * @param {string} articleId - The ID of the article to be deleted.
 	 * @returns {Promise<void>} A promise that resolves when the article is deleted.
 	 * @throws {NotFoundException} If the article does not exist.
 	 * @throws {ForbiddenException} If the user does not own the article.
 	 */
-	async deleteArticleById(profileId: string, articleId: number): Promise<void> {
+	async deleteArticleById(profileId: string, articleId: string): Promise<void> {
 		// get the article by id
 		const article = await this.prisma.article.findUnique({
 			where: { id: articleId },

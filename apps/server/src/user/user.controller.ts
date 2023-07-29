@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
-import { all_auth_recipe_users } from '@prisma/client';
+import type { User } from 'supertokens-node/recipe/thirdpartyemailpassword';
 import { GetUser } from '../auth/decorator';
 import { AuthGuard } from '../auth/guard';
 import { EditUserDto } from './dto';
@@ -12,9 +12,9 @@ export class UserController {
 
 	@Get('me')
 	getMe(
-		@GetUser() user: all_auth_recipe_users,
+		@GetUser() user: User,
 		/* @Session() session: SessionContainer @GetUser('email') _email: string */
-	): all_auth_recipe_users {
+	) {
 		return user;
 	}
 

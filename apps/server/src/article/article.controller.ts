@@ -6,7 +6,6 @@ import {
 	HttpCode,
 	HttpStatus,
 	Param,
-	ParseIntPipe,
 	Patch,
 	Post,
 	Query,
@@ -33,14 +32,14 @@ export class ArticleController {
 	}
 
 	@Get(':id/tags')
-	getArticleTags(@GetUser('id') profileId: string, @Param('id', ParseIntPipe) articleId: number) {
+	getArticleTags(@GetUser('id') profileId: string, @Param('id') articleId: string) {
 		return this.articleService.getTagsUsedByArticle(profileId, articleId);
 	}
 
 	@Get(':id')
 	getArticleById(
 		@GetUser('id') profileId: string,
-		@Param('id', ParseIntPipe) articleId: number,
+		@Param('id') articleId: string,
 		@Query('format') format = 'json',
 	) {
 		return this.articleService.getArticleById(profileId, articleId, format);
@@ -54,7 +53,7 @@ export class ArticleController {
 	@Patch(':id')
 	editArticleById(
 		@GetUser('id') profileId: string,
-		@Param('id', ParseIntPipe) articleId: number,
+		@Param('id') articleId: string,
 		@Body() dto: EditArticleDto,
 	) {
 		return this.articleService.editArticleById(profileId, articleId, dto);
@@ -62,10 +61,7 @@ export class ArticleController {
 
 	@HttpCode(HttpStatus.NO_CONTENT)
 	@Delete(':id')
-	deleteArticleById(
-		@GetUser('id') profileId: string,
-		@Param('id', ParseIntPipe) articleId: number,
-	) {
+	deleteArticleById(@GetUser('id') profileId: string, @Param('id') articleId: string) {
 		return this.articleService.deleteArticleById(profileId, articleId);
 	}
 }

@@ -28,7 +28,7 @@ export class TagService {
 		});
 	}
 
-	async getTagById(profileId: string, tagId: number): Promise<Tag> {
+	async getTagById(profileId: string, tagId: string): Promise<Tag> {
 		const tag = await this.prisma.tag.findUnique({
 			where: {
 				id: tagId,
@@ -84,13 +84,13 @@ export class TagService {
 	 * Adds a tag to an article.
 	 *
 	 * @param {string} profileId - The ID of the user's profile.
-	 * @param {number} articleId - The ID of the article to which the tag is to be added.
-	 * @param {number} tagId - The ID of the tag to be added to the article.
+	 * @param {string} articleId - The ID of the article to which the tag is to be added.
+	 * @param {string} tagId - The ID of the tag to be added to the article.
 	 * @returns {Promise<Article>} A promise that resolves to the updated article.
 	 * @throws {NotFoundException} If the article or tag does not exist.
 	 * @throws {ForbiddenException} If the user does not own the article or tag.
 	 */
-	async addTagToArticle(profileId: string, articleId: number, tagId: number): Promise<Article> {
+	async addTagToArticle(profileId: string, articleId: string, tagId: string): Promise<Article> {
 		// get the article and tag by id concurrently
 		const [article, tag] = await Promise.all([
 			this.prisma.article.findUnique({
@@ -129,17 +129,17 @@ export class TagService {
 	 * Removes a tag from an article.
 	 *
 	 * @param {string} profileId - The ID of the user's profile.
-	 * @param {number} articleId - The ID of the article from which the tag is to be removed.
-	 * @param {number} tagId - The ID of the tag to be removed from the article.
+	 * @param {string} articleId - The ID of the article from which the tag is to be removed.
+	 * @param {string} tagId - The ID of the tag to be removed from the article.
 	 * @returns {Promise<Article>} A promise that resolves to the updated article.
 	 * @throws {NotFoundException} If the article or tag does not exist.
 	 * @throws {ForbiddenException} If the user does not own the article or tag.
 	 */
 	async removeTagFromArticle(
 		profileId: string,
-		articleId: number,
-		tagId: number,
-	): Promise<{ id: number; tags: Tag[] }> {
+		articleId: string,
+		tagId: string,
+	): Promise<{ id: string; tags: Tag[] }> {
 		// get the article and tag by id concurrently
 		const [article, tag] = await Promise.all([
 			this.prisma.article.findUnique({

@@ -18,7 +18,7 @@ export class AddHighlightDto {
 	end: number;
 
 	@ApiProperty()
-	@IsNumber()
+	@IsString()
 	@IsNotEmpty()
-	articleId: number;
+	articleId: string;
 }

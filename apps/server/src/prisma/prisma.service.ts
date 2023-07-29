@@ -1,4 +1,4 @@
-import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
 @Injectable()
@@ -8,13 +8,6 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 	}
 
 	cleanDb() {
-		return this.$transaction([this.article.deleteMany(), this.all_auth_recipe_users.deleteMany()]);
-	}
-
-	enableShutdownHooks(app: INestApplication) {
-		// eslint-disable-next-line @typescript-eslint/no-misused-promises
-		this.$on('beforeExit', async () => {
-			await app.close();
-		});
+		return this.$transaction([this.article.deleteMany()]);
 	}
 }

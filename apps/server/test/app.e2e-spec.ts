@@ -229,7 +229,7 @@ describe('App e2e', () => {
 				content: 'Learn how to use Kubernetes',
 				start: 0,
 				end: 27,
-				articleId: 0,
+				articleId: '$S{articleId}',
 			};
 			it('should add highlight', () =>
 				pactum

@@ -7,270 +7,141 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// **************************************************************
+// User Tables
+// **************************************************************
+
 model Profile {
-  userId    String                @id @unique
-  createdAt DateTime              @default(now())
-  updatedAt DateTime              @updatedAt
+  userId String @id @unique
+
   firstName String?
   lastName  String?
-  articles  Article[]
-  Highlight Highlight[]
-  user      all_auth_recipe_users @relation(fields: [userId], references: [user_id], onDelete: Cascade)
-  Tag       Tag[]
+
+  darkMode        Boolean           @default(true)
+  notifications   NotificationType  @default(ALL)
+  UserActivityLog UserActivityLog[]
+
+  articles   Article[]
+  highlights Highlight[]
+  tags       Tag[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   @@map("profiles")
 }
 
+enum NotificationType {
+  ALL
+  NONE
+}
+
+enum ActivityType {
+  VIEW
+  SHARE
+  CREATE
+  DELETE
+  UPDATE
+  COMMENT
+  HIGHLIGHT
+  TAG
+}
+
+model UserActivityLog {
+  id String @id @default(cuid())
+
+  activityType ActivityType
+
+  entityType EntityType
+  entityId   Int
+
+  additionalData Json?
+
+  profile   Profile @relation(fields: [profileId], references: [userId])
+  profileId String
+
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+}
+
+// **************************************************************
+// Entity Tables
+// **************************************************************
+
 model Article {
-  id            Int         @id @default(autoincrement())
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  id String @id @default(cuid())
+
   title         String
   link          String
   author        String
+  content       String
   top_image_url String?
+  description   String?
   favorite      Boolean
   word_count    Int
-  description   String?
-  content       String
-  profileId     String
-  profile       Profile     @relation(fields: [profileId], references: [userId], onDelete: Cascade)
-  highlights    Highlight[]
-  tags          Tag[]       @relation("ArticleToTag")
+
+  profile   Profile @relation(fields: [profileId], references: [userId], onDelete: Cascade)
+  profileId String
+
+  highlights Highlight[]
+  tags       Tag[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   @@unique([link, profileId], name: "link_profile")
   @@map("articles")
 }
 
+// TODO: Add RSS Feed Table
+// TODO: Add Email Table
+
+// **************************************************************
+// Entity Related Tables
+// **************************************************************
+
+// Enum for different data types that can be tagged or highlighted
+enum EntityType {
+  BOOKMARK
+  LOCALFILE
+  RSSFEED
+  EMAIL
+  HIGHLIGHT
+}
+
 model Tag {
-  id        Int       @id @default(autoincrement())
+  id   String @id @default(cuid())
+  name String
+
+  profile   Profile @relation(fields: [profileId], references: [userId], onDelete: Cascade)
+  profileId String
+
+  articles Article[]
+
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  name      String
-  profileId String
-  profile   Profile   @relation(fields: [profileId], references: [userId], onDelete: Cascade)
-  articles  Article[] @relation("ArticleToTag")
+  deletedAt DateTime?
 
   @@unique(fields: [name, profileId], name: "name_profile")
   @@map("tags")
 }
 
 model Highlight {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  content   String
-  start     Int
-  end       Int
-  articleId Int
-  profileId String
-  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
-  profile   Profile  @relation(fields: [profileId], references: [userId], onDelete: Cascade)
+  id      String @id @default(cuid())
+  content String
+  start   Int
+  end     Int
+
+  Profile   Profile? @relation(fields: [profileId], references: [userId])
+  profileId String?
+
+  articles Article[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   @@map("highlights")
-}
-
-model all_auth_recipe_users {
-  user_id        String          @id @db.Char(36)
-  recipe_id      String          @db.VarChar(128)
-  time_joined    BigInt
-  Profile        Profile?
-  userid_mapping userid_mapping?
-
-  @@index([time_joined(sort: Desc), user_id(sort: Desc)], map: "all_auth_recipe_users_pagination_index")
-}
-
-model emailpassword_pswd_reset_tokens {
-  user_id             String              @db.Char(36)
-  token               String              @unique @db.VarChar(128)
-  token_expiry        BigInt
-  emailpassword_users emailpassword_users @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
-
-  @@id([user_id, token])
-  @@index([token_expiry], map: "emailpassword_password_reset_token_expiry_index")
-}
-
-model emailpassword_users {
-  user_id                         String                            @id @db.Char(36)
-  email                           String                            @unique @db.VarChar(256)
-  password_hash                   String                            @db.VarChar(256)
-  time_joined                     BigInt
-  emailpassword_pswd_reset_tokens emailpassword_pswd_reset_tokens[]
-}
-
-model emailverification_tokens {
-  user_id      String @db.VarChar(128)
-  email        String @db.VarChar(256)
-  token        String @unique @db.VarChar(128)
-  token_expiry BigInt
-
-  @@id([user_id, email, token])
-  @@index([token_expiry], map: "emailverification_tokens_index")
-}
-
-model emailverification_verified_emails {
-  user_id String @db.VarChar(128)
-  email   String @db.VarChar(256)
-
-  @@id([user_id, email])
-}
-
-model jwt_signing_keys {
-  key_id     String  @id @db.VarChar(255)
-  key_string String
-  algorithm  String  @db.VarChar(10)
-  created_at BigInt?
-}
-
-model key_value {
-  name            String  @id @db.VarChar(128)
-  value           String?
-  created_at_time BigInt?
-}
-
-model passwordless_codes {
-  code_id              String               @id @db.Char(36)
-  device_id_hash       String               @db.Char(44)
-  link_code_hash       String               @unique @db.Char(44)
-  created_at           BigInt
-  passwordless_devices passwordless_devices @relation(fields: [device_id_hash], references: [device_id_hash], onDelete: Cascade)
-
-  @@index([created_at], map: "passwordless_codes_created_at_index")
-  @@index([device_id_hash], map: "passwordless_codes_device_id_hash_index")
-}
-
-model passwordless_devices {
-  device_id_hash     String               @id @db.Char(44)
-  email              String?              @db.VarChar(256)
-  phone_number       String?              @db.VarChar(256)
-  link_code_salt     String               @db.Char(44)
-  failed_attempts    Int
-  passwordless_codes passwordless_codes[]
-
-  @@index([email], map: "passwordless_devices_email_index")
-  @@index([phone_number], map: "passwordless_devices_phone_number_index")
-}
-
-model passwordless_users {
-  user_id      String  @id @db.Char(36)
-  email        String? @unique @db.VarChar(256)
-  phone_number String? @unique @db.VarChar(256)
-  time_joined  BigInt
-}
-
-model role_permissions {
-  role       String @db.VarChar(255)
-  permission String @db.VarChar(255)
-  roles      roles  @relation(fields: [role], references: [role], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([role, permission])
-  @@index([permission], map: "role_permissions_permission_index")
-}
-
-model roles {
-  role             String             @id @db.VarChar(255)
-  role_permissions role_permissions[]
-  user_roles       user_roles[]
-}
-
-model session_access_token_signing_keys {
-  created_at_time BigInt  @id
-  value           String?
-}
-
-model session_info {
-  session_handle       String  @id @db.VarChar(255)
-  user_id              String  @db.VarChar(128)
-  refresh_token_hash_2 String  @db.VarChar(128)
-  session_data         String?
-  expires_at           BigInt
-  created_at_time      BigInt
-  jwt_user_payload     String?
-  use_static_key       Boolean
-}
-
-model thirdparty_users {
-  third_party_id      String @db.VarChar(28)
-  third_party_user_id String @db.VarChar(256)
-  user_id             String @unique @db.Char(36)
-  email               String @db.VarChar(256)
-  time_joined         BigInt
-
-  @@id([third_party_id, third_party_user_id])
-}
-
-model user_metadata {
-  user_id       String @id @db.VarChar(128)
-  user_metadata String
-}
-
-model user_roles {
-  user_id String @db.VarChar(128)
-  role    String @db.VarChar(255)
-  roles   roles  @relation(fields: [role], references: [role], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([user_id, role])
-  @@index([role], map: "user_roles_role_index")
-}
-
-model userid_mapping {
-  supertokens_user_id   String                @unique @db.Char(36)
-  external_user_id      String                @unique @db.VarChar(128)
-  external_user_id_info String?
-  all_auth_recipe_users all_auth_recipe_users @relation(fields: [supertokens_user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([supertokens_user_id, external_user_id])
-}
-
-model dashboard_user_sessions {
-  session_id      String          @id @db.Char(36)
-  user_id         String          @db.Char(36)
-  time_created    BigInt
-  expiry          BigInt
-  dashboard_users dashboard_users @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
-
-  @@index([expiry], map: "dashboard_user_sessions_expiry_index")
-}
-
-model dashboard_users {
-  user_id                 String                    @id @db.Char(36)
-  email                   String                    @unique @db.VarChar(256)
-  password_hash           String                    @db.VarChar(256)
-  time_joined             BigInt
-  dashboard_user_sessions dashboard_user_sessions[]
-}
-
-model totp_used_codes {
-  user_id         String     @db.VarChar(128)
-  code            String     @db.VarChar(8)
-  is_valid        Boolean
-  expiry_time_ms  BigInt
-  created_time_ms BigInt
-  totp_users      totp_users @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([user_id, created_time_ms])
-  @@index([expiry_time_ms], map: "totp_used_codes_expiry_time_ms_index")
-}
-
-model totp_user_devices {
-  user_id     String     @db.VarChar(128)
-  device_name String     @db.VarChar(256)
-  secret_key  String     @db.VarChar(256)
-  period      Int
-  skew        Int
-  verified    Boolean
-  totp_users  totp_users @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([user_id, device_name])
-}
-
-model totp_users {
-  user_id           String              @id @db.VarChar(128)
-  totp_used_codes   totp_used_codes[]
-  totp_user_devices totp_user_devices[]
-}
-
-model user_last_active {
-  user_id          String  @id @db.VarChar(128)
-  last_active_time BigInt?
 }

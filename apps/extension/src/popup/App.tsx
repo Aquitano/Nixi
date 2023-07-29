@@ -1,4 +1,4 @@
-import { Component, createSignal, lazy, Match, Show, Suspense, Switch } from 'solid-js';
+import { Component, createSignal, lazy, Match, onMount, Show, Suspense, Switch } from 'solid-js';
 import Session from 'supertokens-web-js/recipe/session';
 
 import 'flowbite';
@@ -21,16 +21,12 @@ export const [isLoggedIn, setIsLoggedIn] = createSignal<boolean>(false);
 export const [articleId, setArticleId] = createSignal<string>();
 
 const App: Component = () => {
-	/**
-	 * Checks if the user is logged in
-	 *
-	 * @returns {Promise<boolean>}
-	 */
-	async function userLoggedIn(): Promise<boolean> {
-		const session = await Session.doesSessionExist();
-		setIsLoggedIn(session);
-		return session;
-	}
+	onMount(() => {
+		(async () => {
+			const session = await Session.doesSessionExist();
+			setIsLoggedIn(session);
+		})();
+	});
 
 	return (
 		<div>
@@ -40,12 +36,12 @@ const App: Component = () => {
 
 			<Switch fallback={<h1>Error</h1>}>
 				{/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-				<Match when={!userLoggedIn()}>
+				<Match when={!isLoggedIn()}>
 					<Suspense fallback={<Skeleton />}>
 						<Auth />
 					</Suspense>
 				</Match>
-				<Match when={userLoggedIn()}>
+				<Match when={isLoggedIn()}>
 					<Suspense fallback={<Skeleton />}>
 						<Save />
 					</Suspense>

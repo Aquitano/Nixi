@@ -6,12 +6,16 @@ import { ColorClasses, addMessage } from '../../utils';
  * Logout user by removing the session token from local storage and invoking the SuperTokens session logout function
  */
 export async function logout() {
+	console.log(await Session.doesSessionExist());
+
 	// Sign out the user
 	await Session.signOut();
 
 	// Clear cookies and local storage
 	localStorage.removeItem('st-cookie');
 	localStorage.removeItem('supertokens');
+
+	console.log(await Session.doesSessionExist());
 
 	// Check if the user is still logged in
 	if (await Session.doesSessionExist()) {

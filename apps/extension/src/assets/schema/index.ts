@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const ArticleSchema = z.object({
-	id: z.number(),
+	id: z.string(),
 	createdAt: z.string().transform((val) => new Date(val)),
 	updatedAt: z.string().transform((val) => new Date(val)),
 	title: z.string(),
@@ -16,7 +16,7 @@ export const ArticleSchema = z.object({
 });
 
 export const tagSchema = z.object({
-	id: z.number(),
+	id: z.string(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
 	name: z.string(),
@@ -24,13 +24,13 @@ export const tagSchema = z.object({
 });
 
 export const highlightSchema = z.object({
-	id: z.number(),
+	id: z.string(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
 	content: z.string(),
 	start: z.number(),
 	end: z.number(),
-	articleId: z.number(),
+	articleId: z.string(),
 	profileId: z.string(),
 });
 

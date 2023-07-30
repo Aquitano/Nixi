@@ -1,6 +1,9 @@
+import { produce } from 'solid-js/store';
 import wretch from 'wretch';
+import { Tag } from '../../../assets/schema';
 import { articleId } from '../../App';
 import { assertIsDefined } from '../../utils';
+import { setItems } from '../Dropdown';
 import { setTags } from '../Tags';
 import { getTag } from './TagRetriever';
 import { addTagSchema, removeTagSchema } from './TagSchemas';
@@ -10,10 +13,10 @@ const API_URL = 'http://localhost:8200/articles';
 /**
  * Adds a tag to the database
  *
- * @param {number} id
+ * @param {string} id
  * @returns {Promise<void>}
  */
-export async function addTag(id: number): Promise<void> {
+export async function addTag(id: string): Promise<void> {
 	const article = articleId();
 	assertIsDefined(article);
 	const response = await wretch(`${API_URL}/tags/${article}`).post({ tagId: id }).json();
@@ -22,19 +25,50 @@ export async function addTag(id: number): Promise<void> {
 
 	if (validatedResponse.success) {
 		setTags(validatedResponse.data.tags);
+		setItems(
+			(item) => item.id === id,
+			produce((item) => {
+				item.checked = true;
+			}),
+		);
 	} else {
 		// TODO: Handle error
-		console.log('error');
+		console.log(validatedResponse.error);
 	}
+}
+
+/**
+ * Checks if the tag already exists in the database
+ *
+ * @param {string} tag
+ * @returns {Promise<Tag | null>}
+ */
+export async function doesTagExist(tag: string): Promise<Tag | null> {
+	try {
+		return await wretch(`${API_URL}/tags/name/${tag}`).get().json();
+	} catch {
+		return null;
+	}
+}
+
+/**
+ * Creates a tag in the database
+ * @param {string} tag
+ * @returns {Promise<Tag>}
+ */
+export async function createTag(tag: string): Promise<Tag> {
+	const response = await wretch(`${API_URL}/tags`).post({ name: tag }).json();
+
+	return response as Tag;
 }
 
 /**
  * Removes a tag from the database
  *
- * @param {number} id
+ * @param {string} id
  * @returns {Promise<void>}
  */
-export async function removeTag(id: number): Promise<void> {
+export async function removeTag(id: string): Promise<void> {
 	const article = articleId();
 	assertIsDefined(article);
 
@@ -44,8 +78,6 @@ export async function removeTag(id: number): Promise<void> {
 		return;
 	}
 
-	console.log(article);
-
 	const response = await wretch(`${API_URL}/tags/${article}?tagId=${id}`).delete().json();
 
 	console.log(response);
@@ -54,6 +86,12 @@ export async function removeTag(id: number): Promise<void> {
 
 	if (validatedResponse.success) {
 		setTags(validatedResponse.data.tags);
+		setItems(
+			(item) => item.id === id,
+			produce((item) => {
+				item.checked = false;
+			}),
+		);
 	} else {
 		console.log('error');
 	}

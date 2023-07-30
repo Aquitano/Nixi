@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { Article, Tag } from '@prisma/client';
+import { type Tag } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 
 enum ErrorMessages {
@@ -86,11 +86,15 @@ export class TagService {
 	 * @param {string} profileId - The ID of the user's profile.
 	 * @param {string} articleId - The ID of the article to which the tag is to be added.
 	 * @param {string} tagId - The ID of the tag to be added to the article.
-	 * @returns {Promise<Article>} A promise that resolves to the updated article.
+	 * @returns {Promise<{ id: string; tags: Tag[] }>} A promise that resolves to the updated article.
 	 * @throws {NotFoundException} If the article or tag does not exist.
 	 * @throws {ForbiddenException} If the user does not own the article or tag.
 	 */
-	async addTagToArticle(profileId: string, articleId: string, tagId: string): Promise<Article> {
+	async addTagToArticle(
+		profileId: string,
+		articleId: string,
+		tagId: string,
+	): Promise<{ id: string; tags: Tag[] }> {
 		// get the article and tag by id concurrently
 		const [article, tag] = await Promise.all([
 			this.prisma.article.findUnique({
@@ -119,8 +123,9 @@ export class TagService {
 					connect: { id: tagId },
 				},
 			},
-			include: {
+			select: {
 				tags: true,
+				id: true,
 			},
 		});
 	}
@@ -131,7 +136,7 @@ export class TagService {
 	 * @param {string} profileId - The ID of the user's profile.
 	 * @param {string} articleId - The ID of the article from which the tag is to be removed.
 	 * @param {string} tagId - The ID of the tag to be removed from the article.
-	 * @returns {Promise<Article>} A promise that resolves to the updated article.
+	 * @returns {Promise<{ id: string; tags: Tag[] }>} A promise that resolves to the updated article.
 	 * @throws {NotFoundException} If the article or tag does not exist.
 	 * @throws {ForbiddenException} If the user does not own the article or tag.
 	 */

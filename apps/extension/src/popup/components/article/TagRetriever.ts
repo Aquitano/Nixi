@@ -8,10 +8,10 @@ const API_URL = 'http://localhost:8200/articles';
 /**
  * Retrieves a tag by its ID.
  *
- * @param {number} id
+ * @param {string} id
  * @returns {Promise<Tag | null>}
  */
-export async function getTag(id: number): Promise<Tag | null> {
+export async function getTag(id: string): Promise<Tag | null> {
 	try {
 		return await wretch(`${API_URL}/tags/${id}`).get().json();
 	} catch {

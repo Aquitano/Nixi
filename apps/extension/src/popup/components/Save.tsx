@@ -118,10 +118,12 @@ async function fetchPage(): Promise<void> {
 
 const Save: Component = () => {
 	// eslint-disable-next-line @typescript-eslint/no-misused-promises
-	onMount(async () => {
-		await articleAlreadyExists();
+	onMount(() => {
+		(async () => {
+			await articleAlreadyExists();
 
-		await injectContentScript();
+			await injectContentScript();
+		})();
 	});
 
 	return (

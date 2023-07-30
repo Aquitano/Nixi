@@ -2,25 +2,19 @@ import { Dropdown, DropdownOptions } from 'flowbite';
 import { Component, For, createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { Tag } from '../../assets/schema/index';
-import { addTag, removeTag } from './article/TagHandler';
+import { addTag, createTag, doesTagExist, removeTag } from './article/TagHandler';
 import { getUserTags } from './article/TagRetriever';
 
-const [items, setItems] = createStore<{ id: number; name: string; checked: boolean }[]>([]);
+export const [items, setItems] = createStore<{ id: string; name: string; checked: boolean }[]>([]);
 
-const DropdownItem: Component<{ id: number; name: string; checked: boolean }> = (props) => {
-	const toggleTag = (name: string, id: number) => {
+const DropdownItem: Component<{ id: string; name: string; checked: boolean }> = (props) => {
+	const toggleTag = (id: string) => {
 		// If not checked, add tag to database
 		if (!props.checked) {
 			addTag(id);
 		} else {
 			removeTag(id);
 		}
-
-		setItems(
-			(todo) => todo.name === name,
-			'checked',
-			(checked) => !checked,
-		);
 	};
 
 	return (
@@ -32,7 +26,7 @@ const DropdownItem: Component<{ id: number; name: string; checked: boolean }> = 
 					value=""
 					checked={props.checked}
 					class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600 dark:ring-offset-gray-700 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-700"
-					onChange={() => toggleTag(props.name, props.id)}
+					onChange={() => toggleTag(props.id)}
 				/>
 				<label
 					for="checkbox-item-11"
@@ -52,35 +46,59 @@ const DropdownMain: Component<{ articleTags: Tag[] }> = (props) => {
 	let dropdownButton: HTMLButtonElement | undefined;
 	let dropdownMenu: HTMLDivElement | undefined;
 
-	async function handleSearch(searchData: string) {
+	async function handleSearch(e: KeyboardEvent) {
+		const searchData = (e.target as HTMLInputElement).value;
+
 		setSearch(searchData);
 
-		console.log('search', search());
+		if (e.key === 'Enter' && !items.some((tag) => tag.name === searchData)) {
+			let tagId = '';
+			// Check if tag already exists in database
+			// If not, add tag to database
+			if (!(await doesTagExist(searchData))) {
+				const tag = await createTag(searchData);
+
+				// Add tag to dropdown
+				setItems([...items, { id: tag.id, name: tag.name, checked: false }]);
+
+				tagId = tag.id;
+
+				console.log('tag created', searchData);
+			} else {
+				// TODO: Optimize this performance-wise
+				tagId = (await getUserTags()).find((tag) => tag.name === searchData)?.id || '';
+			}
+
+			await addTag(tagId);
+			return;
+		}
 
 		// TODO: filter dropdown items (fetch from API)
+		console.log('search', searchData);
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-misused-promises
-	onMount(async () => {
-		const options: DropdownOptions = {
-			triggerType: 'click',
-			offsetSkidding: 0,
-			offsetDistance: 10,
-			delay: 300,
-		};
+	onMount(() => {
+		(async () => {
+			const options: DropdownOptions = {
+				triggerType: 'click',
+				offsetSkidding: 0,
+				offsetDistance: 10,
+				delay: 300,
+			};
 
-		const tags = await getUserTags();
+			const tags = await getUserTags();
 
-		const checkedTags = props.articleTags.map((tag) => tag.id);
+			const checkedTags = props.articleTags.map((tag) => tag.id);
 
-		console.log('checkedTags', checkedTags);
+			console.log('checkedTags', checkedTags);
 
-		setItems(
-			tags.map((tag) => ({ id: tag.id, name: tag.name, checked: checkedTags.includes(tag.id) })),
-		);
+			setItems(
+				tags.map((tag) => ({ id: tag.id, name: tag.name, checked: checkedTags.includes(tag.id) })),
+			);
 
-		// eslint-disable-next-line no-new
-		new Dropdown(dropdownMenu, dropdownButton, options);
+			// eslint-disable-next-line no-new
+			new Dropdown(dropdownMenu, dropdownButton, options);
+		})();
 	});
 
 	return (
@@ -113,7 +131,7 @@ const DropdownMain: Component<{ articleTags: Tag[] }> = (props) => {
 
 			<div
 				id="dropdownSearch"
-				class="z-10 hidden w-60 rounded-lg bg-white shadow dark:bg-gray-700"
+				class="dark z-10 hidden w-60 rounded-lg  bg-gray-700 shadow"
 				ref={dropdownMenu}
 			>
 				<div class="p-3">
@@ -142,7 +160,7 @@ const DropdownMain: Component<{ articleTags: Tag[] }> = (props) => {
 							class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
 							placeholder="Search tags"
 							// eslint-disable-next-line @typescript-eslint/no-misused-promises
-							onInput={(e) => handleSearch(e.currentTarget.value)}
+							onKeyDown={(e) => handleSearch(e)}
 						/>
 					</div>
 				</div>

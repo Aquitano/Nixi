@@ -1,4 +1,4 @@
-import { Component } from 'solid-js';
+import { Component, createSignal } from 'solid-js';
 import { removeTag } from './article/TagHandler';
 
 // Function to select a random color from tailwindcss's color palette
@@ -26,14 +26,17 @@ function randomColor(): string {
 	return colors[Math.floor(Math.random() * colors.length)];
 }
 
-const Badge: Component<{ name: string; id: number }> = (props) => {
+const Badge: Component<{ name: string; id: string }> = (props) => {
+	const [color] = createSignal<string>(randomColor());
+
 	function handleRemove() {
 		removeTag(props.id);
 	}
+
 	return (
 		<span
 			id="badge-dismiss-pink"
-			class={`${randomColor()} mb-2 mr-2 inline-flex items-center rounded px-2 py-1 text-sm font-medium text-zinc-200 dark:bg-zinc-400 dark:text-blue-300`}
+			class={`${color()} mb-2 mr-2 inline-flex items-center rounded px-2 py-1 text-sm font-medium text-zinc-200 dark:bg-zinc-400 dark:text-blue-300`}
 		>
 			{props.name}
 			<button

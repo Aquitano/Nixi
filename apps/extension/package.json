@@ -1,36 +1,39 @@
 {
-  "name": "extension",
-  "version": "0.0.0",
-  "description": "",
-  "type": "module",
-  "scripts": {
-    "start": "vite build --watch",
-    "build": "vite build",
-    "serve": "vite preview",
-    "lint": "eslint \"src/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\" --fix",
-    "format": "prettier --write \"src/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,css,scss}\" --config ../../.prettierrc"
-  },
-  "devDependencies": {
-    "@types/chrome": "^0.0.237",
-    "@types/node": "^20.2.3",
-    "autoprefixer": "^10.4.14",
-    "config": "workspace:config",
-    "eslint": "^8.41.0",
-    "postcss": "^8.4.23",
-    "prettier-plugin-tailwindcss": "^0.3.0",
-    "tailwindcss": "^3.3.2",
-    "tsconfig": "workspace:tsconfig",
-    "typescript": "^5.0.4",
-    "vite": "^4.3.8",
-    "vite-plugin-solid": "^2.7.0"
-  },
-  "dependencies": {
-    "@motionone/solid": "^10.16.2",
-    "@solid-primitives/keyed": "^1.2.0",
-    "@yaireo/tagify": "^4.17.8",
-    "solid-js": "^1.7.5",
-    "solidjs-lazily": "^0.1.2",
-    "supertokens-web-js": "^0.5.0",
-    "zod": "^3.21.4"
-  }
+	"name": "extension",
+	"version": "0.0.0",
+	"description": "",
+	"type": "module",
+	"scripts": {
+		"dev": "vite build --watch",
+		"build": "vite build",
+		"serve": "vite preview",
+		"lint": "eslint \"src/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\" --fix",
+		"format": "prettier --write \"src/**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,css,scss}\" --config ../../.prettierrc"
+	},
+	"devDependencies": {
+		"@types/chrome": "^0.0.242",
+		"@types/node": "^20.4.5",
+		"autoprefixer": "^10.4.14",
+		"config": "workspace:config",
+		"eslint": "^8.46.0",
+		"postcss": "^8.4.27",
+		"prettier-plugin-tailwindcss": "^0.4.1",
+		"tailwindcss": "^3.3.3",
+		"tsconfig": "workspace:tsconfig",
+		"typescript": "^5.1.6",
+		"vite": "^4.4.7",
+		"vite-plugin-solid": "^2.7.0"
+	},
+	"dependencies": {
+		"@motionone/solid": "^10.16.2",
+		"@solid-primitives/keyed": "^1.2.0",
+		"@yaireo/tagify": "^4.17.8",
+		"flowbite": "^1.8.0",
+		"solid-js": "^1.7.8",
+		"solid-toast": "^0.5.0",
+		"solidjs-lazily": "^0.1.2",
+		"supertokens-web-js": "^0.7.1",
+		"wretch": "^2.6.0",
+		"zod": "^3.21.4"
+	}
 }

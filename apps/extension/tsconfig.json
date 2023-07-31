@@ -1,5 +1,11 @@
 {
-  "extends": "tsconfig/extension.json",
-  "include": ["src"],
-  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+	"extends": "tsconfig/extension.json",
+	"include": ["src"],
+	"exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@server/*": ["../server/src/*"]
+		}
+	}
 }

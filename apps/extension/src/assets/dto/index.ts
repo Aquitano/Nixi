@@ -1,1 +1,2 @@
-export * from './create-article.dto';
+export * from '@server/article/dto';
+export * from '@server/user/dto';

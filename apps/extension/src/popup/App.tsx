@@ -1,48 +1,43 @@
-import { Component, createSignal, lazy, onMount, Show, Suspense } from 'solid-js';
+import 'flowbite';
+import { Component, createSignal, lazy, Match, onMount, Suspense, Switch } from 'solid-js';
+import { Toaster } from 'solid-toast';
 import Session from 'supertokens-web-js/recipe/session';
+import Skeleton from './components/Skeleton';
 
 const Save = lazy(() => import('./components/Save'));
 const Auth = lazy(() => import('./components/auth/Auth'));
-const Popup = lazy(() => import('./components/Popup'));
 
-type PopupContent = {
-  colorClass: string;
-  message: string;
-};
-
-export const [showPopup, setShowPopup] = createSignal({ show: false, content: {} } as {
-  show: boolean;
-  content: PopupContent;
-});
-export const [isLoggedIn, setIsLoggedIn] = createSignal<boolean>();
+export const [isLoggedIn, setIsLoggedIn] = createSignal<boolean>(false);
 export const [articleId, setArticleId] = createSignal<string>();
 
 const App: Component = () => {
-  onMount(async () => {
-    if (await Session.doesSessionExist()) {
-      setIsLoggedIn(true);
-    }
-  });
+	onMount(() => {
+		(async () => {
+			const session = await Session.doesSessionExist();
+			setIsLoggedIn(session);
+		})();
+	});
 
-  return (
-    <div>
-      <Show when={showPopup().show}>
-        <Popup />
-      </Show>
-      <Show
-        when={isLoggedIn()}
-        fallback={
-          <Suspense fallback={<div>Loading...</div>}>
-            <Auth />
-          </Suspense>
-        }
-      >
-        <Suspense fallback={<div>Loading...</div>}>
-          <Save />
-        </Suspense>
-      </Show>
-    </div>
-  );
+	return (
+		<div>
+			<div>
+				<Toaster />
+			</div>
+
+			<Switch fallback={<h1>Error</h1>}>
+				<Match when={!isLoggedIn()}>
+					<Suspense fallback={<Skeleton />}>
+						<Auth />
+					</Suspense>
+				</Match>
+				<Match when={isLoggedIn()}>
+					<Suspense fallback={<Skeleton />}>
+						<Save />
+					</Suspense>
+				</Match>
+			</Switch>
+		</div>
+	);
 };
 
 export default App;

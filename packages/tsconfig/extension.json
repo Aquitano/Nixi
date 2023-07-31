@@ -1,20 +1,21 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Extension",
-  "extends": "./base.json",
-  "compilerOptions": {
-    "lib": ["DOM", "ESNext", "DOM.Iterable"],
-    "module": "ESNext",
-    "noEmit": true,
-    "noImplicitReturns": true,
-    "moduleResolution": "bundler",
-    "strictNullChecks": false,
-    "jsx": "preserve",
-    "jsxImportSource": "solid-js",
-    "types": ["chrome", "vite/client"],
-    "useDefineForClassFields": true,
-    "isolatedModules": true,
-    "resolveJsonModule": false,
-    "strict": true
-  }
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"display": "Extension",
+	"extends": "./base.json",
+	"compilerOptions": {
+		"lib": ["DOM", "ESNext", "DOM.Iterable"],
+		"module": "ESNext",
+		"noEmit": true,
+		"noImplicitReturns": true,
+		"moduleResolution": "bundler",
+		"jsx": "preserve",
+		"jsxImportSource": "solid-js",
+		"types": ["chrome", "vite/client"],
+		"useDefineForClassFields": true,
+		"isolatedModules": true,
+		"resolveJsonModule": false,
+		"strictNullChecks": true,
+		"strictPropertyInitialization": false,
+		"strict": true
+	}
 }

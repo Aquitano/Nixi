@@ -1,6 +1,6 @@
 import Session from 'supertokens-web-js/recipe/session';
 import { setIsLoggedIn } from '../../App';
-import { ColorClasses, addMessage } from '../../utils';
+import { addMessage } from '../../utils';
 
 /**
  * Logout user by removing the session token from local storage and invoking the SuperTokens session logout function
@@ -35,7 +35,7 @@ export async function logout() {
 			return;
 		}
 
-		addMessage('Logout failed - please reload page', ColorClasses.error);
+		addMessage('Logout failed - please reload page', 'ERROR');
 	} else {
 		setIsLoggedIn(false);
 

@@ -1,11 +1,12 @@
-import { Component, For, createSignal, onMount } from 'solid-js';
-import { Tag } from '../../assets/schema';
+import { Component, For, onMount } from 'solid-js';
+import { createStore } from 'solid-js/store';
+import { type Tag } from '../../assets/schema';
 import { articleId } from '../App';
 import Badge from './Badge';
 import DropdownMain from './Dropdown';
 import { getArticleTags } from './article/TagRetriever';
 
-export const [tags, setTags] = createSignal<Tag[]>([]);
+export const [tags, setTags] = createStore<Tag[]>([]);
 
 const Tags: Component = () => {
 	onMount(() => {
@@ -19,9 +20,9 @@ const Tags: Component = () => {
 
 	return (
 		<>
-			<For each={tags()}>{(tag) => <Badge name={tag.name} id={tag.id} />}</For>
+			<For each={tags}>{(tag) => <Badge name={tag.name} id={tag.id} />}</For>
 			<div class="mt-4">
-				<DropdownMain articleTags={tags()} />
+				<DropdownMain articleTags={tags} />
 			</div>
 		</>
 	);

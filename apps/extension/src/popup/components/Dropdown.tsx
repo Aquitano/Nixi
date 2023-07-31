@@ -1,7 +1,7 @@
 import { Dropdown, DropdownOptions } from 'flowbite';
 import { Component, For, createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import { Tag } from '../../assets/schema/index';
+import { type Tag } from '../../assets/schema/index';
 import { addTag, createTag, doesTagExist, removeTag } from './article/TagHandler';
 import { getUserTags } from './article/TagRetriever';
 

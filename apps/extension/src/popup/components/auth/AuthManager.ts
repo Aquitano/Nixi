@@ -6,7 +6,7 @@ import {
 } from 'supertokens-web-js/recipe/thirdpartyemailpassword';
 import { z } from 'zod';
 import { setIsLoggedIn } from '../../App.jsx';
-import { ColorClasses, addMessage } from '../../utils.js';
+import { addMessage } from '../../utils.js';
 
 const FormDataSchema = z.object({
 	email: z.string().email(),
@@ -43,15 +43,15 @@ async function checkEmail(email: string) {
 		const response = await doesEmailExist({ email });
 		if (response.doesExist) {
 			// If the email already exists, display an error message
-			addMessage('Email already exists. Please sign in instead', ColorClasses.error);
+			addMessage('Email already exists. Please sign in instead', 'ERROR');
 		}
 	} catch (err: unknown) {
 		if (isSuperTokensError(err)) {
 			// If the error is a SuperTokens error, display the error message from the API
-			addMessage(err.message, ColorClasses.error);
+			addMessage(err.message, 'ERROR');
 		} else {
 			// If the error is not a SuperTokens error, display a generic error message
-			addMessage('Oops! Something went wrong.', ColorClasses.error);
+			addMessage('Oops! Something went wrong.', 'ERROR');
 		}
 	}
 }
@@ -84,15 +84,15 @@ export async function signUpClicked(email: string, password: string) {
 			response.formFields.forEach((formField) => {
 				if (formField.id === 'email') {
 					// Email validation failed, or the email is not unique.
-					addMessage(formField.error, ColorClasses.error);
+					addMessage(formField.error, 'ERROR');
 				} else if (formField.id === 'password') {
 					// Password validation failed.
 					// Maybe it didn't match the password strength
-					addMessage(formField.error, ColorClasses.error);
+					addMessage(formField.error, 'ERROR');
 				}
 			});
 		} else if (response.status === undefined) {
-			addMessage('Oops! Something went wrong.', ColorClasses.error);
+			addMessage('Oops! Something went wrong.', 'ERROR');
 		} else {
 			// Sign up successful.
 			window.location.href = '/index.html';
@@ -100,9 +100,9 @@ export async function signUpClicked(email: string, password: string) {
 	} catch (err: unknown) {
 		if (isSuperTokensError(err)) {
 			// Custom error message sent from the API
-			addMessage(err.message, ColorClasses.error);
+			addMessage(err.message, 'ERROR');
 		} else {
-			addMessage('Oops! Something went wrong.', ColorClasses.error);
+			addMessage('Oops! Something went wrong.', 'ERROR');
 		}
 	}
 }
@@ -134,13 +134,13 @@ export async function signInClicked(email: string, password: string) {
 			response.formFields.forEach((formField) => {
 				if (formField.id === 'email') {
 					// Email validation failed
-					addMessage(formField.error, ColorClasses.error);
+					addMessage(formField.error, 'ERROR');
 				}
 			});
 		} else if (response.status === 'WRONG_CREDENTIALS_ERROR') {
-			addMessage('Email password combination is incorrect.', ColorClasses.error);
+			addMessage('Email password combination is incorrect.', 'ERROR');
 		} else if (response.status === undefined) {
-			addMessage('Oops! Something went wrong.', ColorClasses.error);
+			addMessage('Oops! Something went wrong.', 'ERROR');
 		} else {
 			console.log('Login successful');
 			// await Session.attemptRefreshingSession();
@@ -149,9 +149,9 @@ export async function signInClicked(email: string, password: string) {
 	} catch (err: unknown) {
 		if (isSuperTokensError(err)) {
 			// Custom error message sent from the API
-			addMessage(err.message, ColorClasses.error);
+			addMessage(err.message, 'ERROR');
 		} else {
-			addMessage('Oops! Something went wrong.', ColorClasses.error);
+			addMessage('Oops! Something went wrong.', 'ERROR');
 		}
 	}
 }
@@ -165,7 +165,7 @@ const submit = async (form: FormData, authState: AuthState) => {
 	const validation = FormDataSchema.safeParse(form);
 	if (!validation.success) {
 		// handle validation error
-		addMessage('Zod Validation Error!', ColorClasses.error);
+		addMessage('Zod Validation Error!', 'ERROR');
 		return;
 	}
 	const { doesSessionExist } = await import('supertokens-web-js/recipe/session');

@@ -2,7 +2,7 @@ import { produce } from 'solid-js/store';
 import wretch from 'wretch';
 import { Tag } from '../../../assets/schema';
 import { articleId } from '../../App';
-import { assertIsDefined } from '../../utils';
+import { addMessage, assertIsDefined } from '../../utils';
 import { setItems } from '../Dropdown';
 import { setTags } from '../Tags';
 import { getTag } from './TagRetriever';
@@ -31,9 +31,11 @@ export async function addTag(id: string): Promise<void> {
 				item.checked = true;
 			}),
 		);
+
+		addMessage('Tag added successfully', 'SUCCESS');
 	} else {
-		// TODO: Handle error
 		console.log(validatedResponse.error);
+		addMessage('Oops! Something went wrong.', 'ERROR');
 	}
 }
 
@@ -92,7 +94,9 @@ export async function removeTag(id: string): Promise<void> {
 				item.checked = false;
 			}),
 		);
+		addMessage('Tag removed successfully', 'SUCCESS');
 	} else {
-		console.log('error');
+		console.log(validatedResponse.error);
+		addMessage('Oops! Something went wrong.', 'ERROR');
 	}
 }

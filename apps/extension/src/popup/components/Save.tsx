@@ -1,10 +1,10 @@
 import { Component, lazy, onMount, Show, Suspense } from 'solid-js';
 import wretch from 'wretch';
-import { CreateArticleDto } from '../../assets/dto';
+import { type CreateArticleDto } from '../../assets/dto';
 import logo from '../../assets/logo.svg';
 import { ArticleSchema } from '../../assets/schema';
 import { articleId, setArticleId } from '../App';
-import { addMessage, assertIsDefined, ColorClasses } from '../utils';
+import { addMessage, assertIsDefined } from '../utils';
 import { logout } from './auth/LogoutHandler';
 import styles from './Save.module.css';
 
@@ -33,7 +33,7 @@ async function articleAlreadyExists(url?: string): Promise<boolean> {
 		})
 		.catch((error) => {
 			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-			addMessage(`Error checking if article exists - ${error}`, ColorClasses.error);
+			addMessage(`Error checking if article exists - ${error}`, 'ERROR');
 			console.error(error);
 			return false;
 		});
@@ -54,7 +54,7 @@ async function injectContentScript(): Promise<void> {
 			files: ['contentScript.js'],
 		});
 	} else {
-		addMessage('Unable to select your current tab. Please try again.', ColorClasses.error);
+		addMessage('Unable to select your current tab. Please try again.', 'ERROR');
 	}
 }
 
@@ -67,7 +67,7 @@ async function injectContentScript(): Promise<void> {
 async function sendArticle(data: CreateArticleDto): Promise<void> {
 	if (await articleAlreadyExists(data.link)) {
 		// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-		addMessage(`Article already exists - ${articleId()}`, ColorClasses.error);
+		addMessage(`Article already exists - ${articleId()}`, 'ERROR');
 		// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 		const response = await wretch(`http://localhost:8200/articles/${articleId()}?format=json`)
 			.get()
@@ -80,12 +80,12 @@ async function sendArticle(data: CreateArticleDto): Promise<void> {
 		.post(data)
 		.json((result: unknown) => {
 			const article = ArticleSchema.parse(result);
-			addMessage(`Article saved successfully - ${article.id} `, ColorClasses.success);
+			addMessage(`Article saved successfully - ${article.id} `, 'SUCCESS');
 			setArticleId(article.id.toString());
 		})
 		.catch((error) => {
 			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-			addMessage(`Error saving article - ${error}`, ColorClasses.error);
+			addMessage(`Error saving article - ${error}`, 'ERROR');
 			console.error(error);
 		});
 }
@@ -108,11 +108,11 @@ async function fetchPage(): Promise<void> {
 				};
 				sendArticle(data);
 			} else {
-				addMessage('Error getting data from website', ColorClasses.error);
+				addMessage('Error getting data from website', 'ERROR');
 			}
 		});
 	} catch (error) {
-		addMessage('Error getting data from website', ColorClasses.error);
+		addMessage('Error getting data from website', 'ERROR');
 	}
 }
 

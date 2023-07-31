@@ -1,5 +1,5 @@
 import wretch from 'wretch';
-import { Tag } from '../../../assets/schema';
+import { type Tag } from '../../../assets/schema';
 import { articleId } from '../../App';
 import { assertIsDefined } from '../../utils';
 

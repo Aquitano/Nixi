@@ -188,8 +188,8 @@ importers:
         specifier: ^29.6.2
         version: 29.6.2(@types/node@20.4.5)(ts-node@10.9.1)
       pactum:
-        specifier: ^3.4.1
-        version: 3.4.1
+        specifier: ^3.5.0
+        version: 3.5.0
       prettier:
         specifier: ^3.0.1
         version: 3.0.1
@@ -1212,8 +1212,8 @@ packages:
     resolution: {integrity: sha512-a8TLtmPi8xzPkCbp/OGFUo5yhRkHM2Ko9kOWP4znJr0WAhWyThaw3PnwX4vOTWOAMsV2uRt32PPDcEz63esSaA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  /@exodus/schemasafe@1.1.1:
-    resolution: {integrity: sha512-Pd7+aGvWIaTDL5ecV4ZBEtBrjXnk8/ly5xyHbikxVhgcq7qhihzHWHbcYmFupQBT2A5ggNZGvT7Bpj0M6AKHjA==}
+  /@exodus/schemasafe@1.2.3:
+    resolution: {integrity: sha512-hmdFF4vVyvXosVdCCnZPCfrgwNPA79y3K5l0QzlKFcK5Qd3nkM9oGKcQYCTnTRWJXIV5SUMkkTFIEIdDFtxQPQ==}
     dev: true
 
   /@humanwhocodes/config-array@0.11.10:
@@ -6491,22 +6491,22 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /pactum-matchers@1.1.5:
-    resolution: {integrity: sha512-Bc9VVmCYeTFLRw+Du/i8MJl8jA0iBP1pbhYg45+shrKkZJbhSTsrL8ZyAKLuGeFnO0e1HG1c7u6O9Cua30a9cg==}
+  /pactum-matchers@1.1.6:
+    resolution: {integrity: sha512-55io32NeOKbLpHKKPzYDOr+N2dseTzMbj1Gj1y+zvOkKK6NDf5BT5pxglfqLN/ra3ig5zvbrKFUqZIWjAWboog==}
     dev: true
 
-  /pactum@3.4.1:
-    resolution: {integrity: sha512-rRo2qtrUCdzjjKC+o5GeET+OsIMxxejimPh0tz7w9MB6ZDQgI0WJaXjVbZ0+/CtWPrKD7cyWIWdIJMNVJxsQxg==}
+  /pactum@3.5.0:
+    resolution: {integrity: sha512-9uV8m8sOP0EvbrK7NF7r+d7HIxEZWHkf2f4Df4okShad07R2desvSSTOJVg4ySfZ6hmB2ZckfDSF5pUCtWjoHQ==}
     engines: {node: '>=10'}
     dependencies:
-      '@exodus/schemasafe': 1.1.1
+      '@exodus/schemasafe': 1.2.3
       deep-override: 1.0.2
       form-data-lite: 1.0.3
       json-query: 2.2.2
       klona: 2.0.6
       lightcookie: 1.0.25
       openapi-fuzzer-core: 1.0.6
-      pactum-matchers: 1.1.5
+      pactum-matchers: 1.1.6
       parse-graphql: 1.0.0
       phin: 3.7.0
       polka: 0.5.2

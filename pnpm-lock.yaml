@@ -45,8 +45,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2(solid-js@1.7.11)
       supertokens-web-js:
-        specifier: ^0.7.2
-        version: 0.7.2
+        specifier: ^0.7.3
+        version: 0.7.3
       wretch:
         specifier: ^2.6.0
         version: 2.6.0
@@ -7572,8 +7572,8 @@ packages:
       - supports-color
     dev: false
 
-  /supertokens-web-js@0.7.2:
-    resolution: {integrity: sha512-8TQFfuDzOkdbP/br7AHI8PJaslAYOVmHKT9rxb+v2cuFXYbZzHKoZeY12C1hepqHED8Cbt+rnIIVb2VUYlzd/w==}
+  /supertokens-web-js@0.7.3:
+    resolution: {integrity: sha512-HkpIwQ7KCcD8gn3D9u9hfLV/rAf5sr2M6ICH16R3JV2TOB7XmFgX+jzVn3R7DuSRSXu39dT0nn0Vcdc30EzBbA==}
     dependencies:
       supertokens-js-override: 0.0.4
       supertokens-website: 17.0.2

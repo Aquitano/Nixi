@@ -146,8 +146,8 @@ importers:
         version: 7.1.2
     devDependencies:
       '@nestjs/cli':
-        specifier: ^10.1.12
-        version: 10.1.12
+        specifier: ^10.1.15
+        version: 10.1.15
       '@nestjs/schematics':
         specifier: ^10.0.2
         version: 10.0.2(chokidar@3.5.3)(typescript@5.1.6)
@@ -1610,8 +1610,8 @@ packages:
       tslib: 2.6.1
     dev: false
 
-  /@nestjs/cli@10.1.12:
-    resolution: {integrity: sha512-L+KZOGBvSQUJACC4/o83FRLn5h3MOD5TrGi+Y2NjiDiZr0WYG5b0FaSaCSCy9WQTk46lMaiQYbvi0d4keHJnrw==}
+  /@nestjs/cli@10.1.15:
+    resolution: {integrity: sha512-BYUAacihz0OE1nGeGrfpn9wvFffOVPtlVFanegmHdWip0kngqiZnwlb6nQL5047JRghuPnLTIBycgLQWoeI+jw==}
     engines: {node: '>= 16'}
     hasBin: true
     peerDependencies:

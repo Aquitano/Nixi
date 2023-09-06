@@ -54,7 +54,7 @@
 		"@types/turndown": "^5.0.1",
 		"config": "workspace:*",
 		"dotenv-cli": "^7.3.0",
-		"eslint": "^8.47.0",
+		"eslint": "^8.48.0",
 		"jest": "^29.6.3",
 		"pactum": "^3.5.0",
 		"prettier": "^3.0.2",

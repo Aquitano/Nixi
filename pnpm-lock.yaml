@@ -139,8 +139,8 @@ importers:
         specifier: ^7.8.1
         version: 7.8.1
       supertokens-node:
-        specifier: ^15.1.0
-        version: 15.1.0
+        specifier: ^15.1.1
+        version: 15.1.1
       turndown:
         specifier: ^7.1.2
         version: 7.1.2
@@ -7529,8 +7529,8 @@ packages:
     resolution: {integrity: sha512-r0JFBjkMIdep3Lbk3JA+MpnpuOtw4RSyrlRAbrzMcxwiYco3GFWl/daimQZ5b1forOiUODpOlXbSOljP/oyurg==}
     dev: false
 
-  /supertokens-node@15.1.0:
-    resolution: {integrity: sha512-tGcLdj6hEif6Uile/LOmESuzAlDH0glAKXPV/b4yWD3TQrBmudH5O1cloKVtJ6rKheE5RkLW5Nb12B0DQowsVQ==}
+  /supertokens-node@15.1.1:
+    resolution: {integrity: sha512-qiBPit6d3MPJUtFkyhDfRsKrKRJlA6fbitSpuAogBtQ/3LAi8kzQmHp1FZCUkAjaBOKMNVdJvkfV7JJDEyQ/Lg==}
     dependencies:
       content-type: 1.0.5
       cookie: 0.4.0
@@ -7542,7 +7542,6 @@ packages:
       nodemailer: 6.9.4
       pkce-challenge: 3.1.0
       psl: 1.8.0
-      raw-body: 2.5.2
       supertokens-js-override: 0.0.4
       twilio: 4.14.1(debug@4.3.4)
     transitivePeerDependencies:

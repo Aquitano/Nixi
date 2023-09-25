@@ -139,8 +139,8 @@ importers:
         specifier: ^7.8.1
         version: 7.8.1
       supertokens-node:
-        specifier: ^15.1.1
-        version: 15.1.1
+        specifier: ^16.0.0
+        version: 16.0.0
       turndown:
         specifier: ^7.1.2
         version: 7.1.2
@@ -7541,8 +7541,8 @@ packages:
     resolution: {integrity: sha512-r0JFBjkMIdep3Lbk3JA+MpnpuOtw4RSyrlRAbrzMcxwiYco3GFWl/daimQZ5b1forOiUODpOlXbSOljP/oyurg==}
     dev: false
 
-  /supertokens-node@15.1.1:
-    resolution: {integrity: sha512-qiBPit6d3MPJUtFkyhDfRsKrKRJlA6fbitSpuAogBtQ/3LAi8kzQmHp1FZCUkAjaBOKMNVdJvkfV7JJDEyQ/Lg==}
+  /supertokens-node@16.0.0:
+    resolution: {integrity: sha512-RuuI2IC79newLUc2wo8byGlSWxjjtSTy4o7BTz3Y1z0gdb24b754nZMISZ3+pjhbGjL8mNxo35HZwVo7pgqJqg==}
     dependencies:
       content-type: 1.0.5
       cookie: 0.4.0

@@ -25,7 +25,7 @@
 		"vite-plugin-solid": "^2.7.0"
 	},
 	"dependencies": {
-		"@motionone/solid": "^10.16.2",
+		"@motionone/solid": "^10.16.4",
 		"@solid-primitives/keyed": "^1.2.0",
 		"@yaireo/tagify": "^4.17.8",
 		"flowbite": "^1.8.1",

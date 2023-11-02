@@ -88,8 +88,8 @@ importers:
         specifier: ^4.4.11
         version: 4.4.11(@types/node@20.6.3)
       vite-plugin-solid:
-        specifier: ^2.7.1
-        version: 2.7.1(solid-js@1.8.3)(vite@4.4.11)
+        specifier: ^2.7.2
+        version: 2.7.2(solid-js@1.8.3)(vite@4.4.11)
 
   apps/server:
     dependencies:
@@ -8263,8 +8263,8 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  /vite-plugin-solid@2.7.1(solid-js@1.8.3)(vite@4.4.11):
-    resolution: {integrity: sha512-1rTuJdsDqCZiAWfiEkUeRRz4MaxWhqzgJ6PURN+bBSp4uACA/esgYN9Un++YE+xeXUOHlOwTF+VSdvieEcMz0w==}
+  /vite-plugin-solid@2.7.2(solid-js@1.8.3)(vite@4.4.11):
+    resolution: {integrity: sha512-GV2SMLAibOoXe76i02AsjAg7sbm/0lngBlERvJKVN67HOrJsHcWgkt0R6sfGLDJuFkv2aBe14Zm4vJcNME+7zw==}
     peerDependencies:
       solid-js: ^1.7.2
       vite: ^3.0.0 || ^4.0.0

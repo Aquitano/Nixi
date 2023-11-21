@@ -161,8 +161,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       '@types/jest':
-        specifier: 29.5.5
-        version: 29.5.5
+        specifier: 29.5.9
+        version: 29.5.9
       '@types/jsdom':
         specifier: ^21.1.4
         version: 21.1.4
@@ -2168,8 +2168,8 @@ packages:
       '@types/istanbul-lib-report': 3.0.0
     dev: true
 
-  /@types/jest@29.5.5:
-    resolution: {integrity: sha512-ebylz2hnsWR9mYvmBFbXJXr+33UPc4+ZdxyDXh5w0FlPBTfCVN3wPL+kuOiQt3xvrK419v7XWeAs+AeOksafXg==}
+  /@types/jest@29.5.9:
+    resolution: {integrity: sha512-zJeWhqBwVoPm83sP8h1/SVntwWTu5lZbKQGCvBjxQOyEWnKnsaomt2y7SlV4KfwlrHAHHAn00Sh4IAWaIsGOgQ==}
     dependencies:
       expect: 29.7.0
       pretty-format: 29.7.0

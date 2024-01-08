@@ -27,7 +27,7 @@
 	"dependencies": {
 		"@motionone/solid": "^10.16.4",
 		"@solid-primitives/keyed": "^1.2.0",
-		"@yaireo/tagify": "^4.17.8",
+		"@yaireo/tagify": "^4.18.1",
 		"flowbite": "^1.8.1",
 		"solid-js": "^1.8.5",
 		"solid-toast": "^0.5.0",

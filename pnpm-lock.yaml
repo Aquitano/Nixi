@@ -139,8 +139,8 @@ importers:
         specifier: ^7.8.1
         version: 7.8.1
       supertokens-node:
-        specifier: ^15.1.1
-        version: 15.1.1
+        specifier: ^16.7.0
+        version: 16.7.0
       turndown:
         specifier: ^7.1.2
         version: 7.1.2
@@ -2905,10 +2905,12 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
-  /axios@0.26.1(debug@4.3.4):
-    resolution: {integrity: sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==}
+  /axios@1.6.5(debug@4.3.4):
+    resolution: {integrity: sha512-Ii012v05KEVuUoFWmMW/UQv9aRIc3ZwkWDcM+h5Il8izZCtRVpDUfwpoFf7eOtajT3QiGR4yDUx7lPqHJULgbg==}
     dependencies:
-      follow-redirects: 1.15.2(debug@4.3.4)
+      follow-redirects: 1.15.4(debug@4.3.4)
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
     dev: false
@@ -4508,8 +4510,8 @@ packages:
       mini-svg-data-uri: 1.4.4
     dev: false
 
-  /follow-redirects@1.15.2(debug@4.3.4):
-    resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
+  /follow-redirects@1.15.4(debug@4.3.4):
+    resolution: {integrity: sha512-Cr4D/5wlrb0z9dgERpUL3LrmPKVDsETIJhaCMeDfuFYcqa5bldGV6wBsAN6X/vxlXQtFBMrXdXxdL8CbDTGniw==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -6916,6 +6918,10 @@ packages:
       forwarded: 0.2.0
       ipaddr.js: 1.9.1
 
+  /proxy-from-env@1.1.0:
+    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
+    dev: false
+
   /psl@1.8.0:
     resolution: {integrity: sha512-RIdOzyoavK+hA18OGGWDqUTsCLhtA7IcZ/6NCs4fFJaHBDab+pDDmDIByWFRQJq2Cd7r1OoQxBGKOaztq+hjIQ==}
     dev: false
@@ -7617,8 +7623,8 @@ packages:
     resolution: {integrity: sha512-r0JFBjkMIdep3Lbk3JA+MpnpuOtw4RSyrlRAbrzMcxwiYco3GFWl/daimQZ5b1forOiUODpOlXbSOljP/oyurg==}
     dev: false
 
-  /supertokens-node@15.1.1:
-    resolution: {integrity: sha512-qiBPit6d3MPJUtFkyhDfRsKrKRJlA6fbitSpuAogBtQ/3LAi8kzQmHp1FZCUkAjaBOKMNVdJvkfV7JJDEyQ/Lg==}
+  /supertokens-node@16.7.0:
+    resolution: {integrity: sha512-NTjmpNCuaGMrrlJDzKj4rhkGuJm4u3kcwjD7YiAbAp1HihxaaxWa4ntYZEcRppo8VzWDajtKC0OXqOCBqWDqkA==}
     dependencies:
       content-type: 1.0.5
       cookie: 0.4.0
@@ -7631,7 +7637,7 @@ packages:
       pkce-challenge: 3.1.0
       psl: 1.8.0
       supertokens-js-override: 0.0.4
-      twilio: 4.14.1(debug@4.3.4)
+      twilio: 4.20.0(debug@4.3.4)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -8097,11 +8103,11 @@ packages:
       domino: 2.1.6
     dev: false
 
-  /twilio@4.14.1(debug@4.3.4):
-    resolution: {integrity: sha512-5RWNzzhLMPfETx6x+tzaWps308GyGzotF74VE4/10U0920cjwV46CtqBaA56yM5g/0c9zaGLwLyespeD38RTkw==}
+  /twilio@4.20.0(debug@4.3.4):
+    resolution: {integrity: sha512-Dl49awVTgv9LOLrmXi7elKa2mb69rtkwJHlKNbIR9HjXN7q66gEEaiZsE6gdr+Wfk/zInOvPDVBCdQM+SYXqkA==}
     engines: {node: '>=14.0'}
     dependencies:
-      axios: 0.26.1(debug@4.3.4)
+      axios: 1.6.5(debug@4.3.4)
       dayjs: 1.11.9
       https-proxy-agent: 5.0.1
       jsonwebtoken: 9.0.1

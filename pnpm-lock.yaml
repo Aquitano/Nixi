@@ -121,8 +121,8 @@ importers:
         specifier: ^0.14.0
         version: 0.14.0
       dompurify:
-        specifier: ^3.0.6
-        version: 3.0.6
+        specifier: ^3.0.9
+        version: 3.0.9
       helmet:
         specifier: ^7.1.0
         version: 7.1.0
@@ -3721,8 +3721,8 @@ packages:
     resolution: {integrity: sha512-3VdM/SXBZX2omc9JF9nOPCtDaYQ67BGp5CoLpIQlO2KCAPETs8TcDHacF26jXadGbvUteZzRTeos2fhID5+ucQ==}
     dev: false
 
-  /dompurify@3.0.6:
-    resolution: {integrity: sha512-ilkD8YEnnGh1zJ240uJsW7AzE+2qpbOUYjacomn3AvJ6J4JhKGSZ2nh4wUIXPZrEPppaCLx5jFe8T89Rk8tQ7w==}
+  /dompurify@3.0.9:
+    resolution: {integrity: sha512-uyb4NDIvQ3hRn6NiC+SIFaP4mJ/MdXlvtunaqK9Bn6dD3RuB/1S/gasEjDHD8eiaqdSael2vBv+hOs7Y+jhYOQ==}
     dev: false
 
   /dot-prop@5.3.0:

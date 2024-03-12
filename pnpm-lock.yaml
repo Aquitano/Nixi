@@ -33,8 +33,8 @@ importers:
         specifier: ^4.17.8
         version: 4.17.8(prop-types@15.8.1)
       flowbite:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^2.3.0
+        version: 2.3.0
       solid-js:
         specifier: ^1.8.15
         version: 1.8.15
@@ -4519,8 +4519,8 @@ packages:
   /flatted@3.2.7:
     resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}
 
-  /flowbite@1.8.1:
-    resolution: {integrity: sha512-lXTcO8a6dRTPFpINyOLcATCN/pK1Of/jY4PryklPllAiqH64tSDUsOdQpar3TO59ZXWwugm2e92oaqwH6X90Xg==}
+  /flowbite@2.3.0:
+    resolution: {integrity: sha512-pm3JRo8OIJHGfFYWgaGpPv8E+UdWy0Z3gEAGufw+G/1dusaU/P1zoBLiQpf2/+bYAi+GBQtPVG86KYlV0W+AFQ==}
     dependencies:
       '@popperjs/core': 2.11.8
       mini-svg-data-uri: 1.4.4

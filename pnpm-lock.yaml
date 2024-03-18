@@ -30,8 +30,8 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2(solid-js@1.8.15)
       '@yaireo/tagify':
-        specifier: ^4.17.8
-        version: 4.17.8(prop-types@15.8.1)
+        specifier: ^4.22.0
+        version: 4.22.0(prop-types@15.8.1)
       flowbite:
         specifier: ^1.8.1
         version: 1.8.1
@@ -2668,8 +2668,9 @@ packages:
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
     dev: true
 
-  /@yaireo/tagify@4.17.8(prop-types@15.8.1):
-    resolution: {integrity: sha512-MqU3JhE/35r8qZPgfLshXfOkTkgtFEXh2Ja8J3Nn1rPuut28yorJLtxH67jbrbanE1gFH2vCvxe6meqM6oZ8rA==}
+  /@yaireo/tagify@4.22.0(prop-types@15.8.1):
+    resolution: {integrity: sha512-Fi3eARJPIVRVQt3u2Qs8A2wpaajvY8Sc9aIrJRmvzjYYGMOgwPJRMY7YZkDIH1dJyyC//p8eYv+4k4ZYE9hDqg==}
+    engines: {node: '>=14.20.0', npm: '>=8.0.0'}
     peerDependencies:
       prop-types: ^15.7.2
     dependencies:

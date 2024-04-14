@@ -55,8 +55,8 @@ importers:
         version: 3.22.4
     devDependencies:
       '@types/chrome':
-        specifier: ^0.0.248
-        version: 0.0.248
+        specifier: ^0.0.266
+        version: 0.0.266
       '@types/node':
         specifier: ^20.12.7
         version: 20.12.7
@@ -2087,8 +2087,8 @@ packages:
       '@types/node': 20.12.7
     dev: true
 
-  /@types/chrome@0.0.248:
-    resolution: {integrity: sha512-qtBzxZD1v3eWZn8XxH1i07pAhzJDHnxJBBVy7bmntXxXKxjzNXYxD41teqa5yOcX/Yy8brRFGZESEzGoINvBDg==}
+  /@types/chrome@0.0.266:
+    resolution: {integrity: sha512-QSQWJTL7NjZElvq/6/E5C1+pHgEP8UAJzwoz7M4vSJ7AECt6NNehJ+tU6snnvuTqZOBjFCivvitYo5+8tNPmhg==}
     dependencies:
       '@types/filesystem': 0.0.32
       '@types/har-format': 1.2.11

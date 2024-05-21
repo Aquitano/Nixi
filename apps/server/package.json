@@ -32,7 +32,7 @@
 		"argon2": "^0.40.1",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.14.0",
-		"dompurify": "^3.0.9",
+		"dompurify": "^3.1.4",
 		"helmet": "^7.1.0",
 		"jsdom": "^22.1.0",
 		"reflect-metadata": "^0.2.2",

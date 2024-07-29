@@ -15,8 +15,8 @@ importers:
         specifier: ^19.0.3
         version: 19.0.3
       husky:
-        specifier: ^8.0.3
-        version: 8.0.3
+        specifier: ^9.1.3
+        version: 9.1.3
       turbo:
         specifier: ^1.10.16
         version: 1.10.16
@@ -4882,9 +4882,9 @@ packages:
     engines: {node: '>=10.17.0'}
     dev: true
 
-  /husky@8.0.3:
-    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
-    engines: {node: '>=14'}
+  /husky@9.1.3:
+    resolution: {integrity: sha512-ET3TQmQgdIu0pt+jKkpo5oGyg/4MQZpG6xcam5J5JyNJV+CBT23OBpCF15bKHKycRyMH9k6ONy8g2HdGIsSkMQ==}
+    engines: {node: '>=18'}
     hasBin: true
     dev: true
 

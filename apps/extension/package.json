@@ -22,7 +22,7 @@
 		"tsconfig": "workspace:tsconfig",
 		"typescript": "^5.2.2",
 		"vite": "^5.0.0",
-		"vite-plugin-solid": "^2.7.2"
+		"vite-plugin-solid": "^2.10.2"
 	},
 	"dependencies": {
 		"@motionone/solid": "^10.16.4",

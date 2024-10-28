@@ -12,8 +12,8 @@ importers:
         specifier: ^18.5.0
         version: 18.5.0(@types/node@20.12.7)(typescript@5.2.2)
       '@commitlint/config-conventional':
-        specifier: ^19.0.3
-        version: 19.0.3
+        specifier: ^19.5.0
+        version: 19.5.0
       husky:
         specifier: ^8.0.3
         version: 8.0.3
@@ -826,11 +826,11 @@ packages:
       - typescript
     dev: true
 
-  /@commitlint/config-conventional@19.0.3:
-    resolution: {integrity: sha512-vh0L8XeLaEzTe8VCxSd0gAFvfTK0RFolrzw4o431bIuWJfi/yRCHJlsDwus7wW2eJaFFDR0VFXJyjGyDQhi4vA==}
+  /@commitlint/config-conventional@19.5.0:
+    resolution: {integrity: sha512-OBhdtJyHNPryZKg0fFpZNOBM1ZDbntMvqMuSmpfyP86XSfwzGw4CaoYRG4RutUPg0BTK07VMRIkNJT6wi2zthg==}
     engines: {node: '>=v18'}
     dependencies:
-      '@commitlint/types': 19.0.3
+      '@commitlint/types': 19.5.0
       conventional-changelog-conventionalcommits: 7.0.2
     dev: true
 
@@ -971,8 +971,8 @@ packages:
       chalk: 4.1.2
     dev: true
 
-  /@commitlint/types@19.0.3:
-    resolution: {integrity: sha512-tpyc+7i6bPG9mvaBbtKUeghfyZSDgWquIDfMgqYtTbmZ9Y9VzEm2je9EYcQ0aoz5o7NvGS+rcDec93yO08MHYA==}
+  /@commitlint/types@19.5.0:
+    resolution: {integrity: sha512-DSHae2obMSMkAtTBSOulg5X7/z+rGLxcXQIkg3OmWvY6wifojge5uVMydfhUvs7yQj+V7jNmRZ2Xzl8GJyqRgg==}
     engines: {node: '>=v18'}
     dependencies:
       '@types/conventional-commits-parser': 5.0.0

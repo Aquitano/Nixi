@@ -38,7 +38,7 @@
 		"reflect-metadata": "^0.2.2",
 		"rimraf": "^6.0.1",
 		"rxjs": "^7.8.1",
-		"supertokens-node": "^15.1.1",
+		"supertokens-node": "^22.0.0",
 		"turndown": "^7.2.0"
 	},
 	"devDependencies": {

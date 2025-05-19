@@ -19,7 +19,7 @@
 		"@commitlint/cli": "^19.6.1",
 		"@commitlint/config-conventional": "^19.8.1",
 		"husky": "^8.0.3",
-		"turbo": "^1.10.16"
+		"turbo": "^2.5.3"
 	},
 	"engines": {
 		"npm": ">=9.0.0",

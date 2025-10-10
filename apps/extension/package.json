@@ -12,7 +12,7 @@
 	},
 	"devDependencies": {
 		"@types/chrome": "^0.0.309",
-		"@types/node": "^20.12.7",
+		"@types/node": "^24.7.1",
 		"autoprefixer": "^10.4.20",
 		"config": "workspace:config",
 		"eslint": "^8.57.0",
